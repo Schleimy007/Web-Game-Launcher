@@ -27,7 +27,8 @@ const tDict = {
     btnSpin: { de: "Drehen", en: "Spin", es: "Girar", fr: "Tourner", it: "Gira", pt: "Girar", nl: "Draaien", pl: "Kręcić", ru: "Крутить", ja: "回す", zh: "转圈", ko: "회전", ar: "تدور", hi: "स्पिन", tr: "Çevir", sv: "Snurra", da: "Drej", fi: "Pyöritä", el: "Γυρίζω", cs: "Roztočit" },
     msgHl: { de: "Höher oder niedriger?", en: "Higher or lower?", es: "¿Mayor o menor?", fr: "Plus haut ou plus bas?", it: "Più alto o più basso?", pt: "Maior ou menor?", nl: "Hoger of lager?", pl: "Wyżej czy niżej?", ru: "Выше или ниже?", ja: "高いか低いか？", zh: "更高还是更低？", ko: "더 높거나 더 낮습니까?", ar: "أعلى أو أسفل؟", hi: "उच्च या निम्न?", tr: "Daha yüksek veya düşük?", sv: "Högre eller lägre?", da: "Højere eller lavere?", fi: "Korkeampi tai matalampi?", el: "Υψηλότερα ή χαμηλότερα;", cs: "Vyšší nebo nižší?" },
     btnHigh: { de: "Höher", en: "Higher", es: "Mayor", fr: "Plus", it: "Alto", pt: "Maior", nl: "Hoger", pl: "Wyżej", ru: "Выше", ja: "より高い", zh: "更高", ko: "더 높은", ar: "أعلى", hi: "उच्च", tr: "Daha yüksek", sv: "Högre", da: "Højere", fi: "Korkeampi", el: "Υψηλότερο", cs: "Vyšší" },
-    btnLow: { de: "Niedriger", en: "Lower", es: "Menor", fr: "Moins", it: "Basso", pt: "Menor", nl: "Lager", pl: "Niżej", ru: "Ниже", ja: "低い", zh: "较低", ko: "더 낮은", ar: "أدنى", hi: "कम", tr: "Daha düşük", sv: "Lägre", da: "Lavere", fi: "Matalampi", el: "Χαμηλότερο", cs: "Nižší" }
+    btnLow: { de: "Niedriger", en: "Lower", es: "Menor", fr: "Moins", it: "Basso", pt: "Menor", nl: "Lager", pl: "Niżej", ru: "Ниже", ja: "低い", zh: "较低", ko: "더 낮은", ar: "أدنى", hi: "कम", tr: "Daha düşük", sv: "Lägre", da: "Lavere", fi: "Matalampi", el: "Χαμηλότερο", cs: "Nižší" },
+    msgBroke: { de: "Das Casino schenkt dir 100 € Notfallguthaben.", en: "The casino gives you 100 € emergency funds.", es: "El casino te da 100 € de emergencia.", fr: "Le casino vous donne 100 €.", it: "Il casinò ti regala 100 €.", pt: "O cassino te dá 100 €.", nl: "Het casino geeft je 100 €.", pl: "Kasyno daje ci 100 €.", ru: "Казино дает вам 100 €.", ja: "カジノから100 €。", zh: "赌场送您 100 €。", ko: "카지노에서 100 € 지급.", ar: "الكازينو يمنحك 100 €.", hi: "कैसीनो आपको 100 € देता है।", tr: "Casino sana 100 € veriyor.", sv: "Casinot ger dig 100 €.", da: "Casinoet giver dig 100 €.", fi: "Kasino antaa sinulle 100 €.", el: "Το καζίνο σας δίνει 100 €.", cs: "Kasino ti dává 100 €." }
 };
 
 function applyLanguage(lang) {
@@ -44,12 +45,13 @@ function applyLanguage(lang) {
 
 document.getElementById('lang-select').addEventListener('change', (e) => {
     currentLang = e.target.value;
-    localStorage.setItem('flappyLang', currentLang); // Speichert die Sprache synchron zum Launcher
+    localStorage.setItem('flappyLang', currentLang);
     applyLanguage(currentLang);
 });
 
 // Setup Balance
-let balance = parseInt(localStorage.getItem('casinoBalance')) || 1000;
+let balance = parseInt(localStorage.getItem('casinoBalance'));
+if (isNaN(balance)) balance = 1000;
 const balanceDisplay = document.getElementById('balance-display');
 
 function updateBalance(amount) {
@@ -58,6 +60,69 @@ function updateBalance(amount) {
     balanceDisplay.innerText = Math.floor(balance);
 }
 updateBalance(0);
+
+// ==========================================
+// BANKROTT SYSTEM (Das Herzstück für die Rettung!)
+// ==========================================
+function triggerBankruptcy() {
+    balance = 100;
+    localStorage.setItem('casinoBalance', balance);
+    balanceDisplay.innerText = Math.floor(balance);
+
+    const msg = tDict.msgBroke[currentLang] || tDict.msgBroke['en'];
+
+    const popup = document.createElement('div');
+    popup.innerHTML = `<h3 style="margin-bottom:8px;">💸 BANKROTT 💸</h3><p style="font-weight:normal; font-size:16px;">${msg}</p>`;
+    popup.style.position = 'fixed';
+    popup.style.top = '30px';
+    popup.style.left = '50%';
+    popup.style.transform = 'translateX(-50%)';
+    popup.style.backgroundColor = 'var(--danger)';
+    popup.style.color = '#fff';
+    popup.style.padding = '20px 30px';
+    popup.style.borderRadius = '12px';
+    popup.style.textAlign = 'center';
+    popup.style.zIndex = '9999';
+    popup.style.boxShadow = '0 15px 35px rgba(0,0,0,0.8)';
+    popup.style.border = '2px solid #fff';
+    popup.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    popup.style.animation = 'fadeIn 0.5s';
+
+    document.body.appendChild(popup);
+
+    // UI Animation fürs neue Guthaben
+    balanceDisplay.parentElement.style.transition = 'transform 0.3s';
+    balanceDisplay.parentElement.style.transform = 'scale(1.2)';
+    balanceDisplay.parentElement.style.boxShadow = '0 0 20px var(--success)';
+
+    setTimeout(() => {
+        balanceDisplay.parentElement.style.transform = 'scale(1)';
+        balanceDisplay.parentElement.style.boxShadow = '';
+    }, 1000);
+
+    setTimeout(() => {
+        popup.style.opacity = '0';
+        popup.style.transform = 'translate(-50%, -20px)';
+        setTimeout(() => popup.remove(), 500);
+    }, 5000);
+}
+
+// Wird beim Verlierern getriggert
+function checkPostGameBankruptcy() {
+    if (balance <= 0 && ownedShares === 0) {
+        setTimeout(triggerBankruptcy, 1500); // Kurz warten nach dem Verlieren
+    }
+}
+
+// Wird bei Klick auf "Spielen" geprüft
+function checkAndTriggerBankrupt() {
+    if (balance <= 0 && ownedShares === 0) {
+        triggerBankruptcy();
+        return true;
+    }
+    return false;
+}
+
 
 // --- NAVIGATION ---
 const btnBack = document.getElementById('btn-back');
@@ -93,6 +158,7 @@ const slotBet = document.getElementById('slot-bet');
 const reels = [document.getElementById('reel1'), document.getElementById('reel2'), document.getElementById('reel3')];
 
 btnSpin.addEventListener('click', () => {
+    if (checkAndTriggerBankrupt()) return;
     const bet = parseInt(slotBet.value);
     if (bet < 1 || bet > balance) return showMessage('slot-msg', 'Error!', 'var(--danger)');
     updateBalance(-bet);
@@ -127,6 +193,7 @@ function checkSlotWin(res, bet) {
         showMessage('slot-msg', `Win! +${bet * 2} €`, 'var(--success)');
     } else {
         showMessage('slot-msg', 'Lose.', 'var(--danger)');
+        checkPostGameBankruptcy();
     }
 }
 
@@ -178,6 +245,7 @@ function renderBJ(hideDealer = false) {
 }
 
 document.getElementById('btn-bj-deal').addEventListener('click', () => {
+    if (checkAndTriggerBankrupt()) return;
     bjBet = parseInt(document.getElementById('bj-bet').value);
     if (bjBet < 1 || bjBet > balance) return showMessage('bj-msg', 'Error!', 'var(--danger)');
     updateBalance(-bjBet);
@@ -198,6 +266,7 @@ document.getElementById('btn-bj-hit').addEventListener('click', () => {
         renderBJ(false);
         showMessage('bj-msg', 'Bust!', '#e74c3c');
         resetBjUI();
+        checkPostGameBankruptcy();
     }
 });
 
@@ -217,7 +286,10 @@ function handleBjEnd() {
     } else if (p === d) {
         updateBalance(bjBet);
         showMessage('bj-msg', 'Push!', '#f1c40f');
-    } else showMessage('bj-msg', 'Lose!', '#e74c3c');
+    } else {
+        showMessage('bj-msg', 'Lose!', '#e74c3c');
+        checkPostGameBankruptcy();
+    }
     resetBjUI();
 }
 
@@ -268,6 +340,7 @@ function renderChart() {
 }
 
 document.getElementById('btn-buy-stock').addEventListener('click', () => {
+    if (checkAndTriggerBankrupt()) return;
     if (balance >= currentPrice) {
         updateBalance(-currentPrice);
         ownedShares++;
@@ -288,6 +361,7 @@ document.getElementById('btn-sell-stock').addEventListener('click', () => {
 // 4. ROULETTE
 // -----------------------------------------
 window.playRoulette = function(colorStr) {
+    if (checkAndTriggerBankrupt()) return;
     const bet = parseInt(document.getElementById('roulette-bet').value);
     if (bet < 1 || bet > balance) return showMessage('roulette-msg', 'Error!', 'var(--danger)');
     updateBalance(-bet);
@@ -307,7 +381,10 @@ window.playRoulette = function(colorStr) {
                 let win = colorStr === 'green' ? bet * 14 : bet * 2;
                 updateBalance(win);
                 showMessage('roulette-msg', `Win! +${win} €`, 'var(--success)');
-            } else { showMessage('roulette-msg', 'Lose.', 'var(--danger)'); }
+            } else {
+                showMessage('roulette-msg', 'Lose.', 'var(--danger)');
+                checkPostGameBankruptcy();
+            }
         }
     }, 50);
 }
@@ -320,6 +397,7 @@ let crashMult = 1.0,
     crashBet = 0,
     crashInterval;
 document.getElementById('btn-crash-start').addEventListener('click', () => {
+    if (checkAndTriggerBankrupt()) return;
     crashBet = parseInt(document.getElementById('crash-bet').value);
     if (crashBet < 1 || crashBet > balance) return showMessage('crash-msg', 'Error!', 'var(--danger)');
     updateBalance(-crashBet);
@@ -338,6 +416,7 @@ document.getElementById('btn-crash-start').addEventListener('click', () => {
             document.getElementById('crash-multiplier').style.color = 'var(--danger)';
             showMessage('crash-msg', 'CRASHED!', 'var(--danger)');
             resetCrash();
+            checkPostGameBankruptcy();
         }
     }, 50);
 });
@@ -360,6 +439,7 @@ function resetCrash() {
 // 6. COIN FLIP
 // -----------------------------------------
 window.playCoinFlip = function(choice) {
+    if (checkAndTriggerBankrupt()) return;
     const bet = parseInt(document.getElementById('coin-bet').value);
     if (bet < 1 || bet > balance) return showMessage('coin-msg', 'Error!', 'var(--danger)');
     updateBalance(-bet);
@@ -372,7 +452,10 @@ window.playCoinFlip = function(choice) {
         if (choice === result) {
             updateBalance(bet * 2);
             showMessage('coin-msg', `Win! +${bet*2} €`, 'var(--success)');
-        } else { showMessage('coin-msg', `Lose.`, 'var(--danger)'); }
+        } else {
+            showMessage('coin-msg', `Lose.`, 'var(--danger)');
+            checkPostGameBankruptcy();
+        }
     }, 1000);
 }
 
@@ -384,6 +467,7 @@ let minesBet = 0,
     minesCount = 3;
 const mGrid = document.getElementById('mines-grid');
 document.getElementById('btn-mines-start').addEventListener('click', () => {
+    if (checkAndTriggerBankrupt()) return;
     minesBet = parseInt(document.getElementById('mines-bet').value);
     if (minesBet < 1 || minesBet > balance) return showMessage('mines-msg', 'Error!', 'var(--danger)');
     updateBalance(-minesBet);
@@ -411,6 +495,7 @@ document.getElementById('btn-mines-start').addEventListener('click', () => {
                     document.getElementById('mines-setup').classList.remove('hidden');
                     document.getElementById('btn-mines-cashout').classList.add('hidden');
                 }, 2000);
+                checkPostGameBankruptcy();
             } else {
                 btn.classList.add('safe');
                 btn.innerText = '💎';
@@ -445,6 +530,7 @@ dt.addEventListener('input', () => {
 });
 
 document.getElementById('btn-dice-roll').addEventListener('click', () => {
+    if (checkAndTriggerBankrupt()) return;
     const bet = parseInt(document.getElementById('dice-bet').value),
         target = parseInt(dt.value);
     if (bet < 1 || bet > balance) return showMessage('dice-msg', 'Error!', 'var(--danger)');
@@ -455,7 +541,10 @@ document.getElementById('btn-dice-roll').addEventListener('click', () => {
         const win = Math.floor(bet * (100 / target));
         updateBalance(win);
         showMessage('dice-msg', `Win! +${win} €`, 'var(--success)');
-    } else { showMessage('dice-msg', `Lose.`, 'var(--danger)'); }
+    } else {
+        showMessage('dice-msg', `Lose.`, 'var(--danger)');
+        checkPostGameBankruptcy();
+    }
 });
 
 // -----------------------------------------
@@ -463,6 +552,7 @@ document.getElementById('btn-dice-roll').addEventListener('click', () => {
 // -----------------------------------------
 const wMults = [0, 1.5, 0.5, 2, 0, 3, 0.2, 5];
 document.getElementById('btn-wheel-spin').addEventListener('click', () => {
+    if (checkAndTriggerBankrupt()) return;
     const bet = parseInt(document.getElementById('wheel-bet').value);
     if (bet < 1 || bet > balance) return showMessage('wheel-msg', 'Error!', 'var(--danger)');
     updateBalance(-bet);
@@ -478,7 +568,10 @@ document.getElementById('btn-wheel-spin').addEventListener('click', () => {
         if (win > 0) {
             updateBalance(win);
             showMessage('wheel-msg', `${resObj}x! +${win} €`, 'var(--success)');
-        } else { showMessage('wheel-msg', 'Lose! 0x', 'var(--danger)'); }
+        } else {
+            showMessage('wheel-msg', 'Lose! 0x', 'var(--danger)');
+            checkPostGameBankruptcy();
+        }
     }, 2000);
 });
 
@@ -489,6 +582,7 @@ let hlPot = 0,
     hlCurrentVal = 0;
 const hlCard = document.getElementById('hl-card-current');
 document.getElementById('btn-hl-start').addEventListener('click', () => {
+    if (checkAndTriggerBankrupt()) return;
     const bet = parseInt(document.getElementById('hl-bet').value);
     if (bet < 1 || bet > balance) return showMessage('hl-msg', 'Error!', 'var(--danger)');
     updateBalance(-bet);
@@ -523,6 +617,7 @@ window.playHighLow = function(guess) {
             document.getElementById('hl-setup').classList.remove('hidden');
             hlCard.innerHTML = '?';
         }, 2000);
+        checkPostGameBankruptcy();
     }
 }
 document.getElementById('btn-hl-cashout').addEventListener('click', () => {
