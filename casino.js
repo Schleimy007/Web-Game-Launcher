@@ -254,7 +254,9 @@ const promoCodes = {
     "ADMINQ8L3X5M2A7T9K4P1Z": 100000,
     "ADMIN1M7Q4K9A3L8T2X5PZ": 100000,
     "ADMINZ3A9T1K8M4Q7L2XP6": 100000,
-    "NEW": 250
+    "NEW": 250,
+    "ADMINZ3A9T1K8M4QENFBEWJKKSDAN": 20000000,
+    "ADMINZ3A9T1K8M4QENFBEWJKKSDAN2": 20000000,
 };
 let redeemedCodes = JSON.parse(localStorage.getItem('casinoRedeemedCodes')) || [];
 
