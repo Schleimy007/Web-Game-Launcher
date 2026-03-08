@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Slots</title>
+    <link rel="stylesheet" href="flappy.css">
+    <style>
+        body {
+            background-color: #4a235a;
+        }
+        
+        #game-container {
+            background-color: #8e44ad;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slots-area {
+            background: #ded895;
+            border: 4px solid #543847;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 6px 0 #000;
+            width: 90%;
+            margin-bottom: 20px;
+        }
+        
+        .reels {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            background: #222;
+            padding: 15px;
+            border-radius: 8px;
+            border: 3px solid #000;
+            margin: 15px 0;
+        }
+        
+        .reel {
+            width: 70px;
+            height: 90px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            border-radius: 5px;
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5);
+        }
+        
+        .spinning {
+            animation: spin 0.1s infinite;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: translateY(-10px);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+            100% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .bet-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game-container">
+        <div id="start-menu" class="screen">
+            <h1 class="title">Lucky Slots</h1>
+            <div class="menu-box">
+                <p>💰 Coins: <span id="menu-coins" style="color: #e45c13;">0</span></p>
+                <p>🏆 Höchster Gewinn: <span id="menu-highscore">0</span></p>
+            </div>
+            <div class="button-group">
+                <button id="start-btn" class="btn primary">An den Automaten</button>
+                <button id="leaderboard-btn" class="btn secondary" style="background-color: #3498db;">Leaderboard</button>
+                <button id="settings-btn" class="btn secondary">Einstellungen</button>
+                <button id="credits-btn" class="btn secondary">Credits</button>
+            </div>
+        </div>
+
+        <div id="game-ui" class="hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+            <div class="slots-area">
+                <h2 style="margin:0; color:#e45c13; text-shadow: 1px 1px 0 #fff;">JACKPOT x10</h2>
+                <div class="reels">
+                    <div class="reel" id="r1">🍒</div>
+                    <div class="reel" id="r2">🍒</div>
+                    <div class="reel" id="r3">🍒</div>
+                </div>
+                <div id="msg" style="font-weight: bold; font-size: 20px; height: 25px;">Einsatz wählen!</div>
+                <div class="bet-box"><button class="btn secondary" id="btn-minus" style="padding: 5px 15px;">-10</button>
+                    <div>Einsatz: <span id="bet">10</span></div><button class="btn secondary" id="btn-plus" style="padding: 5px 15px;">+10</button></div>
+            </div>
+            <div class="button-group"><button id="btn-spin" class="btn primary" style="background-color: #2ecc71;">🎰 SPIN 🎰</button><button id="btn-back" class="btn secondary">Hauptmenü</button></div>
+        </div>
+
+        <div id="leaderboard-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Top 10 Gewinne</h2>
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <tr>
+                            <td colspan="3" style="text-align:center;">Lokal</td>
+                        </tr>
+                    </tbody>
+                </table><button onclick="document.getElementById('leaderboard-modal').classList.add('hidden')" class="btn secondary mt-10">Schließen</button></div>
+        </div>
+        <div id="settings-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Einstellungen</h2>
+                <div class="setting-item flex-col"><label>Sprache:</label><select id="language-select" class="retro-select"><option value="de">Deutsch</option><option value="en">English</option></select></div><button onclick="document.getElementById('settings-modal').classList.add('hidden')"
+                    class="btn secondary mt-10">Schließen</button></div>
+        </div>
+        <div id="credits-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Credits</h2>
+                <p>Casino Vibes by Schleimy</p><button onclick="document.getElementById('credits-modal').classList.add('hidden')" class="btn secondary mt-10">Schließen</button></div>
+        </div>
+    </div>
+    <script>
+        const els = {
+            start: document.getElementById('start-menu'),
+            ui: document.getElementById('game-ui'),
+            coins: document.getElementById('menu-coins'),
+            bet: document.getElementById('bet'),
+            msg: document.getElementById('msg'),
+            spin: document.getElementById('btn-spin'),
+            r1: document.getElementById('r1'),
+            r2: document.getElementById('r2'),
+            r3: document.getElementById('r3'),
+            high: document.getElementById('menu-highscore')
+        };
+        let bet = 10;
+        let isSpinning = false;
+        const syms = ['🍒', '🍋', '🍉', '💎', '🔔', '7️⃣'];
+        let highScore = parseInt(localStorage.getItem('slotsHigh')) || 0;
+
+        function getCoins() {
+            return parseInt(localStorage.getItem('hubCoins')) || 0;
+        }
+
+        function setCoins(v) {
+            localStorage.setItem('hubCoins', v);
+            els.coins.innerText = v;
+        }
+        els.coins.innerText = getCoins();
+        els.high.innerText = highScore;
+
+        document.getElementById('start-btn').onclick = () => {
+            els.start.classList.add('hidden');
+            els.ui.classList.remove('hidden');
+            els.coins.innerText = getCoins();
+        };
+        document.getElementById('btn-back').onclick = () => {
+            els.ui.classList.add('hidden');
+            els.start.classList.remove('hidden');
+            els.coins.innerText = getCoins();
+            els.high.innerText = highScore;
+        };
+
+        document.getElementById('btn-minus').onclick = () => {
+            if (!isSpinning && bet > 10) {
+                bet -= 10;
+                els.bet.innerText = bet;
+            }
+        };
+        document.getElementById('btn-plus').onclick = () => {
+            if (!isSpinning && bet + 10 <= getCoins()) {
+                bet += 10;
+                els.bet.innerText = bet;
+            }
+        };
+
+        els.spin.onclick = () => {
+            let c = getCoins();
+            if (c < bet) {
+                els.msg.innerText = "Zu wenig Coins!";
+                els.msg.style.color = "red";
+                return;
+            }
+            if (isSpinning) return;
+            setCoins(c - bet);
+            isSpinning = true;
+            els.msg.innerText = "Viel Glück...";
+            els.msg.style.color = "black";
+            els.r1.classList.add('spinning');
+            els.r2.classList.add('spinning');
+            els.r3.classList.add('spinning');
+            setTimeout(() => {
+                els.r1.classList.remove('spinning');
+                els.r2.classList.remove('spinning');
+                els.r3.classList.remove('spinning');
+                let res = [syms[Math.floor(Math.random() * syms.length)], syms[Math.floor(Math.random() * syms.length)], syms[Math.floor(Math.random() * syms.length)]];
+                els.r1.innerText = res[0];
+                els.r2.innerText = res[1];
+                els.r3.innerText = res[2];
+                let cNow = getCoins();
+                let win = 0;
+                if (res[0] === res[1] && res[1] === res[2]) {
+                    win = bet * 10;
+                    setCoins(cNow + win);
+                    els.msg.innerText = `JACKPOT! +${win}`;
+                    els.msg.style.color = "green";
+                } else if (res[0] === res[1] || res[1] === res[2] || res[0] === res[2]) {
+                    win = bet * 2;
+                    setCoins(cNow + win);
+                    els.msg.innerText = `Gewonnen! +${win}`;
+                    els.msg.style.color = "green";
+                } else {
+                    els.msg.innerText = "Verloren!";
+                    els.msg.style.color = "red";
+                }
+                if (win > highScore) {
+                    highScore = win;
+                    localStorage.setItem('slotsHigh', highScore);
+                }
+                isSpinning = false;
+                if (bet > getCoins()) {
+                    bet = Math.max(10, Math.floor(getCoins() / 10) * 10);
+                    els.bet.innerText = bet;
+                }
+            }, 1500);
+        };
+        document.getElementById('leaderboard-btn').onclick = () => document.getElementById('leaderboard-modal').classList.remove('hidden');
+        document.getElementById('settings-btn').onclick = () => document.getElementById('settings-modal').classList.remove('hidden');
+        document.getElementById('credits-btn').onclick = () => document.getElementById('credits-modal').classList.remove('hidden');
+    </script>
+</body>
+
+</html>
