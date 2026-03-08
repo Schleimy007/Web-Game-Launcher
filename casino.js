@@ -32,7 +32,7 @@ const tDict = {
     msgHl: { de: "Höher oder niedriger?", en: "Higher or lower?", es: "¿Mayor o menor?", fr: "Plus haut ou plus bas?", it: "Più alto o più basso?", pt: "Maior ou menor?", nl: "Hoger of lager?", pl: "Wyżej czy niżej?", ru: "Выше или ниже?", ja: "高いか低いか？", zh: "更高还是更低？", ko: "더 높거나 더 낮습니까?", ar: "أعلى أو أسفل؟", hi: "उच्च या निम्न?", tr: "Daha yüksek veya düşük?", sv: "Högre eller lägre?", da: "Højere eller lavere?", fi: "Korkeampi tai matalampi?", el: "Υψηλότερα ή χαμηλότερα;", cs: "Vyšší nebo nižší?" },
     btnHigh: { de: "Höher", en: "Higher", es: "Mayor", fr: "Plus", it: "Alto", pt: "Maior", nl: "Hoger", pl: "Wyżej", ru: "Выше", ja: "より高い", zh: "更高", ko: "더 높은", ar: "أعلى", hi: "उच्च", tr: "Daha yüksek", sv: "Högre", da: "Højere", fi: "Korkeampi", el: "Υψηλότερο", cs: "Vyšší" },
     btnLow: { de: "Niedriger", en: "Lower", es: "Menor", fr: "Moins", it: "Basso", pt: "Menor", nl: "Lager", pl: "Niżej", ru: "Ниже", ja: "低い", zh: "较低", ko: "더 낮은", ar: "أدنى", hi: "कम", tr: "Daha düşük", sv: "Lägre", da: "Lavere", fi: "Matalampi", el: "Χαμηλότερο", cs: "Nižší" },
-    msgBroke: { de: "Das Casino schenkt dir 500 € Notfallguthaben.", en: "The casino gives you 500 € emergency funds.", es: "El casino te da 500 € de emergencia.", fr: "Le casino vous donne 500 €.", it: "Il casinò ti regala 500 €.", pt: "O cassino te dá 500 €.", nl: "Het casino geeft je 500 €.", pl: "Kasyno daje ci 500 €.", ru: "Казино дает вам 500 €.", ja: "カジノから500 €。", zh: "赌场送您 500 €。", ko: "카지노에서 500 € 지급.", ar: "الكازينو يمنحك 500 €.", hi: "कैसीनो आपको 500 € देता है।", tr: "Casino sana 500 € veriyor.", sv: "Casinot ger dig 500 €.", da: "Casinoet giver dig 500 €.", fi: "Kasino antaa sinulle 500 €.", el: "Το καζίνο σας δίνει 500 €.", cs: "Kasino ti dává 500 €." },
+    msgBroke: { de: "Das Casino schenkt dir 500 € Notfallguthaben.", en: "The casino gives you 500 € emergency funds.", es: "El casino te da 500 € de emergencia.", fr: "Le casino vous donne 500 €.", it: "Il casinò ti regala 500 €.", pt: "O cassino te dá 500 €.", nl: "Het casino geeft je 500 €.", pl: "Kasyno daje ci 500 €.", ru: "Казино дает вам 500 €.", ja: "カジノから500 €。", zh: "赌场送您 500 €。", ko: "카지노에서 500 € 지급.", ar: "الكازينو يمنحك 500 €.", hi: "कैसीनो आपको 500 € देता है。", tr: "Casino sana 500 € veriyor.", sv: "Casinot ger dig 500 €.", da: "Casinoet giver dig 500 €.", fi: "Kasino antaa sinulle 500 €.", el: "Το καζίνο σας δίνει 500 €.", cs: "Kasino ti dává 500 €." },
     modalOk: { de: "OK", en: "OK", es: "Aceptar", fr: "OK", it: "OK", pt: "OK", nl: "OK", pl: "OK", ru: "ОК", ja: "OK", zh: "确定", ko: "확인", ar: "موافق", hi: "ठीक है", tr: "Tamam", sv: "OK", da: "OK", fi: "OK", el: "ΟΚ", cs: "OK" },
     modalCancel: { de: "Abbrechen", en: "Cancel", es: "Cancelar", fr: "Annuler", it: "Annulla", pt: "Cancelar", nl: "Annuleren", pl: "Anuluj", ru: "Отмена", ja: "キャンセル", zh: "取消", ko: "취소", ar: "إلغاء", hi: "रद्द करें", tr: "İptal", sv: "Avbryt", da: "Annuller", fi: "Peruuta", el: "Ακύρωση", cs: "Zrušit" },
     modalPromoTitle: { de: "Promo-Code", en: "Promo Code", es: "Código Promocional", fr: "Code Promo", it: "Codice Promo", pt: "Código Promo", nl: "Promotiecode", pl: "Kod Promo", ru: "Промокод", ja: "プロモコード", zh: "优惠码", ko: "프로모션 코드", ar: "رمز ترويجي", hi: "प्रोमो कोड", tr: "Promosyon Kodu", sv: "Kampanjkod", da: "Rabatkode", fi: "Tarjouskoodi", el: "Κωδικός προσφοράς", cs: "Promo kód" },
@@ -42,7 +42,7 @@ const tDict = {
     modalPromoUsed: { de: "Dieser Code wurde bereits eingelöst!", en: "This code has already been redeemed!", es: "¡Este código ya ha sido canjeado!", fr: "Ce code a déjà été utilisé !", it: "Questo codice è già stato usato!", pt: "Este código já foi usado!", nl: "Deze code is al ingewisseld!", pl: "Ten kod został już użyty!", ru: "Этот код уже был использован!", ja: "このコードはすでに使用されています！", zh: "该代码已使用！", ko: "이 코드는 이미 사용되었습니다!", ar: "تم استخدام هذا الرمز بالفعل!", hi: "यह कोड पहले ही इस्तेमाल हो चुका है!", tr: "Bu kod zaten kullanıldı!", sv: "Denna kod har redan använts!", da: "Denne kode er allerede brugt!", fi: "Tämä koodi on jo käytetty!", el: "Αυτός ο κωδικός έχει ήδη χρησιμοποιηθεί!", cs: "Tento kód již byl použit!" },
     modalPromoInvalid: { de: "Ungültiger Code!", en: "Invalid code!", es: "¡Código inválido!", fr: "Code invalide !", it: "Codice non valido!", pt: "Código inválido!", nl: "Ongeldige code!", pl: "Nieprawidłowy kod!", ru: "Недействительный код!", ja: "無効なコード！", zh: "无效代码！", ko: "잘못된 코드!", ar: "رمز غير صالح!", hi: "अमान्य कोड!", tr: "Geçersiz kod!", sv: "Ogiltig kod!", da: "Ugyldig kode!", fi: "Virheellinen koodi!", el: "Μη έγκυρος κωδικός!", cs: "Neplatný kód!" },
     modalNoMoney: { de: "Nicht genug Guthaben!", en: "Not enough funds!", es: "¡No hay suficientes fondos!", fr: "Fonds insuffisants !", it: "Fondi insufficienti!", pt: "Fundos insuficientes!", nl: "Niet genoeg saldo!", pl: "Niewystarczające środki!", ru: "Недостаточно средств!", ja: "資金が不足しています！", zh: "资金不足！", ko: "자금이 부족합니다!", ar: "أموال غير كافية!", hi: "पर्याप्त धनराशि नहीं!", tr: "Yetersiz bakiye!", sv: "Inte tillräckligt med pengar!", da: "Ikke nok midler!", fi: "Ei tarpeeksi varoja!", el: "Μη επαρκή κεφάλαια!", cs: "Nedostatek prostředků!" },
-    modalNoStocks: { de: "Du hast nicht genug Aktien!", en: "Not enough shares!", es: "¡No tienes suficientes acciones!", fr: "Pas assez d'actions !", it: "Non hai abbastanza azioni!", pt: "Não tem ações suficientes!", nl: "Niet genoeg aandelen!", pl: "Nie masz wystarczająco akcji!", ru: "Недостаточно акций!", ja: "株式が足りません！", zh: "您的股票不足！", ko: "주식이 부족합니다!", ar: "ليس لديك أسهم كافية!", hi: "पर्याप्त शेयर نہیں۔", tr: "Yeterli hisseniz yok!", sv: "Inte tillräckligt med aktier!", da: "Ikke nok aktier!", fi: "Ei tarpeeksi osakkeita!", el: "Δεν έχετε αρκετές μετοχές!", cs: "Nemáš dostatek akcií!" },
+    modalNoStocks: { de: "Du hast nicht genug Aktien!", en: "Not enough shares!", es: "¡No tienes suficientes acciones!", fr: "Pas assez d'actions !", it: "Non hai abbastanza azioni!", pt: "Não tem ações suficientes!", nl: "Niet genoeg aandelen!", pl: "Nie masz wystarczająco akcji!", ru: "Недостаточно акций!", ja: "株式が足りません！", zh: "您的股票不足！", ko: "주식이 부족합니다!", ar: "ليس لديك أسهم كافية!", hi: "पर्याप्त शेयर नहीं हैं!", tr: "Yeterli hisseniz yok!", sv: "Inte tillräckligt med aktier!", da: "Ikke nok aktier!", fi: "Ei tarpeeksi osakkeita!", el: "Δεν έχετε αρκετές μετοχές!", cs: "Nemáš dostatek akcií!" },
     modalPromoWon: { de: "Glückwunsch! Du hast {amount} € erhalten.", en: "Congratulations! You received {amount} €.", es: "¡Felicidades! Has recibido {amount} €.", fr: "Félicitations ! Vous avez reçu {amount} €.", it: "Congratulazioni! Hai ricevuto {amount} €.", pt: "Parabéns! Você recebeu {amount} €.", nl: "Gefeliciteerd! Je hebt {amount} € ontvangen.", pl: "Gratulacje! Otrzymałeś {amount} €.", ru: "Поздравляем! Вы получили {amount} €.", ja: "おめでとう！{amount} €を受け取りました。", zh: "恭喜！您获得了 {amount} €。", ko: "축하합니다! {amount} €를 받았습니다.", ar: "تهانينا! لقد تلقيت {amount} €.", hi: "बधाई हो! आपको {amount} € मिले हैं।", tr: "Tebrikler! {amount} € aldınız.", sv: "Grattis! Du har fått {amount} €.", da: "Tillykke! Du har modtaget {amount} €.", fi: "Onnittelut! Olet saanut {amount} €.", el: "Συγχαρητήρια! Λάβατε {amount} €.", cs: "Gratulujeme! Získali jste {amount} €." }
 };
 
@@ -735,10 +735,10 @@ window.playRoulette = function(colorStr) {
 }
 
 // -----------------------------------------
-// 5. CRASH
+// 5. CRASH (FIX x0.5 START)
 // -----------------------------------------
-let crashMult = 1.0,
-    crashTarget = 1.0,
+let crashMult = 0.50,
+    crashTarget = 0.50,
     crashBet = 0,
     crashInterval;
 
@@ -750,23 +750,25 @@ document.getElementById('btn-crash-start').addEventListener('click', () => {
 
     document.getElementById('crash-bet-area').classList.add('hidden');
     document.getElementById('crash-cashout-area').classList.remove('hidden');
-    crashMult = 1.0;
+    crashMult = 0.50; // Startet jetzt bei 0.50x
 
     let chance = Math.random();
 
-    if (chance < 0.15) {
-        crashTarget = 1.0;
-    } else if (chance < 0.60) {
-        crashTarget = 1.01 + (Math.random() * 0.79);
+    if (chance < 0.10) {
+        // Extrem selten direkt bei 0.50x crashen (Totalverlust)
+        crashTarget = 0.50;
     } else {
-        crashTarget = 0.85 / Math.random();
+        // Berechnung halbiert (* 0.5), damit man nicht zu viel macht
+        crashTarget = 0.50 + ((0.90 / Math.random()) * 0.5);
     }
 
+    // Harte Grenze, damit man nicht astronomisch viel gewinnt
     if (crashTarget > 50) {
-        crashTarget = 30 + (Math.random() * 20);
+        crashTarget = 20 + (Math.random() * 15);
     }
 
     document.getElementById('crash-multiplier').style.color = 'var(--accent)';
+    document.getElementById('crash-multiplier').innerText = crashMult.toFixed(2) + 'x';
     showMessage('crash-msg', '...');
 
     crashInterval = setInterval(() => {
@@ -776,6 +778,10 @@ document.getElementById('btn-crash-start').addEventListener('click', () => {
         else if (crashMult >= 2) step = 0.05;
 
         crashMult += step;
+
+        // Verhindert, dass der Wert über das Ziel hinausschießt
+        if (crashMult > crashTarget) crashMult = crashTarget;
+
         document.getElementById('crash-multiplier').innerText = crashMult.toFixed(2) + 'x';
 
         if (crashMult >= crashTarget) {
