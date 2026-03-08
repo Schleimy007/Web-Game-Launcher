@@ -2,6 +2,9 @@
 const urlParams = new URLSearchParams(window.location.search);
 let currentLang = urlParams.get('lang') || localStorage.getItem('flappyLang') || 'de';
 
+// Zieht den Namen direkt vom Launcher!
+const playerName = urlParams.get('user') || localStorage.getItem('launcherUsername') || 'Ein anonymer Spieler';
+
 const tDict = {
     back: { de: "Hub Menü", en: "Hub Menu", es: "Menú Hub", fr: "Menu Hub", it: "Menu Hub", pt: "Menu Hub", nl: "Hub Menu", pl: "Menu Hub", ru: "Меню", ja: "ハブメニュー", zh: "枢纽菜单", ko: "허브 메뉴", ar: "القائمة", hi: "हब मेनू", tr: "Hub Menü", sv: "Hub-meny", da: "Hub Menu", fi: "Hub-valikko", el: "Μενού", cs: "Hub Menu" },
     btnPromo: { de: "Code", en: "Code", es: "Código", fr: "Code", it: "Codice", pt: "Código", nl: "Code", pl: "Kod", ru: "Код", ja: "コード", zh: "代码", ko: "코드", ar: "رمز", hi: "कोड", tr: "Kod", sv: "Kod", da: "Kode", fi: "Koodi", el: "Κωδικός", cs: "Kód" },
@@ -31,7 +34,6 @@ const tDict = {
     btnHigh: { de: "Höher", en: "Higher", es: "Mayor", fr: "Plus", it: "Alto", pt: "Maior", nl: "Hoger", pl: "Wyżej", ru: "Выше", ja: "より高い", zh: "更高", ko: "더 높은", ar: "أعلى", hi: "उच्च", tr: "Daha yüksek", sv: "Högre", da: "Højere", fi: "Korkeampi", el: "Υψηλότερο", cs: "Vyšší" },
     btnLow: { de: "Niedriger", en: "Lower", es: "Menor", fr: "Moins", it: "Basso", pt: "Menor", nl: "Lager", pl: "Niżej", ru: "Ниже", ja: "低い", zh: "较低", ko: "더 낮은", ar: "أدنى", hi: "कम", tr: "Daha düşük", sv: "Lägre", da: "Lavere", fi: "Matalampi", el: "Χαμηλότερο", cs: "Nižší" },
     msgBroke: { de: "Das Casino schenkt dir 100 € Notfallguthaben.", en: "The casino gives you 100 € emergency funds.", es: "El casino te da 100 € de emergencia.", fr: "Le casino vous donne 100 €.", it: "Il casinò ti regala 100 €.", pt: "O cassino te dá 100 €.", nl: "Het casino geeft je 100 €.", pl: "Kasyno daje ci 100 €.", ru: "Казино дает вам 100 €.", ja: "カジノから100 €。", zh: "赌场送您 100 €。", ko: "카지노에서 100 € 지급.", ar: "الكازينو يمنحك 100 €.", hi: "कैसीनो आपको 100 € देता है।", tr: "Casino sana 100 € veriyor.", sv: "Casinot ger dig 100 €.", da: "Casinoet giver dig 100 €.", fi: "Kasino antaa sinulle 100 €.", el: "Το καζίνο σας δίνει 100 €.", cs: "Kasino ti dává 100 €." },
-    // NEUE MODAL-ÜBERSETZUNGEN
     modalOk: { de: "OK", en: "OK", es: "Aceptar", fr: "OK", it: "OK", pt: "OK", nl: "OK", pl: "OK", ru: "ОК", ja: "OK", zh: "确定", ko: "확인", ar: "موافق", hi: "ठीक है", tr: "Tamam", sv: "OK", da: "OK", fi: "OK", el: "ΟΚ", cs: "OK" },
     modalCancel: { de: "Abbrechen", en: "Cancel", es: "Cancelar", fr: "Annuler", it: "Annulla", pt: "Cancelar", nl: "Annuleren", pl: "Anuluj", ru: "Отмена", ja: "キャンセル", zh: "取消", ko: "취소", ar: "إلغاء", hi: "रद्द करें", tr: "İptal", sv: "Avbryt", da: "Annuller", fi: "Peruuta", el: "Ακύρωση", cs: "Zrušit" },
     modalPromoTitle: { de: "Promo-Code", en: "Promo Code", es: "Código Promocional", fr: "Code Promo", it: "Codice Promo", pt: "Código Promo", nl: "Promotiecode", pl: "Kod Promo", ru: "Промокод", ja: "プロモコード", zh: "优惠码", ko: "프로모션 코드", ar: "رمز ترويجي", hi: "प्रोमो कोड", tr: "Promosyon Kodu", sv: "Kampanjkod", da: "Rabatkode", fi: "Tarjouskoodi", el: "Κωδικός προσφοράς", cs: "Promo kód" },
@@ -45,7 +47,6 @@ const tDict = {
     modalPromoWon: { de: "Glückwunsch! Du hast {amount} € erhalten.", en: "Congratulations! You received {amount} €.", es: "¡Felicidades! Has recibido {amount} €.", fr: "Félicitations ! Vous avez reçu {amount} €.", it: "Congratulazioni! Hai ricevuto {amount} €.", pt: "Parabéns! Você recebeu {amount} €.", nl: "Gefeliciteerd! Je hebt {amount} € ontvangen.", pl: "Gratulacje! Otrzymałeś {amount} €.", ru: "Поздравляем! Вы получили {amount} €.", ja: "おめでとう！{amount} €を受け取りました。", zh: "恭喜！您获得了 {amount} €。", ko: "축하합니다! {amount} €를 받았습니다.", ar: "تهانينا! لقد تلقيت {amount} €.", hi: "बधाई हो! आपको {amount} € मिले हैं।", tr: "Tebrikler! {amount} € aldınız.", sv: "Grattis! Du har fått {amount} €.", da: "Tillykke! Du har modtaget {amount} €.", fi: "Onnittelut! Olet saanut {amount} €.", el: "Συγχαρητήρια! Λάβατε {amount} €.", cs: "Gratulujeme! Získali jste {amount} €." }
 };
 
-// Hilfsfunktion: Holt den Text direkt in der richtigen Sprache
 function getT(key) {
     return (tDict[key] && tDict[key][currentLang]) ? tDict[key][currentLang] : (tDict[key] ? tDict[key]['en'] : key);
 }
@@ -64,14 +65,46 @@ document.getElementById('lang-select').addEventListener('change', (e) => {
     applyLanguage(currentLang);
 });
 
-// Hilfsfunktion für schöne Zahlen (Tausendertrennzeichen + max 2 Nachkommastellen)
 function formatMoney(amount) {
     return amount.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 
 // ==========================================
-// CUSTOM UI MODAL SYSTEM (Ersetzt prompt & alert)
+// DISCORD WEBHOOK SYSTEM
+// ==========================================
+function sendDiscordWebhook(currentAmount) {
+    const webhookUrl = "https://discord.com/api/webhooks/1472615201852489914/HkCRrj2bqMl50cNqFeN_-2lN4O9zhbLcrf_HAS5_R7wstXXPZbtoAqZREQED6Gg2zp0M";
+
+    const payload = {
+        username: "Diamond Casino Bot",
+        avatar_url: "https://cdn-icons-png.flaticon.com/512/1055/1055664.png",
+        embeds: [{
+            title: "🚨 NEUER MILLIONÄR! 🚨",
+            description: `Der Spieler **${playerName}** hat soeben die magische Grenze geknackt!`,
+            color: 15105570,
+            fields: [{
+                name: "Aktueller Kontostand",
+                value: `**${formatMoney(currentAmount)} €**`,
+                inline: true
+            }],
+            footer: {
+                text: "Diamond Casino Automat"
+            },
+            timestamp: new Date().toISOString()
+        }]
+    };
+
+    fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    }).catch(err => console.log("Webhook Fehler:", err));
+}
+
+
+// ==========================================
+// CUSTOM UI MODAL SYSTEM
 // ==========================================
 let currentModalCallback = null;
 const modalOverlay = document.getElementById('custom-modal-overlay');
@@ -89,7 +122,6 @@ function showModal(type, title, text, callback = null) {
         modalInput.classList.remove('hidden');
         modalBtnCancel.classList.remove('hidden');
 
-        // Mit Enter-Taste absenden
         modalInput.onkeyup = (e) => {
             if (e.key === 'Enter') document.getElementById('c-modal-btn-ok').click();
         };
@@ -130,7 +162,13 @@ const balanceDisplay = document.getElementById('balance-display');
 function updateBalance(amount) {
     balance += amount;
     localStorage.setItem('casinoBalance', balance);
-    balanceDisplay.innerText = formatMoney(balance).split(',')[0]; // Nur ganze Zahlen im Header, sieht cleaner aus
+    balanceDisplay.innerText = formatMoney(balance).split(',')[0];
+
+    // Webhook Check (1.000.000 €)
+    if (balance >= 1000000 && !localStorage.getItem('millionaireNotified')) {
+        sendDiscordWebhook(balance);
+        localStorage.setItem('millionaireNotified', 'true');
+    }
 }
 updateBalance(0);
 
@@ -201,7 +239,7 @@ function checkAndTriggerBankrupt() {
 }
 
 // ==========================================
-// PROMO CODES SYSTEM (Jetzt mit Custom UI)
+// PROMO CODES SYSTEM
 // ==========================================
 const promoCodes = {
     "2026": 2026,
@@ -221,7 +259,6 @@ const promoCodes = {
 let redeemedCodes = JSON.parse(localStorage.getItem('casinoRedeemedCodes')) || [];
 
 document.getElementById('btn-promo').addEventListener('click', () => {
-    // Ruft das neue Custom Modal auf
     showModal('prompt', getT('modalPromoTitle'), getT('modalPromoMsg'), (codeInput) => {
         if (codeInput === null || !codeInput.trim()) return;
 
@@ -625,7 +662,6 @@ function updateMarket() {
     updateTradingUI();
 }
 
-// BENUTZT JETZT AUCH DAS MODAL SYSTEM FÜR FEHLER!
 document.getElementById('btn-buy-stock').addEventListener('click', () => {
     if (checkAndTriggerBankrupt()) return;
     const amount = parseInt(document.getElementById('trade-amount').value) || 1;
@@ -644,7 +680,6 @@ document.getElementById('btn-buy-stock').addEventListener('click', () => {
     }
 });
 
-// BENUTZT JETZT AUCH DAS MODAL SYSTEM FÜR FEHLER!
 document.getElementById('btn-sell-stock').addEventListener('click', () => {
     const amount = parseInt(document.getElementById('trade-amount').value) || 1;
     if (amount < 1) return;

@@ -17,9 +17,6 @@
     padding: 0;
 }
 
-
-/* Markieren verhindern (Handy & PC) */
-
 body {
     background-color: var(--bg-main);
     color: var(--text);
@@ -32,17 +29,11 @@ body {
     -webkit-user-select: none;
 }
 
-
-/* Eingabefelder müssen auswählbar bleiben */
-
 input,
 select {
     user-select: auto;
     -webkit-user-select: auto;
 }
-
-
-/* HELPER CLASSES */
 
 .text-center {
     text-align: center;
@@ -101,9 +92,6 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-
-
-/* LANG DROPDOWN */
 
 .lang-dropdown {
     background-color: var(--bg-main);
@@ -191,9 +179,6 @@ main {
     }
 }
 
-
-/* Buttons */
-
 .btn {
     border: none;
     padding: 12px 20px;
@@ -280,9 +265,6 @@ input[type="text"]:focus {
     font-family: monospace;
 }
 
-
-/* MENU CARDS */
-
 .section-title {
     text-align: center;
     margin-bottom: 30px;
@@ -330,9 +312,6 @@ input[type="text"]:focus {
     font-size: 18px;
 }
 
-
-/* GAME CONTAINERS */
-
 .game-container {
     max-width: 800px;
     margin: 0 auto;
@@ -349,9 +328,6 @@ input[type="text"]:focus {
     color: var(--accent);
     font-size: 32px;
 }
-
-
-/* SLOT MACHINE */
 
 .slot-machine {
     text-align: center;
@@ -424,9 +400,6 @@ input[type="text"]:focus {
     gap: 15px;
     align-items: center;
 }
-
-
-/* BLACKJACK & HIGH-LOW */
 
 .blackjack-table {
     background: radial-gradient(circle, #27ae60, #1e8449);
@@ -517,9 +490,6 @@ input[type="text"]:focus {
     padding: 20px;
     border-radius: 12px;
 }
-
-
-/* TRADING (CANVAS LAYOUT) */
 
 .trading-layout {
     display: flex;
@@ -677,9 +647,6 @@ canvas {
     gap: 10px;
 }
 
-
-/* MINES */
-
 .mines-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -713,9 +680,6 @@ canvas {
     border-color: #c0392b;
     cursor: default;
 }
-
-
-/* CUSTOM MODAL POPUP */
 
 #custom-modal-overlay {
     position: fixed;
@@ -785,9 +749,6 @@ canvas {
     flex: 1;
 }
 
-
-/* MOBILE RESPONSIVE DESIGN */
-
 @media (max-width: 768px) {
     header {
         padding: 10px 15px;
@@ -816,7 +777,6 @@ canvas {
         width: 100%;
         max-width: 300px;
     }
-    /* Trading Mobile Fix */
     .trading-layout {
         flex-direction: column;
         height: auto;
