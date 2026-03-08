@@ -3,13 +3,11 @@ let ownedGames = JSON.parse(localStorage.getItem('launcherOwnedGames')) || [];
 let globalLang = localStorage.getItem('flappyLang') || 'de';
 let animEnabled = localStorage.getItem('launcherAnim') !== 'false';
 
-// Username generieren oder laden
 function generateRandomUser() {
     return 'User-' + Math.random().toString(36).substr(2, 5).toUpperCase();
 }
 let currentUsername = localStorage.getItem('launcherUsername') || generateRandomUser();
 
-// Spieldaten
 const gamesDatabase = {
     flappy: {
         id: 'flappy',
@@ -42,7 +40,6 @@ const gamesDatabase = {
     }
 };
 
-// --- VOLLSTÄNDIGE ÜBERSETZUNGEN ---
 const translations = {
     de: { navLib: "Bibliothek", navStore: "Shop", navSet: "Einstellungen", titleLib: "Meine Spiele", titleStore: "Entdecken", titleSet: "Launcher Einstellungen", libEmptyTitle: "Deine Bibliothek ist leer.", libEmptyDesc: "Besuche den Shop, um Spiele hinzuzufügen!", storeEmptyTitle: "Der Shop ist leer.", storeEmptyDesc: "Schau später wieder vorbei!", btnPlay: "Spielen", btnGet: "Kostenlos Holen", btnOwned: "In Bibliothek", setUserTitle: "Benutzername", setUserDesc: "Ändere deinen Anzeigenamen im Hub.", setLangTitle: "Globale Sprache", setLangDesc: "Wird als URL-Parameter an Spiele gesendet.", setAnimTitle: "Animationen reduzieren", setAnimDesc: "Schaltet Effekte ab.", btnExit: "Beenden", loader: "Starte Spiel...", btnSave: "Speichern", btnReset: "Zurücksetzen", menuClear: "Stand löschen", menuUninstall: "Deinstallieren" },
     en: { navLib: "Library", navStore: "Store", navSet: "Settings", titleLib: "My Games", titleStore: "Discover", titleSet: "Launcher Settings", libEmptyTitle: "Your library is empty.", libEmptyDesc: "Visit the store to add games!", storeEmptyTitle: "The store is empty.", storeEmptyDesc: "Check back later!", btnPlay: "Play", btnGet: "Get for Free", btnOwned: "In Library", setUserTitle: "Username", setUserDesc: "Change your display name.", setLangTitle: "Global Language", setLangDesc: "Passed to games as URL parameter.", setAnimTitle: "Reduce Animations", setAnimDesc: "Disables effects.", btnExit: "Exit", loader: "Starting...", btnSave: "Save", btnReset: "Reset", menuClear: "Clear Save", menuUninstall: "Uninstall" },
@@ -66,7 +63,6 @@ const translations = {
     cs: { navLib: "Knihovna", navStore: "Obchod", navSet: "Nastavení", titleLib: "Moje Hry", titleStore: "Objevit", titleSet: "Nastavení", libEmptyTitle: "Prázdné.", libEmptyDesc: "Navštivte obchod!", storeEmptyTitle: "Prázdné.", storeEmptyDesc: "Zkontrolujte později!", btnPlay: "Hrát", btnGet: "Získat Zdarma", btnOwned: "V Knihovně", setUserTitle: "Jméno", setUserDesc: "Změňte své jméno.", setLangTitle: "Jazyk", setLangDesc: "Aplikováno na všechny hry.", setAnimTitle: "Redukovat Animace", setAnimDesc: "Zakáže efekty.", btnExit: "Ukončit", loader: "Spouštění...", btnSave: "Uložit", btnReset: "Resetovat", menuClear: "Smazat Uložení", menuUninstall: "Odinstalovat" }
 };
 
-// DOM Referenzen
 const els = {
     usernameDisplay: document.getElementById('display-username'),
     usernameInput: document.getElementById('username-input'),
@@ -93,13 +89,11 @@ const els = {
     textBtnReset: document.getElementById('text-btn-reset')
 };
 
-// UI mit Werten befüllen
 els.usernameDisplay.innerText = currentUsername;
 els.usernameInput.value = currentUsername;
 els.langSelect.value = globalLang;
 els.animToggle.checked = animEnabled;
 
-// --- SPRACHE UPDATE ---
 function applyLanguageToUI(lang) {
     const t = translations[lang] || translations['en'];
     els.navLib.innerText = t.navLib;
@@ -125,7 +119,6 @@ function applyLanguageToUI(lang) {
 
 els.langSelect.addEventListener('change', (e) => applyLanguageToUI(e.target.value));
 
-// --- SPEICHERN & ZURÜCKSETZEN ---
 document.getElementById('btn-save-settings').addEventListener('click', () => {
     let newName = els.usernameInput.value.trim();
     if (newName === "") newName = generateRandomUser();
@@ -153,8 +146,6 @@ document.getElementById('btn-reset-settings').addEventListener('click', () => {
     }
 });
 
-
-// --- RENDER LOGIK ---
 function renderLibrary(langOverride) {
     const activeLang = langOverride || globalLang;
     const t = translations[activeLang] || translations['en'];
@@ -256,7 +247,6 @@ function renderStore(langOverride) {
     });
 }
 
-// --- KONTEXT-MENÜ LOGIK ---
 window.toggleContextMenu = function(e, id) {
     e.stopPropagation();
     document.querySelectorAll('.context-menu').forEach(m => {
@@ -269,19 +259,14 @@ window.addEventListener('click', () => {
     document.querySelectorAll('.context-menu').forEach(m => m.classList.remove('show'));
 });
 
-// GEFIXT: Speicherstand löschen (umgeht Sicherheits-Blockaden vom Browser bei lokalen Dateien)
 window.clearGameSave = function(id) {
     const t = translations[globalLang] || translations['en'];
     if (confirm(t.menuClear + " ?")) {
         const gameFile = gamesDatabase[id].file;
-
-        // Trick: Spiel unsichtbar laden und ihm den Befehl zum Löschen übergeben
         const tempFrame = document.createElement('iframe');
         tempFrame.style.display = 'none';
         tempFrame.src = gameFile + "?action=clearSave";
         document.body.appendChild(tempFrame);
-
-        // Nach kurzer Ladezeit Frame entfernen
         setTimeout(() => {
             document.body.removeChild(tempFrame);
             alert("Fertig!");
@@ -316,7 +301,6 @@ window.switchTab = function(tabId) {
     document.getElementById('tab-' + tabId).classList.add('active');
 }
 
-// --- GAME LAUNCH LOGIK ---
 const gameOverlay = document.getElementById('game-overlay');
 const gameFrame = document.getElementById('game-frame');
 

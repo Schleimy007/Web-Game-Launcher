@@ -12,17 +12,27 @@ body {
 
 #game-container {
     position: relative;
-    width: 480px;
-    height: 720px;
+    width: 100%;
+    max-width: 480px;
+    height: 100vh;
+    max-height: 720px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
     overflow: hidden;
     background-color: #70c5ce;
-    border: 6px solid #222;
-    border-radius: 8px;
+    border: none;
+}
+
+@media (min-width: 481px) {
+    #game-container {
+        border: 6px solid #222;
+        border-radius: 8px;
+    }
 }
 
 canvas {
     display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .screen {
@@ -130,7 +140,8 @@ canvas {
     border: 4px solid #543847;
     border-radius: 12px;
     padding: 25px;
-    width: 75%;
+    width: 85%;
+    max-width: 400px;
     text-align: center;
     box-shadow: 0 10px 0 #000;
     color: #000;
@@ -147,7 +158,7 @@ canvas {
 }
 
 .setting-item {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     margin: 15px 0;
     display: flex;
@@ -204,9 +215,6 @@ canvas {
     border-radius: 4px;
     text-align: center;
 }
-
-
-/* Preview Styles */
 
 .preview-container {
     align-items: center;
