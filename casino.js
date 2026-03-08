@@ -138,10 +138,14 @@ function checkAndTriggerBankrupt() {
 // PROMO CODES SYSTEM
 // ==========================================
 const promoCodes = {
-    "START100": 100,
+    "2026": 2026,
     "SCHLEIMY": 500,
-    "JACKPOT": 1000,
-    "GELD": 250
+    "Admin-8QZ1M4K7T2A9L5X3": 100000,
+    "Admin-P4L9X7A2K8T1M6Q3": 100000,
+    "Admin-Z6T3N9A8X1K5Q2B7": 100000,
+    "Admin-4FJ8K2P9XQ7M3R1L": 100000,
+    "Admin-A7K9X2M4Q8L1Z5T3-1MIO": 1000000,
+    "New": 250
 };
 let redeemedCodes = JSON.parse(localStorage.getItem('casinoRedeemedCodes')) || [];
 
