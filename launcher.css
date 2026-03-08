@@ -45,7 +45,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 25px 20px;
-    z-index: 10;
+    z-index: 100;
 }
 
 .logo {
@@ -156,6 +156,13 @@ body {
     padding: 40px 50px;
     position: relative;
 }
+
+.mobile-header {
+    display: none;
+}
+
+
+/* Standardmäßig unsichtbar */
 
 .tab-content {
     display: none;
@@ -274,7 +281,7 @@ body {
 }
 
 
-/* Game Grid & Cards (GEFIXT: overflow: visible statt hidden) */
+/* Game Grid & Cards */
 
 .game-grid {
     display: grid;
@@ -290,7 +297,6 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    /* Wichtig für Context-Menü */
 }
 
 .game-card:hover {
@@ -309,7 +315,6 @@ body {
     border-top-left-radius: 11px;
     border-top-right-radius: 11px;
     overflow: hidden;
-    /* Beschneidet nur das Banner/Bild */
 }
 
 .flappy-bg {
@@ -638,4 +643,137 @@ iframe {
     background: #000;
     position: relative;
     z-index: 2;
+}
+
+
+/* =========================================
+   MOBILE OPTIMIZATION (Responsives Design)
+   ========================================= */
+
+@media (max-width: 768px) {
+    #app-container {
+        flex-direction: column;
+    }
+    /* Sidebar wird zur Bottom-Navigation */
+    #sidebar {
+        width: 100%;
+        height: auto;
+        padding: 0;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        border-right: none;
+        border-top: 1px solid var(--border);
+        flex-direction: row;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+    }
+    #sidebar .logo,
+    #sidebar .user-profile {
+        display: none;
+    }
+    /* Oben verstecken */
+    .nav-links {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+    }
+    .nav-links li {
+        flex-direction: column;
+        flex: 1;
+        padding: 12px 0;
+        border-radius: 0;
+        font-size: 11px;
+        gap: 4px;
+        justify-content: center;
+    }
+    .nav-links li.active {
+        border-left: none;
+        border-bottom: 4px solid var(--accent);
+        background-color: transparent;
+    }
+    /* Content Bereich anpassen */
+    #main-content {
+        padding: 20px 20px 80px 20px;
+        /* Extra Abstand unten für die Navbar */
+    }
+    /* Mobiler Header anzeigen */
+    .mobile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border);
+    }
+    .mobile-header .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 0;
+    }
+    .mobile-header .logo-icon {
+        font-size: 28px;
+        color: var(--accent);
+    }
+    .mobile-header h2 {
+        font-size: 20px;
+    }
+    .avatar-small {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--accent);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .section-header h1 {
+        font-size: 26px;
+    }
+    /* Hero Banner auf Handy */
+    .hero-banner {
+        height: auto;
+        padding: 25px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .hero-content h2 {
+        font-size: 28px;
+    }
+    /* Einstellungen stapeln */
+    .setting-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .modern-input,
+    .modern-select {
+        width: 100%;
+    }
+    .settings-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    .settings-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    /* Game Grid kompakter */
+    .game-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 15px;
+    }
+    .card-image {
+        height: 110px;
+    }
+    .huge-icon {
+        font-size: 60px;
+    }
+    /* Context Menü Ausrichtung fixen */
+    .context-menu {
+        right: auto;
+        left: 0;
+        top: 35px;
+    }
 }
