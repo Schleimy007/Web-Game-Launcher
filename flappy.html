@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird - Ultimate Custom Edition</title>
+    <link rel="stylesheet" href="flappy.css">
+</head>
+
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas" width="480" height="720"></canvas>
+
+        <div id="start-menu" class="screen">
+            <h1 class="title">Flappy Bird</h1>
+            <div class="menu-box">
+                <p>🏆 <span id="text-best-score">Bester Score:</span> <span id="menu-highscore">0</span></p>
+                <p id="text-controls" class="controls-text">Steuerung:<br>Leertaste / Klick / Touch</p>
+            </div>
+            <div class="button-group">
+                <button id="start-btn" class="btn primary"><span id="text-btn-start">Spiel Starten</span></button>
+                <button id="settings-btn" class="btn secondary"><span id="text-btn-settings">Einstellungen</span></button>
+                <button id="credits-btn" class="btn secondary"><span id="text-btn-credits">Credits</span></button>
+            </div>
+        </div>
+
+        <div id="game-over-menu" class="screen hidden">
+            <h1 id="text-game-over" class="game-over-title">Game Over!</h1>
+            <div class="score-board">
+                <p><span id="text-score-label">Score:</span> <span id="final-score">0</span></p>
+                <p><span id="text-best-label">Best:</span> <span id="high-score">0</span></p>
+            </div>
+            <div class="button-group">
+                <button id="restart-btn" class="btn primary"><span id="text-btn-restart">Nochmal</span></button>
+                <button id="menu-btn" class="btn secondary"><span id="text-btn-menu">Hauptmenü</span></button>
+            </div>
+        </div>
+
+        <div id="settings-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="text-modal-settings">Einstellungen</h2>
+
+                <div class="setting-item">
+                    <label id="text-label-particles" for="particle-toggle">Partikel-Effekte:</label>
+                    <input type="checkbox" id="particle-toggle" checked>
+                </div>
+
+                <div class="setting-item flex-col">
+                    <label id="text-label-difficulty" for="difficulty-select">Schwierigkeit:</label>
+                    <select id="difficulty-select" class="retro-select">
+                        <option value="easy" id="text-diff-easy">Einfach</option>
+                        <option value="normal" id="text-diff-normal" selected>Normal</option>
+                        <option value="hard" id="text-diff-hard">Schwer</option>
+                        <option value="custom" id="text-diff-custom">Custom</option>
+                    </select>
+                </div>
+
+                <div id="custom-settings-block" class="custom-box hidden">
+                    <div class="setting-item custom-item">
+                        <label id="text-lbl-grav">Schwerkraft:</label>
+                        <input type="number" id="inp-grav" step="0.01" min="0.01" max="0.5">
+                    </div>
+                    <div class="setting-item custom-item">
+                        <label id="text-lbl-jump">Sprung:</label>
+                        <input type="number" id="inp-jump" step="0.1" min="1" max="10">
+                    </div>
+                    <div class="setting-item custom-item">
+                        <label id="text-lbl-gap">Lücke:</label>
+                        <input type="number" id="inp-gap" step="5" min="80" max="400">
+                    </div>
+                    <div class="setting-item custom-item">
+                        <label id="text-lbl-spd">Tempo:</label>
+                        <input type="number" id="inp-spd" step="0.5" min="1" max="10">
+                    </div>
+                    <div class="setting-item custom-item">
+                        <label id="text-lbl-spawn">Spawn Rate:</label>
+                        <input type="number" id="inp-spawn" step="10" min="40" max="300">
+                    </div>
+
+                    <div class="setting-item custom-item preview-container flex-col">
+                        <label id="text-lbl-preview" class="preview-label">Vorschau:</label>
+                        <canvas id="previewCanvas" width="240" height="360" class="preview-canvas"></canvas>
+                    </div>
+                </div>
+
+                <div class="setting-item flex-col">
+                    <label id="text-label-language" for="language-select">Sprache:</label>
+                    <select id="language-select" class="retro-select">
+                        <option value="de">Deutsch (German)</option>
+                        <option value="en">English (English)</option>
+                        <option value="es">Español (Spanish)</option>
+                        <option value="fr">Français (French)</option>
+                        <option value="it">Italiano (Italian)</option>
+                        <option value="pt">Português (Portuguese)</option>
+                        <option value="nl">Nederlands (Dutch)</option>
+                        <option value="pl">Polski (Polish)</option>
+                        <option value="ru">Русский (Russian)</option>
+                        <option value="ja">日本語 (Japanese)</option>
+                        <option value="zh">中文 (Chinese)</option>
+                        <option value="ko">한국어 (Korean)</option>
+                        <option value="ar">العربية (Arabic)</option>
+                        <option value="hi">हिन्दी (Hindi)</option>
+                        <option value="tr">Türkçe (Turkish)</option>
+                        <option value="sv">Svenska (Swedish)</option>
+                        <option value="da">Dansk (Danish)</option>
+                        <option value="fi">Suomi (Finnish)</option>
+                        <option value="el">Ελληνικά (Greek)</option>
+                        <option value="cs">Čeština (Czech)</option>
+                    </select>
+                </div>
+
+                <button id="close-settings-btn" class="btn secondary mt-10"><span id="text-btn-close-settings">Schließen</span></button>
+            </div>
+        </div>
+
+        <div id="credits-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="text-modal-credits">Credits</h2>
+                <p id="text-credits-desc">Ein ultimatives Flappy Bird Erlebnis.</p>
+                <p class="highlight-text"><strong>by Schleimy</strong></p>
+                <button id="close-credits-btn" class="btn secondary mt-10"><span id="text-btn-close-credits">Schließen</span></button>
+            </div>
+        </div>
+    </div>
+    <script src="flappy.js"></script>
+</body>
+
+</html>
