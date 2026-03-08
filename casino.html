@@ -23,6 +23,10 @@
             </button>
         </div>
         <div class="header-right" style="display: flex; gap: 15px; align-items: center;">
+            <button id="btn-promo" class="btn warning hide-mobile" style="padding: 6px 15px; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                <span class="material-symbols-rounded" style="font-size: 18px;">redeem</span> 
+                <span data-translate="btnPromo">Code</span>
+            </button>
             <select id="lang-select" class="lang-dropdown">
                 <option value="de">Deutsch (German)</option>
                 <option value="en">English (English)</option>
@@ -143,24 +147,41 @@
         </div>
 
         <div id="view-trading" class="view">
-            <div class="game-container">
+            <div class="game-container" style="max-width: 1000px; padding: 20px;">
                 <h2 data-translate="tradeTitle">Aktien Trading</h2>
-                <div class="trading-board">
-                    <div class="price-box">
-                        <span class="stock-name">SchleimyCorp (SMC)</span>
-                        <div class="current-price" id="live-price">100.00 €</div>
-                        <div class="price-change" id="price-change">+0.00%</div>
+
+                <div class="trading-layout">
+                    <div class="stock-sidebar" id="stock-list-container">
                     </div>
-                    <div class="chart-container">
-                        <div id="chart-bars"></div>
-                    </div>
-                    <div class="portfolio">
-                        <div><span data-translate="lblShares">Aktien</span>: <strong id="owned-shares">0</strong></div>
-                        <div><span data-translate="lblValue">Wert</span>: <strong id="shares-value">0.00 €</strong></div>
-                    </div>
-                    <div class="trading-controls">
-                        <button id="btn-buy-stock" class="btn success" data-translate="btnBuy">KAUFEN</button>
-                        <button id="btn-sell-stock" class="btn danger" data-translate="btnSell">VERKAUFEN</button>
+
+                    <div class="stock-main">
+                        <div class="price-box">
+                            <span class="stock-name" id="active-stock-name">SchleimyCorp (SMC)</span>
+                            <div class="current-price" id="live-price">100.00 €</div>
+                            <div class="price-change" id="price-change">+0.00%</div>
+                        </div>
+
+                        <div class="chart-container" id="chart-wrapper">
+                            <canvas id="trading-chart"></canvas>
+                            <div id="chart-hover-line" class="hidden"></div>
+                            <div id="chart-tooltip" class="hidden">0.00 €</div>
+                        </div>
+
+                        <div class="portfolio">
+                            <div><span data-translate="lblShares">Aktien</span>: <strong id="owned-shares">0</strong></div>
+                            <div><span data-translate="lblValue">Wert</span>: <strong id="shares-value">0.00 €</strong></div>
+                        </div>
+
+                        <div class="trading-controls" style="flex-direction: column; align-items: stretch;">
+                            <div class="trade-input-group flex-center mb-20" style="gap: 15px;">
+                                <label style="font-weight: bold; font-size: 18px;"><span data-translate="lblAmount">Menge</span>:</label>
+                                <input type="number" id="trade-amount" value="1" min="1" style="width: 120px;">
+                            </div>
+                            <div style="display: flex; gap: 15px;">
+                                <button id="btn-buy-stock" class="btn success flex-1" data-translate="btnBuy">KAUFEN</button>
+                                <button id="btn-sell-stock" class="btn danger flex-1" data-translate="btnSell">VERKAUFEN</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

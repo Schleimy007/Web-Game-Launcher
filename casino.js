@@ -4,13 +4,15 @@ let currentLang = urlParams.get('lang') || localStorage.getItem('flappyLang') ||
 
 const tDict = {
     back: { de: "Hub Menü", en: "Hub Menu", es: "Menú Hub", fr: "Menu Hub", it: "Menu Hub", pt: "Menu Hub", nl: "Hub Menu", pl: "Menu Hub", ru: "Меню", ja: "ハブメニュー", zh: "枢纽菜单", ko: "허브 메뉴", ar: "القائمة", hi: "हब मेनू", tr: "Hub Menü", sv: "Hub-meny", da: "Hub Menu", fi: "Hub-valikko", el: "Μενού", cs: "Hub Menu" },
+    btnPromo: { de: "Code", en: "Code", es: "Código", fr: "Code", it: "Codice", pt: "Código", nl: "Code", pl: "Kod", ru: "Код", ja: "コード", zh: "代码", ko: "코드", ar: "رمز", hi: "कोड", tr: "Kod", sv: "Kod", da: "Kode", fi: "Koodi", el: "Κωδικός", cs: "Kód" },
     menuTitle: { de: "Wähle dein Spiel", en: "Choose your game", es: "Elige tu juego", fr: "Choisissez votre jeu", it: "Scegli il gioco", pt: "Escolha seu jogo", nl: "Kies je spel", pl: "Wybierz grę", ru: "Выберите игру", ja: "ゲームを選択", zh: "选择游戏", ko: "게임 선택", ar: "اختر لعبتك", hi: "अपना खेल चुनें", tr: "Oyununu seç", sv: "Välj spel", da: "Vælg spil", fi: "Valitse peli", el: "Επιλέξτε παιχνίδι", cs: "Vyberte hru" },
     tradeTitle: { de: "Aktien Trading", en: "Stock Trading", es: "Comercio de Acciones", fr: "Bourse", it: "Trading Azioni", pt: "Negociação de Ações", nl: "Aandelenhandel", pl: "Giełda", ru: "Трейдинг", ja: "株式取引", zh: "股票交易", ko: "주식 거래", ar: "تداول الأسهم", hi: "शेयर ट्रेडिंग", tr: "Hisse Ticareti", sv: "Aktiehandel", da: "Aktiehandel", fi: "Osakekauppa", el: "Συναλλαγές", cs: "Obchodování" },
     wheelTitle: { de: "Glücksrad", en: "Wheel of Fortune", es: "Ruleta de la Fortuna", fr: "Roue de la Fortune", it: "Ruota della Fortuna", pt: "Roda da Fortuna", nl: "Rad van Fortuin", pl: "Koło Fortuny", ru: "Колесо Фортуны", ja: "観覧車", zh: "幸运轮", ko: "행운의 바퀴", ar: "عجلة الحظ", hi: "भाग्य का पहिया", tr: "Çarkıfelek", sv: "Lyckohjul", da: "Lykkehjul", fi: "Onnenpyörä", el: "Τροχός της Τύχης", cs: "Kolo štěstí" },
     msgBet: { de: "Einsatz wählen!", en: "Place your bet!", es: "¡Haz tu apuesta!", fr: "Faites vos jeux!", it: "Fai la tua puntata!", pt: "Faça sua aposta!", nl: "Plaats inzet!", pl: "Zrób zakład!", ru: "Сделайте ставку!", ja: "ベットを配置！", zh: "下注！", ko: "베팅하세요!", ar: "ضع رهانك!", hi: "शर्त लगाएं!", tr: "Bahis yapın!", sv: "Placera insats!", da: "Placer indsats!", fi: "Aseta panos!", el: "Τοποθετήστε στοίχημα!", cs: "Vsaďte si!" },
     lblYou: { de: "Du", en: "You", es: "Tú", fr: "Toi", it: "Tu", pt: "Você", nl: "Jij", pl: "Ty", ru: "Ты", ja: "あなた", zh: "你", ko: "너", ar: "أنت", hi: "आप", tr: "Sen", sv: "Du", da: "Du", fi: "Sinä", el: "Εσύ", cs: "Ty" },
     lblShares: { de: "Aktien", en: "Shares", es: "Acciones", fr: "Actions", it: "Azioni", pt: "Ações", nl: "Aandelen", pl: "Akcje", ru: "Акции", ja: "株式", zh: "股票", ko: "주식", ar: "الأسهم", hi: "शेयर", tr: "Hisseler", sv: "Aktier", da: "Aktier", fi: "Osakkeet", el: "Μετοχές", cs: "Akcie" },
-    lblValue: { de: "Wert", en: "Value", es: "Valor", fr: "Valeur", it: "Valore", pt: "Valor", nl: "Waarde", pl: "Wartość", ru: "Ценность", ja: "価値", zh: "价值", ko: "가치", ar: "القيمة", hi: "मूल्य", tr: "Değer", sv: "Värde", da: "Værdi", fi: "Arvo", el: "Αξία", cs: "Hodnota" },
+    lblValue: { de: "Wert", en: "Value", es: "Valor", fr: "Valeur", it: "Valore", pt: "Valor", nl: "Waarde", pl: "Wartość", ru: "Ценность", ja: "价值", zh: "价值", ko: "가치", ar: "القيمة", hi: "मूल्य", tr: "Değer", sv: "Värde", da: "Værdi", fi: "Arvo", el: "Αξία", cs: "Hodnota" },
+    lblAmount: { de: "Menge", en: "Amount", es: "Cantidad", fr: "Montant", it: "Quantità", pt: "Quantidade", nl: "Aantal", pl: "Ilość", ru: "Количество", ja: "量", zh: "数量", ko: "수량", ar: "كمية", hi: "मात्रा", tr: "Miktar", sv: "Belopp", da: "Beløb", fi: "Määrä", el: "Ποσό", cs: "Množství" },
     btnBuy: { de: "KAUFEN", en: "BUY", es: "COMPRAR", fr: "ACHETER", it: "COMPRA", pt: "COMPRAR", nl: "KOPEN", pl: "KUP", ru: "КУПИТЬ", ja: "購入", zh: "买", ko: "구입", ar: "شراء", hi: "खरीदें", tr: "SATIN AL", sv: "KÖP", da: "KØB", fi: "OSTA", el: "ΑΓΟΡΑ", cs: "KOUPIT" },
     btnSell: { de: "VERKAUFEN", en: "SELL", es: "VENDER", fr: "VENDRE", it: "VENDI", pt: "VENDER", nl: "VERKOPEN", pl: "SPRZEDAJ", ru: "ПРОДАТЬ", ja: "売る", zh: "卖出", ko: "팔다", ar: "يبيع", hi: "बेचना", tr: "SAT", sv: "SÄLJ", da: "SÆLG", fi: "MYY", el: "ΠΩΛΗΣΗ", cs: "PRODAT" },
     msgColor: { de: "Wähle eine Farbe!", en: "Choose a color!", es: "¡Elige un color!", fr: "Choisis une couleur!", it: "Scegli un colore!", pt: "Escolha uma cor!", nl: "Kies een kleur!", pl: "Wybierz kolor!", ru: "Выберите цвет!", ja: "色を選択", zh: "选择颜色", ko: "색상을 선택하십시오!", ar: "اختر لوناً!", hi: "रंग चुनें!", tr: "Bir renk seç!", sv: "Välj färg!", da: "Vælg farve!", fi: "Valitse väri!", el: "Επιλέξτε χρώμα!", cs: "Vyberte barvu!" },
@@ -38,7 +40,7 @@ function applyLanguage(lang) {
         if (tDict[key] && tDict[key][lang]) {
             el.innerText = tDict[key][lang];
         } else if (tDict[key] && tDict[key]['en']) {
-            el.innerText = tDict[key]['en']; // Fallback zu Englisch
+            el.innerText = tDict[key]['en'];
         }
     });
 }
@@ -49,6 +51,11 @@ document.getElementById('lang-select').addEventListener('change', (e) => {
     applyLanguage(currentLang);
 });
 
+// Hilfsfunktion für schöne Zahlen (Tausendertrennzeichen + max 2 Nachkommastellen)
+function formatMoney(amount) {
+    return amount.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
 // Setup Balance
 let balance = parseInt(localStorage.getItem('casinoBalance'));
 if (isNaN(balance)) balance = 1000;
@@ -57,17 +64,25 @@ const balanceDisplay = document.getElementById('balance-display');
 function updateBalance(amount) {
     balance += amount;
     localStorage.setItem('casinoBalance', balance);
-    balanceDisplay.innerText = Math.floor(balance);
+    balanceDisplay.innerText = formatMoney(balance).split(',')[0]; // Nur ganze Zahlen im Header, sieht cleaner aus
 }
 updateBalance(0);
 
 // ==========================================
-// BANKROTT SYSTEM (Das Herzstück für die Rettung!)
+// BANKROTT SYSTEM
 // ==========================================
+function getTotalPortfolioValue() {
+    let total = 0;
+    for (let id in stocks) {
+        total += stocks[id].owned * stocks[id].price;
+    }
+    return total;
+}
+
 function triggerBankruptcy() {
     balance = 100;
     localStorage.setItem('casinoBalance', balance);
-    balanceDisplay.innerText = Math.floor(balance);
+    updateBalance(0);
 
     const msg = tDict.msgBroke[currentLang] || tDict.msgBroke['en'];
 
@@ -90,7 +105,6 @@ function triggerBankruptcy() {
 
     document.body.appendChild(popup);
 
-    // UI Animation fürs neue Guthaben
     balanceDisplay.parentElement.style.transition = 'transform 0.3s';
     balanceDisplay.parentElement.style.transform = 'scale(1.2)';
     balanceDisplay.parentElement.style.boxShadow = '0 0 20px var(--success)';
@@ -99,7 +113,6 @@ function triggerBankruptcy() {
         balanceDisplay.parentElement.style.transform = 'scale(1)';
         balanceDisplay.parentElement.style.boxShadow = '';
     }, 1000);
-
     setTimeout(() => {
         popup.style.opacity = '0';
         popup.style.transform = 'translate(-50%, -20px)';
@@ -107,21 +120,46 @@ function triggerBankruptcy() {
     }, 5000);
 }
 
-// Wird beim Verlierern getriggert
 function checkPostGameBankruptcy() {
-    if (balance <= 0 && ownedShares === 0) {
-        setTimeout(triggerBankruptcy, 1500); // Kurz warten nach dem Verlieren
+    if (balance <= 0 && getTotalPortfolioValue() <= 0) {
+        setTimeout(triggerBankruptcy, 1500);
     }
 }
 
-// Wird bei Klick auf "Spielen" geprüft
 function checkAndTriggerBankrupt() {
-    if (balance <= 0 && ownedShares === 0) {
+    if (balance <= 0 && getTotalPortfolioValue() <= 0) {
         triggerBankruptcy();
         return true;
     }
     return false;
 }
+
+// ==========================================
+// PROMO CODES SYSTEM
+// ==========================================
+const promoCodes = {
+    "START100": 100,
+    "SCHLEIMY": 500,
+    "JACKPOT": 1000,
+    "GELD": 250
+};
+let redeemedCodes = JSON.parse(localStorage.getItem('casinoRedeemedCodes')) || [];
+
+document.getElementById('btn-promo').addEventListener('click', () => {
+    const codeInput = prompt("Bitte gib deinen Promo-Code ein:");
+    if (!codeInput) return;
+    const code = codeInput.trim().toUpperCase();
+    if (redeemedCodes.includes(code)) { alert("Dieser Code wurde bereits eingelöst!"); return; }
+    if (promoCodes.hasOwnProperty(code)) {
+        const amount = promoCodes[code];
+        updateBalance(amount);
+        redeemedCodes.push(code);
+        localStorage.setItem('casinoRedeemedCodes', JSON.stringify(redeemedCodes));
+        alert(`Glückwunsch! Du hast ${amount} € erhalten.`);
+    } else {
+        alert("Ungültiger Code!");
+    }
+});
 
 
 // --- NAVIGATION ---
@@ -132,7 +170,10 @@ function openGame(gameId) {
     views.forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + gameId).classList.add('active');
     btnBack.classList.remove('hidden');
-    if (gameId === 'trading' && !tradingActive) initTrading();
+    if (gameId === 'trading') {
+        if (!tradingInterval) initTrading();
+        else updateTradingUI();
+    }
 }
 
 btnBack.addEventListener('click', () => {
@@ -186,11 +227,11 @@ function checkSlotWin(res, bet) {
     if (s1 === s2 && s2 === s3) {
         let multi = (s1 === '7️⃣') ? 50 : (s1 === '💎') ? 20 : (s1 === '🔔') ? 10 : 5;
         updateBalance(bet * multi);
-        showMessage('slot-msg', `JACKPOT! +${bet * multi} €`, 'var(--warning)');
+        showMessage('slot-msg', `JACKPOT! +${formatMoney(bet * multi)} €`, 'var(--warning)');
         reels.forEach(r => r.classList.add('win-anim'));
     } else if (s1 === s2 || s2 === s3 || s1 === s3) {
         updateBalance(bet * 2);
-        showMessage('slot-msg', `Win! +${bet * 2} €`, 'var(--success)');
+        showMessage('slot-msg', `Win! +${formatMoney(bet * 2)} €`, 'var(--success)');
     } else {
         showMessage('slot-msg', 'Lose.', 'var(--danger)');
         checkPostGameBankruptcy();
@@ -243,7 +284,6 @@ function renderBJ(hideDealer = false) {
     document.getElementById('dealer-cards').innerHTML = dealerHand.map((c, i) => getCardHTML(c, i === 1 && hideDealer)).join('');
     document.getElementById('dealer-score').innerText = hideDealer ? "?" : calcScore(dealerHand);
 }
-
 document.getElementById('btn-bj-deal').addEventListener('click', () => {
     if (checkAndTriggerBankrupt()) return;
     bjBet = parseInt(document.getElementById('bj-bet').value);
@@ -258,7 +298,6 @@ document.getElementById('btn-bj-deal').addEventListener('click', () => {
     renderBJ(true);
     if (calcScore(playerHand) === 21) handleBjEnd();
 });
-
 document.getElementById('btn-bj-hit').addEventListener('click', () => {
     playerHand.push(deck.pop());
     renderBJ(true);
@@ -269,7 +308,6 @@ document.getElementById('btn-bj-hit').addEventListener('click', () => {
         checkPostGameBankruptcy();
     }
 });
-
 document.getElementById('btn-bj-stand').addEventListener('click', () => handleBjEnd());
 
 function handleBjEnd() {
@@ -298,64 +336,249 @@ function resetBjUI() {
     setTimeout(() => document.getElementById('bj-bet-area').classList.remove('hidden'), 2000);
 }
 
-// -----------------------------------------
-// 3. TRADING
-// -----------------------------------------
-let tradingActive = false,
-    currentPrice = 100.0,
-    ownedShares = 0,
-    priceHistory = Array(20).fill(100),
-    tradingInterval;
+// ==========================================
+// 3. TRADING (FIXED TOOLTIP & BIG NUMBERS)
+// ==========================================
+let tradingInterval = null;
+let activeStockId = 'SMC';
+let chartPoints = [];
 
-function initTrading() {
-    tradingActive = true;
-    renderChart();
-    if (tradingInterval) clearInterval(tradingInterval);
-    tradingInterval = setInterval(() => {
-        currentPrice = Math.max(1, currentPrice * (1 + ((Math.random() - 0.5) * 5) / 100));
-        priceHistory.shift();
-        priceHistory.push(currentPrice);
-        document.getElementById('live-price').innerText = currentPrice.toFixed(2) + ' €';
-        const diffPercent = ((currentPrice - priceHistory[18]) / priceHistory[18]) * 100;
-        document.getElementById('price-change').innerText = (diffPercent > 0 ? '+' : '') + diffPercent.toFixed(2) + '%';
-        document.getElementById('price-change').className = 'price-change ' + (diffPercent >= 0 ? 'price-up' : 'price-down');
-        document.getElementById('shares-value').innerText = (ownedShares * currentPrice).toFixed(2) + ' €';
-        renderChart();
-    }, 2000);
+let savedPortfolio = JSON.parse(localStorage.getItem('casinoPortfolio')) || {};
+
+const stocks = {
+    'DMD': { name: 'Diamond Holdings', price: 1000.0, vol: 0.01, history: Array(30).fill(1000.0), owned: savedPortfolio['DMD'] || 0 },
+    'SMC': { name: 'SchleimyCorp', price: 100.0, vol: 0.04, history: Array(30).fill(100.0), owned: savedPortfolio['SMC'] || 0 },
+    'FLP': { name: 'Flappy Inc.', price: 10.0, vol: 0.12, history: Array(30).fill(10.0), owned: savedPortfolio['FLP'] || 0 },
+    'XCC': { name: 'CryptoCoin', price: 1.0, vol: 0.25, history: Array(30).fill(1.0), owned: savedPortfolio['XCC'] || 0 }
+};
+
+function savePortfolio() {
+    let toSave = {};
+    for (let id in stocks) toSave[id] = stocks[id].owned;
+    localStorage.setItem('casinoPortfolio', JSON.stringify(toSave));
 }
 
-function renderChart() {
-    const min = Math.min(...priceHistory),
-        max = Math.max(...priceHistory),
-        range = max - min || 1;
-    const c = document.getElementById('chart-bars');
-    c.innerHTML = '';
-    priceHistory.forEach((p, i) => {
-        const bar = document.createElement('div');
-        bar.className = 'chart-bar';
-        bar.style.height = (((p - min) / range) * 80 + 10) + '%';
-        if (i > 0) bar.style.backgroundColor = p >= priceHistory[i - 1] ? 'var(--success)' : 'var(--danger)';
-        c.appendChild(bar);
+function initTrading() {
+    renderStockList();
+    updateTradingUI();
+    if (tradingInterval) clearInterval(tradingInterval);
+    tradingInterval = setInterval(updateMarket, 2000);
+
+    window.addEventListener('resize', () => {
+        if (document.getElementById('view-trading').classList.contains('active')) {
+            updateTradingUI();
+        }
     });
+}
+
+function selectStock(id) {
+    activeStockId = id;
+    renderStockList();
+    updateTradingUI();
+}
+
+function renderStockList() {
+    const container = document.getElementById('stock-list-container');
+    container.innerHTML = '';
+
+    for (let id in stocks) {
+        const stock = stocks[id];
+        const oldPrice = stock.history[0];
+        const diffPercent = ((stock.price - oldPrice) / oldPrice) * 100;
+        const colorClass = diffPercent >= 0 ? 'price-up' : 'price-down';
+        const sign = diffPercent >= 0 ? '+' : '';
+
+        const div = document.createElement('div');
+        div.className = `stock-item ${id === activeStockId ? 'active' : ''}`;
+        div.onclick = () => selectStock(id);
+
+        div.innerHTML = `
+            <div class="stock-item-info">
+                <span class="stock-item-symbol">${id}</span>
+                <span class="stock-item-price">${formatMoney(stock.price)} €</span>
+            </div>
+            <div class="stock-item-change ${colorClass}">${sign}${diffPercent.toFixed(2)}%</div>
+        `;
+        container.appendChild(div);
+    }
+}
+
+function updateTradingUI() {
+    const stock = stocks[activeStockId];
+
+    document.getElementById('active-stock-name').innerText = `${stock.name} (${activeStockId})`;
+    document.getElementById('live-price').innerText = formatMoney(stock.price) + ' €';
+
+    const oldPrice = stock.history[0];
+    const diffPercent = ((stock.price - oldPrice) / oldPrice) * 100;
+    const changeEl = document.getElementById('price-change');
+    changeEl.innerText = (diffPercent >= 0 ? '+' : '') + diffPercent.toFixed(2) + '%';
+    changeEl.className = 'price-change ' + (diffPercent >= 0 ? 'price-up' : 'price-down');
+    document.getElementById('live-price').className = 'current-price ' + (diffPercent >= 0 ? 'price-up' : 'price-down');
+
+    document.getElementById('owned-shares').innerText = stock.owned;
+    document.getElementById('shares-value').innerText = formatMoney(stock.owned * stock.price) + ' €';
+
+    renderCanvasChart(stock.history);
+}
+
+function renderCanvasChart(history) {
+    const canvas = document.getElementById('trading-chart');
+    const wrapper = document.getElementById('chart-wrapper');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = wrapper.clientWidth * 2;
+    canvas.height = wrapper.clientHeight * 2;
+    const w = canvas.width;
+    const h = canvas.height;
+
+    ctx.clearRect(0, 0, w, h);
+    chartPoints = [];
+
+    const minRaw = Math.min(...history);
+    const maxRaw = Math.max(...history);
+    const padding = (maxRaw - minRaw) * 0.1 || minRaw * 0.05;
+    const min = minRaw - padding;
+    const max = maxRaw + padding;
+    const range = max - min;
+
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let i = 1; i < 4; i++) {
+        let y = (h / 4) * i;
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+    }
+    for (let i = 1; i < 5; i++) {
+        let x = (w / 5) * i;
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+    }
+    ctx.stroke();
+
+    const isUp = history[history.length - 1] >= history[0];
+    const color = isUp ? '#2ecc71' : '#e74c3c';
+
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 6;
+    ctx.lineJoin = 'round';
+
+    history.forEach((p, i) => {
+        const x = (i / (history.length - 1)) * w;
+        const y = h - ((p - min) / range) * h;
+
+        chartPoints.push({ x: x / 2, y: y / 2, price: p });
+
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    const grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, color + '66');
+    grad.addColorStop(1, color + '00');
+
+    ctx.lineTo(w, h);
+    ctx.lineTo(0, h);
+    ctx.fillStyle = grad;
+    ctx.fill();
+}
+
+// BUGFIX Tooltip Boundaries
+const chartCanvas = document.getElementById('trading-chart');
+const tooltip = document.getElementById('chart-tooltip');
+const hoverLine = document.getElementById('chart-hover-line');
+
+chartCanvas.addEventListener('mousemove', (e) => {
+    if (!chartPoints.length) return;
+    const rect = chartCanvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+
+    let closest = chartPoints.reduce((prev, curr) =>
+        Math.abs(curr.x - mouseX) < Math.abs(prev.x - mouseX) ? curr : prev
+    );
+
+    tooltip.innerText = formatMoney(closest.price) + ' €';
+
+    // Boundary-Check: Verhindert, dass der Tooltip aus dem Rahmen rutscht
+    let tooltipX = closest.x;
+    let safeMargin = tooltip.offsetWidth / 2 + 10;
+
+    if (tooltipX < safeMargin) tooltipX = safeMargin;
+    if (tooltipX > rect.width - safeMargin) tooltipX = rect.width - safeMargin;
+
+    // Auch verhindern, dass er oben abgeschnitten wird
+    let tooltipY = closest.y - 30;
+    if (tooltipY < 20) tooltipY = 20;
+
+    tooltip.style.left = tooltipX + 'px';
+    tooltip.style.top = tooltipY + 'px';
+
+    // Positionierung über Transform anpassen, damit unser Left/Top exakt ist
+    tooltip.style.transform = 'translate(-50%, -50%)';
+    tooltip.classList.remove('hidden');
+
+    hoverLine.style.left = closest.x + 'px';
+    hoverLine.classList.remove('hidden');
+});
+
+chartCanvas.addEventListener('mouseleave', () => {
+    tooltip.classList.add('hidden');
+    hoverLine.classList.add('hidden');
+});
+
+
+function updateMarket() {
+    for (let id in stocks) {
+        const stock = stocks[id];
+        const change = (Math.random() - 0.5) * stock.vol;
+        stock.price = Math.max(0.1, stock.price * (1 + change));
+
+        stock.history.shift();
+        stock.history.push(stock.price);
+    }
+
+    renderStockList();
+    updateTradingUI();
 }
 
 document.getElementById('btn-buy-stock').addEventListener('click', () => {
     if (checkAndTriggerBankrupt()) return;
-    if (balance >= currentPrice) {
-        updateBalance(-currentPrice);
-        ownedShares++;
-        document.getElementById('owned-shares').innerText = ownedShares;
-        document.getElementById('shares-value').innerText = (ownedShares * currentPrice).toFixed(2) + ' €';
+    const amount = parseInt(document.getElementById('trade-amount').value) || 1;
+    if (amount < 1) return;
+
+    const stock = stocks[activeStockId];
+    const cost = stock.price * amount;
+
+    if (balance >= cost) {
+        updateBalance(-cost);
+        stock.owned += amount;
+        savePortfolio();
+        updateTradingUI();
+    } else {
+        alert("Nicht genug Guthaben!");
     }
 });
+
 document.getElementById('btn-sell-stock').addEventListener('click', () => {
-    if (ownedShares > 0) {
-        updateBalance(currentPrice);
-        ownedShares--;
-        document.getElementById('owned-shares').innerText = ownedShares;
-        document.getElementById('shares-value').innerText = (ownedShares * currentPrice).toFixed(2) + ' €';
+    const amount = parseInt(document.getElementById('trade-amount').value) || 1;
+    if (amount < 1) return;
+
+    const stock = stocks[activeStockId];
+
+    if (stock.owned >= amount) {
+        const revenue = stock.price * amount;
+        updateBalance(revenue);
+        stock.owned -= amount;
+        savePortfolio();
+        updateTradingUI();
+    } else {
+        alert("Du hast nicht genug Aktien!");
     }
 });
+
 
 // -----------------------------------------
 // 4. ROULETTE
@@ -380,7 +603,7 @@ window.playRoulette = function(colorStr) {
             if (colorStr === resultColor) {
                 let win = colorStr === 'green' ? bet * 14 : bet * 2;
                 updateBalance(win);
-                showMessage('roulette-msg', `Win! +${win} €`, 'var(--success)');
+                showMessage('roulette-msg', `Win! +${formatMoney(win)} €`, 'var(--success)');
             } else {
                 showMessage('roulette-msg', 'Lose.', 'var(--danger)');
                 checkPostGameBankruptcy();
@@ -420,12 +643,11 @@ document.getElementById('btn-crash-start').addEventListener('click', () => {
         }
     }, 50);
 });
-
 document.getElementById('btn-crash-cashout').addEventListener('click', () => {
     clearInterval(crashInterval);
     let win = Math.floor(crashBet * crashMult);
     updateBalance(win);
-    showMessage('crash-msg', `Win! +${win} €`, 'var(--success)');
+    showMessage('crash-msg', `Win! +${formatMoney(win)} €`, 'var(--success)');
     document.getElementById('crash-multiplier').style.color = 'var(--success)';
     resetCrash();
 });
@@ -451,7 +673,7 @@ window.playCoinFlip = function(choice) {
         display.innerText = result === 'heads' ? '👱' : '🦅';
         if (choice === result) {
             updateBalance(bet * 2);
-            showMessage('coin-msg', `Win! +${bet*2} €`, 'var(--success)');
+            showMessage('coin-msg', `Win! +${formatMoney(bet*2)} €`, 'var(--success)');
         } else {
             showMessage('coin-msg', `Lose.`, 'var(--danger)');
             checkPostGameBankruptcy();
@@ -475,8 +697,8 @@ document.getElementById('btn-mines-start').addEventListener('click', () => {
     mGrid.classList.remove('hidden');
     document.getElementById('btn-mines-cashout').classList.remove('hidden');
     minesPot = minesBet;
-    document.getElementById('mines-pot').innerText = minesPot;
-    showMessage('mines-msg', '...');
+    document.getElementById('mines-pot').innerText = formatMoney(minesPot);
+    showMessage('mines-msg', 'Viel Glück!', 'var(--text-main)');
     mGrid.innerHTML = '';
     let bombIndices = [];
     while (bombIndices.length < minesCount) { let r = Math.floor(Math.random() * 25); if (!bombIndices.includes(r)) bombIndices.push(r); }
@@ -489,27 +711,33 @@ document.getElementById('btn-mines-start').addEventListener('click', () => {
                 btn.classList.add('bomb');
                 btn.innerText = '💣';
                 showMessage('mines-msg', 'BOOM! Lose.', 'var(--danger)');
+                document.getElementById('btn-mines-cashout').classList.add('hidden');
                 Array.from(mGrid.children).forEach(b => b.onclick = null);
+                Array.from(mGrid.children).forEach((b, idx) => {
+                    if (bombIndices.includes(idx) && idx !== i) {
+                        b.classList.add('bomb');
+                        b.innerText = '💣';
+                        b.style.opacity = '0.5';
+                    }
+                });
                 setTimeout(() => {
                     mGrid.classList.add('hidden');
                     document.getElementById('mines-setup').classList.remove('hidden');
-                    document.getElementById('btn-mines-cashout').classList.add('hidden');
-                }, 2000);
+                }, 2500);
                 checkPostGameBankruptcy();
             } else {
                 btn.classList.add('safe');
                 btn.innerText = '💎';
                 minesPot = Math.floor(minesPot * 1.2);
-                document.getElementById('mines-pot').innerText = minesPot;
+                document.getElementById('mines-pot').innerText = formatMoney(minesPot);
             }
         };
         mGrid.appendChild(btn);
     }
 });
-
 document.getElementById('btn-mines-cashout').addEventListener('click', () => {
     updateBalance(minesPot);
-    showMessage('mines-msg', `Win! +${minesPot} €`, 'var(--success)');
+    showMessage('mines-msg', `Win! +${formatMoney(minesPot)} €`, 'var(--success)');
     Array.from(mGrid.children).forEach(b => b.onclick = null);
     document.getElementById('btn-mines-cashout').classList.add('hidden');
     setTimeout(() => {
@@ -528,7 +756,6 @@ dt.addEventListener('input', () => {
     if (target > 98) target = 98;
     document.getElementById('dice-mult-display').innerText = (100 / target).toFixed(2) + 'x';
 });
-
 document.getElementById('btn-dice-roll').addEventListener('click', () => {
     if (checkAndTriggerBankrupt()) return;
     const bet = parseInt(document.getElementById('dice-bet').value),
@@ -540,7 +767,7 @@ document.getElementById('btn-dice-roll').addEventListener('click', () => {
     if (roll < target) {
         const win = Math.floor(bet * (100 / target));
         updateBalance(win);
-        showMessage('dice-msg', `Win! +${win} €`, 'var(--success)');
+        showMessage('dice-msg', `Win! +${formatMoney(win)} €`, 'var(--success)');
     } else {
         showMessage('dice-msg', `Lose.`, 'var(--danger)');
         checkPostGameBankruptcy();
@@ -567,7 +794,7 @@ document.getElementById('btn-wheel-spin').addEventListener('click', () => {
             win = Math.floor(bet * resObj);
         if (win > 0) {
             updateBalance(win);
-            showMessage('wheel-msg', `${resObj}x! +${win} €`, 'var(--success)');
+            showMessage('wheel-msg', `${resObj}x! +${formatMoney(win)} €`, 'var(--success)');
         } else {
             showMessage('wheel-msg', 'Lose! 0x', 'var(--danger)');
             checkPostGameBankruptcy();
@@ -587,7 +814,7 @@ document.getElementById('btn-hl-start').addEventListener('click', () => {
     if (bet < 1 || bet > balance) return showMessage('hl-msg', 'Error!', 'var(--danger)');
     updateBalance(-bet);
     hlPot = bet;
-    document.getElementById('hl-pot').innerText = hlPot;
+    document.getElementById('hl-pot').innerText = formatMoney(hlPot);
     document.getElementById('hl-setup').classList.add('hidden');
     document.getElementById('hl-actions').classList.remove('hidden');
     createDeck();
@@ -597,7 +824,6 @@ document.getElementById('btn-hl-start').addEventListener('click', () => {
     hlCard.className = 'card-ui ' + ((c.suit === '♥' || c.suit === '♦') ? 'red' : '');
     showMessage('hl-msg', '...');
 });
-
 window.playHighLow = function(guess) {
     const oldVal = hlCurrentVal;
     createDeck();
@@ -605,10 +831,9 @@ window.playHighLow = function(guess) {
     hlCurrentVal = ['J', 'Q', 'K', 'A'].includes(c.val) ? (c.val === 'A' ? 14 : (c.val === 'K' ? 13 : (c.val === 'Q' ? 12 : 11))) : parseInt(c.val);
     hlCard.innerHTML = `<div class="card-top">${c.val}</div><div class="card-center">${c.suit}</div>`;
     hlCard.className = 'card-ui ' + ((c.suit === '♥' || c.suit === '♦') ? 'red' : '');
-
     if ((guess === 'high' && hlCurrentVal >= oldVal) || (guess === 'low' && hlCurrentVal <= oldVal)) {
         hlPot = Math.floor(hlPot * 1.5);
-        document.getElementById('hl-pot').innerText = hlPot;
+        document.getElementById('hl-pot').innerText = formatMoney(hlPot);
         showMessage('hl-msg', 'Win!', 'var(--success)');
     } else {
         showMessage('hl-msg', 'Lose!', 'var(--danger)');
@@ -622,7 +847,7 @@ window.playHighLow = function(guess) {
 }
 document.getElementById('btn-hl-cashout').addEventListener('click', () => {
     updateBalance(hlPot);
-    showMessage('hl-msg', `Win! +${hlPot} €`, 'var(--success)');
+    showMessage('hl-msg', `Win! +${formatMoney(hlPot)} €`, 'var(--success)');
     document.getElementById('hl-actions').classList.add('hidden');
     setTimeout(() => {
         document.getElementById('hl-setup').classList.remove('hidden');
@@ -630,5 +855,5 @@ document.getElementById('btn-hl-cashout').addEventListener('click', () => {
     }, 2000);
 });
 
-// Beim ersten Start die Sprache sofort laden:
+// Beim Start
 applyLanguage(currentLang);
