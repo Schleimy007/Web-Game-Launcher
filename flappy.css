@@ -157,6 +157,46 @@ canvas {
     padding-bottom: 10px;
 }
 
+
+/* LEADERBOARD TABLE */
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    padding: 8px;
+    border-bottom: 2px dashed #543847;
+    text-align: left;
+}
+
+.leaderboard-table th {
+    color: #e45c13;
+    font-size: 18px;
+}
+
+.leaderboard-table td:last-child,
+.leaderboard-table th:last-child {
+    text-align: right;
+}
+
+.leaderboard-table tr:last-child td {
+    border-bottom: none;
+}
+
+.top-1 td {
+    color: #e48400;
+    font-weight: bold;
+    font-size: 18px;
+    text-shadow: 1px 1px 0 #fff;
+}
+
 .setting-item {
     font-size: 16px;
     font-weight: bold;

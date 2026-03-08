@@ -16,10 +16,11 @@
             <h1 class="title">Flappy Bird</h1>
             <div class="menu-box">
                 <p>🏆 <span id="text-best-score">Bester Score:</span> <span id="menu-highscore">0</span></p>
-                <p id="text-controls" class="controls-text">Steuerung:<br>Leertaste / Klick / Touch</p>
+                <p id="text-controls" class="controls-text">Steuerung:<br>Leertaste / Pfeiltaste / Touch</p>
             </div>
             <div class="button-group">
                 <button id="start-btn" class="btn primary"><span id="text-btn-start">Spiel Starten</span></button>
+                <button id="leaderboard-btn" class="btn secondary" style="background-color: #3498db;"><span id="text-btn-leaderboard">Leaderboard</span></button>
                 <button id="settings-btn" class="btn secondary"><span id="text-btn-settings">Einstellungen</span></button>
                 <button id="credits-btn" class="btn secondary"><span id="text-btn-credits">Credits</span></button>
             </div>
@@ -34,6 +35,24 @@
             <div class="button-group">
                 <button id="restart-btn" class="btn primary"><span id="text-btn-restart">Nochmal</span></button>
                 <button id="menu-btn" class="btn secondary"><span id="text-btn-menu">Hauptmenü</span></button>
+            </div>
+        </div>
+
+        <div id="leaderboard-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="text-modal-leaderboard">Top 10 Leaderboard</h2>
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th id="text-rank">#</th>
+                            <th id="text-name">Name</th>
+                            <th id="text-score">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                    </tbody>
+                </table>
+                <button id="close-leaderboard-btn" class="btn secondary mt-10"><span id="text-btn-close-leaderboard">Schließen</span></button>
             </div>
         </div>
 

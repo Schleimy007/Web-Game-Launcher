@@ -1,3 +1,11 @@
+// ==========================================
+// GLOBALES LEADERBOARD SETUP (DREAMLO)
+// 1. Gehe auf dreamlo.com
+// 2. Kopiere deinen Public Code und Private Code hier rein
+// ==========================================
+const DREAMLO_PUBLIC = '5fa8af5feb371a09c4c51d17'; // Bsp: '65e9c0...'
+const DREAMLO_PRIVATE = 'cgpr101Ep0yMn0IZPhMAqwVghoK20BG06c_rPh-i1Npg'; // Bsp: 'oK_9h2...'
+
 // --- DATEN & STATE ---
 let ownedGames = JSON.parse(localStorage.getItem('launcherOwnedGames')) || [];
 let globalLang = localStorage.getItem('flappyLang') || 'de';
@@ -6,7 +14,13 @@ let animEnabled = localStorage.getItem('launcherAnim') !== 'false';
 function generateRandomUser() {
     return 'User-' + Math.random().toString(36).substr(2, 5).toUpperCase();
 }
-let currentUsername = localStorage.getItem('launcherUsername') || generateRandomUser();
+
+// SOFORTIGES SPEICHERN, DAMIT ES NICHT VERLOREN GEHT
+let currentUsername = localStorage.getItem('launcherUsername');
+if (!currentUsername) {
+    currentUsername = generateRandomUser();
+    localStorage.setItem('launcherUsername', currentUsername);
+}
 
 const gamesDatabase = {
     flappy: {
@@ -119,9 +133,43 @@ function applyLanguageToUI(lang) {
 
 els.langSelect.addEventListener('change', (e) => applyLanguageToUI(e.target.value));
 
-document.getElementById('btn-save-settings').addEventListener('click', () => {
+// --- ASYNC SPEICHERN & GLOBALE NAMENSPRÜFUNG ---
+document.getElementById('btn-save-settings').addEventListener('click', async() => {
     let newName = els.usernameInput.value.trim();
     if (newName === "") newName = generateRandomUser();
+
+    const saveBtn = document.getElementById('text-btn-save');
+    const oldText = saveBtn.innerText;
+
+    // Prüfen ob globaler Modus an ist
+    if (DREAMLO_PUBLIC !== 'DEIN_PUBLIC_KEY') {
+        saveBtn.innerText = "Prüfe Name...";
+        try {
+            const res = await fetch(`https://www.dreamlo.com/lb/${DREAMLO_PUBLIC}/json`);
+            const data = await res.json();
+            let entries = data.dreamlo.leaderboard ? data.dreamlo.leaderboard.entry : [];
+            if (!Array.isArray(entries) && entries) entries = [entries];
+
+            // Name schon in der globalen Liste?
+            const exists = entries.find(e => e.name.toLowerCase() === newName.toLowerCase());
+            const myCurrentName = localStorage.getItem('launcherUsername') || '';
+
+            if (exists && newName.toLowerCase() !== myCurrentName.toLowerCase()) {
+                alert("Dieser Name ist weltweit schon vergeben! Bitte wähle einen anderen.");
+                saveBtn.innerText = oldText;
+                return; // Abbruch
+            }
+
+            // Namen global "reservieren" mit Score 0, wenn er neu ist
+            if (!exists) {
+                fetch(`https://www.dreamlo.com/lb/${DREAMLO_PRIVATE}/add/${newName}/0`);
+            }
+        } catch (e) {
+            console.error("Fehler beim Abrufen von Dreamlo", e);
+        }
+    }
+
+    // Wenn wir hier sind, ist alles okay
     currentUsername = newName;
     localStorage.setItem('launcherUsername', currentUsername);
     els.usernameDisplay.innerText = currentUsername;
@@ -133,8 +181,6 @@ document.getElementById('btn-save-settings').addEventListener('click', () => {
     animEnabled = els.animToggle.checked;
     localStorage.setItem('launcherAnim', animEnabled);
 
-    const saveBtn = document.getElementById('text-btn-save');
-    const oldText = saveBtn.innerText;
     saveBtn.innerText = "✓";
     setTimeout(() => saveBtn.innerText = oldText, 2000);
 });
@@ -305,9 +351,10 @@ const gameOverlay = document.getElementById('game-overlay');
 const gameFrame = document.getElementById('game-frame');
 
 window.launchGame = function(gameFile) {
-    const urlMitSprache = gameFile + "?lang=" + globalLang;
+    // FIX: Wir übergeben den Namen jetzt sicher über die URL!
+    const urlMitParams = gameFile + "?lang=" + globalLang + "&user=" + encodeURIComponent(currentUsername);
     gameOverlay.classList.remove('hidden');
-    gameFrame.src = urlMitSprache;
+    gameFrame.src = urlMitParams;
     gameFrame.onload = function() { gameFrame.focus(); };
 }
 
