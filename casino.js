@@ -140,11 +140,11 @@ function checkAndTriggerBankrupt() {
 const promoCodes = {
     "2026": 2026,
     "SCHLEIMY": 500,
-    "Admin-8QZ1M4K7T2A9L5X3": 100000,
-    "Admin-P4L9X7A2K8T1M6Q3": 100000,
-    "Admin-Z6T3N9A8X1K5Q2B7": 100000,
-    "Admin-4FJ8K2P9XQ7M3R1L": 100000,
-    "Admin-A7K9X2M4Q8L1Z5T3-1MIO": 1000000,
+    "Admin8QZ1M4K7T2A9L5X3": 100000,
+    "AdminP4L9X7A2K8T1M6Q3": 100000,
+    "AdminZ6T3N9A8X1K5Q2B7": 100000,
+    "Admin4FJ8K2P9XQ7M3R1L": 100000,
+    "AdminA7K9X2M4Q8L1Z5T31MIO": 1000000,
     "New": 250
 };
 let redeemedCodes = JSON.parse(localStorage.getItem('casinoRedeemedCodes')) || [];
