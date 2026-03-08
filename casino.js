@@ -30,18 +30,31 @@ const tDict = {
     msgHl: { de: "Höher oder niedriger?", en: "Higher or lower?", es: "¿Mayor o menor?", fr: "Plus haut ou plus bas?", it: "Più alto o più basso?", pt: "Maior ou menor?", nl: "Hoger of lager?", pl: "Wyżej czy niżej?", ru: "Выше или ниже?", ja: "高いか低いか？", zh: "更高还是更低？", ko: "더 높거나 더 낮습니까?", ar: "أعلى أو أسفل؟", hi: "उच्च या निम्न?", tr: "Daha yüksek veya düşük?", sv: "Högre eller lägre?", da: "Højere eller lavere?", fi: "Korkeampi tai matalampi?", el: "Υψηλότερα ή χαμηλότερα;", cs: "Vyšší nebo nižší?" },
     btnHigh: { de: "Höher", en: "Higher", es: "Mayor", fr: "Plus", it: "Alto", pt: "Maior", nl: "Hoger", pl: "Wyżej", ru: "Выше", ja: "より高い", zh: "更高", ko: "더 높은", ar: "أعلى", hi: "उच्च", tr: "Daha yüksek", sv: "Högre", da: "Højere", fi: "Korkeampi", el: "Υψηλότερο", cs: "Vyšší" },
     btnLow: { de: "Niedriger", en: "Lower", es: "Menor", fr: "Moins", it: "Basso", pt: "Menor", nl: "Lager", pl: "Niżej", ru: "Ниже", ja: "低い", zh: "较低", ko: "더 낮은", ar: "أدنى", hi: "कम", tr: "Daha düşük", sv: "Lägre", da: "Lavere", fi: "Matalampi", el: "Χαμηλότερο", cs: "Nižší" },
-    msgBroke: { de: "Das Casino schenkt dir 100 € Notfallguthaben.", en: "The casino gives you 100 € emergency funds.", es: "El casino te da 100 € de emergencia.", fr: "Le casino vous donne 100 €.", it: "Il casinò ti regala 100 €.", pt: "O cassino te dá 100 €.", nl: "Het casino geeft je 100 €.", pl: "Kasyno daje ci 100 €.", ru: "Казино дает вам 100 €.", ja: "カジノから100 €。", zh: "赌场送您 100 €。", ko: "카지노에서 100 € 지급.", ar: "الكازينو يمنحك 100 €.", hi: "कैसीनो आपको 100 € देता है।", tr: "Casino sana 100 € veriyor.", sv: "Casinot ger dig 100 €.", da: "Casinoet giver dig 100 €.", fi: "Kasino antaa sinulle 100 €.", el: "Το καζίνο σας δίνει 100 €.", cs: "Kasino ti dává 100 €." }
+    msgBroke: { de: "Das Casino schenkt dir 100 € Notfallguthaben.", en: "The casino gives you 100 € emergency funds.", es: "El casino te da 100 € de emergencia.", fr: "Le casino vous donne 100 €.", it: "Il casinò ti regala 100 €.", pt: "O cassino te dá 100 €.", nl: "Het casino geeft je 100 €.", pl: "Kasyno daje ci 100 €.", ru: "Казино дает вам 100 €.", ja: "カジノから100 €。", zh: "赌场送您 100 €。", ko: "카지노에서 100 € 지급.", ar: "الكازينو يمنحك 100 €.", hi: "कैसीनो आपको 100 € देता है।", tr: "Casino sana 100 € veriyor.", sv: "Casinot ger dig 100 €.", da: "Casinoet giver dig 100 €.", fi: "Kasino antaa sinulle 100 €.", el: "Το καζίνο σας δίνει 100 €.", cs: "Kasino ti dává 100 €." },
+    // NEUE MODAL-ÜBERSETZUNGEN
+    modalOk: { de: "OK", en: "OK", es: "Aceptar", fr: "OK", it: "OK", pt: "OK", nl: "OK", pl: "OK", ru: "ОК", ja: "OK", zh: "确定", ko: "확인", ar: "موافق", hi: "ठीक है", tr: "Tamam", sv: "OK", da: "OK", fi: "OK", el: "ΟΚ", cs: "OK" },
+    modalCancel: { de: "Abbrechen", en: "Cancel", es: "Cancelar", fr: "Annuler", it: "Annulla", pt: "Cancelar", nl: "Annuleren", pl: "Anuluj", ru: "Отмена", ja: "キャンセル", zh: "取消", ko: "취소", ar: "إلغاء", hi: "रद्द करें", tr: "İptal", sv: "Avbryt", da: "Annuller", fi: "Peruuta", el: "Ακύρωση", cs: "Zrušit" },
+    modalPromoTitle: { de: "Promo-Code", en: "Promo Code", es: "Código Promocional", fr: "Code Promo", it: "Codice Promo", pt: "Código Promo", nl: "Promotiecode", pl: "Kod Promo", ru: "Промокод", ja: "プロモコード", zh: "优惠码", ko: "프로모션 코드", ar: "رمز ترويجي", hi: "प्रोमो कोड", tr: "Promosyon Kodu", sv: "Kampanjkod", da: "Rabatkode", fi: "Tarjouskoodi", el: "Κωδικός προσφοράς", cs: "Promo kód" },
+    modalPromoMsg: { de: "Bitte gib deinen Promo-Code ein:", en: "Please enter your promo code:", es: "Por favor, introduce tu código:", fr: "Veuillez entrer votre code :", it: "Inserisci il tuo codice:", pt: "Por favor, insira seu código:", nl: "Voer uw promotiecode in:", pl: "Wpisz kod promocyjny:", ru: "Введите промокод:", ja: "コードを入力してください：", zh: "请输入您的优惠码：", ko: "프로모션 코드를 입력하세요:", ar: "أدخل الرمز الترويجي الخاص بك:", hi: "कृपया अपना कोड दर्ज करें:", tr: "Promosyon kodunuzu girin:", sv: "Vänligen ange din kod:", da: "Indtast venligst din kode:", fi: "Anna tarjouskoodisi:", el: "Εισαγάγετε τον κωδικό προσφοράς σας:", cs: "Zadejte svůj promo kód:" },
+    modalError: { de: "Fehler", en: "Error", es: "Error", fr: "Erreur", it: "Errore", pt: "Erro", nl: "Fout", pl: "Błąd", ru: "Ошибка", ja: "エラー", zh: "错误", ko: "오류", ar: "خطأ", hi: "त्रुटि", tr: "Hata", sv: "Fel", da: "Fejl", fi: "Virhe", el: "Σφάλμα", cs: "Chyba" },
+    modalSuccess: { de: "Erfolg", en: "Success", es: "Éxito", fr: "Succès", it: "Successo", pt: "Sucesso", nl: "Succes", pl: "Sukces", ru: "Успех", ja: "成功", zh: "成功", ko: "성공", ar: "نجاح", hi: "सफलता", tr: "Başarı", sv: "Framgång", da: "Succes", fi: "Menestys", el: "Επιτυχία", cs: "Úspěch" },
+    modalPromoUsed: { de: "Dieser Code wurde bereits eingelöst!", en: "This code has already been redeemed!", es: "¡Este código ya ha sido canjeado!", fr: "Ce code a déjà été utilisé !", it: "Questo codice è già stato usato!", pt: "Este código já foi usado!", nl: "Deze code is al ingewisseld!", pl: "Ten kod został już użyty!", ru: "Этот код уже был использован!", ja: "このコードはすでに使用されています！", zh: "该代码已使用！", ko: "이 코드는 이미 사용되었습니다!", ar: "تم استخدام هذا الرمز بالفعل!", hi: "यह कोड पहले ही इस्तेमाल हो चुका है!", tr: "Bu kod zaten kullanıldı!", sv: "Denna kod har redan använts!", da: "Denne kode er allerede brugt!", fi: "Tämä koodi on jo käytetty!", el: "Αυτός ο κωδικός έχει ήδη χρησιμοποιηθεί!", cs: "Tento kód již byl použit!" },
+    modalPromoInvalid: { de: "Ungültiger Code!", en: "Invalid code!", es: "¡Código inválido!", fr: "Code invalide !", it: "Codice non valido!", pt: "Código inválido!", nl: "Ongeldige code!", pl: "Nieprawidłowy kod!", ru: "Недействительный код!", ja: "無効なコード！", zh: "无效代码！", ko: "잘못된 코드!", ar: "رمز غير صالح!", hi: "अमान्य कोड!", tr: "Geçersiz kod!", sv: "Ogiltig kod!", da: "Ugyldig kode!", fi: "Virheellinen koodi!", el: "Μη έγκυρος κωδικός!", cs: "Neplatný kód!" },
+    modalNoMoney: { de: "Nicht genug Guthaben!", en: "Not enough funds!", es: "¡No hay suficientes fondos!", fr: "Fonds insuffisants !", it: "Fondi insufficienti!", pt: "Fundos insuficientes!", nl: "Niet genoeg saldo!", pl: "Niewystarczające środki!", ru: "Недостаточно средств!", ja: "資金が不足しています！", zh: "资金不足！", ko: "자금이 부족합니다!", ar: "أموال غير كافية!", hi: "पर्याप्त धनराशि नहीं!", tr: "Yetersiz bakiye!", sv: "Inte tillräckligt med pengar!", da: "Ikke nok midler!", fi: "Ei tarpeeksi varoja!", el: "Μη επαρκή κεφάλαια!", cs: "Nedostatek prostředků!" },
+    modalNoStocks: { de: "Du hast nicht genug Aktien!", en: "Not enough shares!", es: "¡No tienes suficientes acciones!", fr: "Pas assez d'actions !", it: "Non hai abbastanza azioni!", pt: "Não tem ações suficientes!", nl: "Niet genoeg aandelen!", pl: "Nie masz wystarczająco akcji!", ru: "Недостаточно акций!", ja: "株式が足りません！", zh: "您的股票不足！", ko: "주식이 부족합니다!", ar: "ليس لديك أسهم كافية!", hi: "पर्याप्त शेयर नहीं हैं!", tr: "Yeterli hisseniz yok!", sv: "Inte tillräckligt med aktier!", da: "Ikke nok aktier!", fi: "Ei tarpeeksi osakkeita!", el: "Δεν έχετε αρκετές μετοχές!", cs: "Nemáš dostatek akcií!" },
+    modalPromoWon: { de: "Glückwunsch! Du hast {amount} € erhalten.", en: "Congratulations! You received {amount} €.", es: "¡Felicidades! Has recibido {amount} €.", fr: "Félicitations ! Vous avez reçu {amount} €.", it: "Congratulazioni! Hai ricevuto {amount} €.", pt: "Parabéns! Você recebeu {amount} €.", nl: "Gefeliciteerd! Je hebt {amount} € ontvangen.", pl: "Gratulacje! Otrzymałeś {amount} €.", ru: "Поздравляем! Вы получили {amount} €.", ja: "おめでとう！{amount} €を受け取りました。", zh: "恭喜！您获得了 {amount} €。", ko: "축하합니다! {amount} €를 받았습니다.", ar: "تهانينا! لقد تلقيت {amount} €.", hi: "बधाई हो! आपको {amount} € मिले हैं।", tr: "Tebrikler! {amount} € aldınız.", sv: "Grattis! Du har fått {amount} €.", da: "Tillykke! Du har modtaget {amount} €.", fi: "Onnittelut! Olet saanut {amount} €.", el: "Συγχαρητήρια! Λάβατε {amount} €.", cs: "Gratulujeme! Získali jste {amount} €." }
 };
+
+// Hilfsfunktion: Holt den Text direkt in der richtigen Sprache
+function getT(key) {
+    return (tDict[key] && tDict[key][currentLang]) ? tDict[key][currentLang] : (tDict[key] ? tDict[key]['en'] : key);
+}
 
 function applyLanguage(lang) {
     document.getElementById('lang-select').value = lang;
     document.querySelectorAll('[data-translate]').forEach(el => {
         const key = el.getAttribute('data-translate');
-        if (tDict[key] && tDict[key][lang]) {
-            el.innerText = tDict[key][lang];
-        } else if (tDict[key] && tDict[key]['en']) {
-            el.innerText = tDict[key]['en'];
-        }
+        el.innerText = getT(key);
     });
 }
 
@@ -56,7 +69,60 @@ function formatMoney(amount) {
     return amount.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-// Setup Balance
+
+// ==========================================
+// CUSTOM UI MODAL SYSTEM (Ersetzt prompt & alert)
+// ==========================================
+let currentModalCallback = null;
+const modalOverlay = document.getElementById('custom-modal-overlay');
+const modalInput = document.getElementById('c-modal-input');
+const modalBtnCancel = document.getElementById('c-modal-btn-cancel');
+
+function showModal(type, title, text, callback = null) {
+    document.getElementById('c-modal-title').innerText = title;
+    document.getElementById('c-modal-desc').innerText = text;
+
+    modalInput.value = '';
+    currentModalCallback = callback;
+
+    if (type === 'prompt') {
+        modalInput.classList.remove('hidden');
+        modalBtnCancel.classList.remove('hidden');
+
+        // Mit Enter-Taste absenden
+        modalInput.onkeyup = (e) => {
+            if (e.key === 'Enter') document.getElementById('c-modal-btn-ok').click();
+        };
+        setTimeout(() => modalInput.focus(), 100);
+    } else {
+        modalInput.classList.add('hidden');
+        modalBtnCancel.classList.add('hidden');
+        modalInput.onkeyup = null;
+    }
+
+    modalOverlay.classList.remove('hidden');
+}
+
+function closeCustomModal() {
+    modalOverlay.classList.add('hidden');
+    modalInput.onkeyup = null;
+}
+
+document.getElementById('c-modal-btn-ok').addEventListener('click', () => {
+    const val = modalInput.value;
+    closeCustomModal();
+    if (currentModalCallback) currentModalCallback(val);
+});
+
+document.getElementById('c-modal-btn-cancel').addEventListener('click', () => {
+    closeCustomModal();
+    if (currentModalCallback) currentModalCallback(null);
+});
+
+
+// ==========================================
+// BALANCE & SETUP
+// ==========================================
 let balance = parseInt(localStorage.getItem('casinoBalance'));
 if (isNaN(balance)) balance = 1000;
 const balanceDisplay = document.getElementById('balance-display');
@@ -84,7 +150,7 @@ function triggerBankruptcy() {
     localStorage.setItem('casinoBalance', balance);
     updateBalance(0);
 
-    const msg = tDict.msgBroke[currentLang] || tDict.msgBroke['en'];
+    const msg = getT('msgBroke');
 
     const popup = document.createElement('div');
     popup.innerHTML = `<h3 style="margin-bottom:8px;">💸 BANKROTT 💸</h3><p style="font-weight:normal; font-size:16px;">${msg}</p>`;
@@ -135,34 +201,49 @@ function checkAndTriggerBankrupt() {
 }
 
 // ==========================================
-// PROMO CODES SYSTEM
+// PROMO CODES SYSTEM (Jetzt mit Custom UI)
 // ==========================================
 const promoCodes = {
     "2026": 2026,
     "SCHLEIMY": 500,
-    "Admin8QZ1M4K7T2A9L5X3": 100000,
-    "AdminP4L9X7A2K8T1M6Q3": 100000,
-    "AdminZ6T3N9A8X1K5Q2B7": 100000,
-    "Admin4FJ8K2P9XQ7M3R1L": 100000,
-    "AdminA7K9X2M4Q8L1Z5T31MIO": 1000000,
-    "New": 250
+    "ADMIN8QZ1M4K7T2A9L5X3": 100000,
+    "ADMINP4L9X7A2K8T1M6Q3": 100000,
+    "ADMINZ6T3N9A8X1K5Q2B7": 100000,
+    "ADMIN4FJ8K2P9XQ7M3R1L": 100000,
+    "ADMINA7K9X2M4Q8L1Z5T31MIO": 1000000,
+    "ADMINX7K3P9L2A8M4Q1ZT5": 1000000,
+    "ADMIN4T9KX2A7Q3M8L1P6R": 1000000,
+    "ADMINQ8L3X5M2A7T9K4P1Z": 100000,
+    "ADMIN1M7Q4K9A3L8T2X5PZ": 100000,
+    "ADMINZ3A9T1K8M4Q7L2XP6": 100000,
+    "NEW": 250
 };
 let redeemedCodes = JSON.parse(localStorage.getItem('casinoRedeemedCodes')) || [];
 
 document.getElementById('btn-promo').addEventListener('click', () => {
-    const codeInput = prompt("Bitte gib deinen Promo-Code ein:");
-    if (!codeInput) return;
-    const code = codeInput.trim().toUpperCase();
-    if (redeemedCodes.includes(code)) { alert("Dieser Code wurde bereits eingelöst!"); return; }
-    if (promoCodes.hasOwnProperty(code)) {
-        const amount = promoCodes[code];
-        updateBalance(amount);
-        redeemedCodes.push(code);
-        localStorage.setItem('casinoRedeemedCodes', JSON.stringify(redeemedCodes));
-        alert(`Glückwunsch! Du hast ${amount} € erhalten.`);
-    } else {
-        alert("Ungültiger Code!");
-    }
+    // Ruft das neue Custom Modal auf
+    showModal('prompt', getT('modalPromoTitle'), getT('modalPromoMsg'), (codeInput) => {
+        if (codeInput === null || !codeInput.trim()) return;
+
+        const code = codeInput.trim().toUpperCase();
+
+        if (redeemedCodes.includes(code)) {
+            showModal('alert', getT('modalError'), getT('modalPromoUsed'));
+            return;
+        }
+
+        if (promoCodes.hasOwnProperty(code)) {
+            const amount = promoCodes[code];
+            updateBalance(amount);
+            redeemedCodes.push(code);
+            localStorage.setItem('casinoRedeemedCodes', JSON.stringify(redeemedCodes));
+
+            const successMsg = getT('modalPromoWon').replace('{amount}', formatMoney(amount));
+            showModal('alert', getT('modalSuccess'), successMsg);
+        } else {
+            showModal('alert', getT('modalError'), getT('modalPromoInvalid'));
+        }
+    });
 });
 
 
@@ -341,7 +422,7 @@ function resetBjUI() {
 }
 
 // ==========================================
-// 3. TRADING (FIXED TOOLTIP & BIG NUMBERS)
+// 3. TRADING 
 // ==========================================
 let tradingInterval = null;
 let activeStockId = 'SMC';
@@ -490,7 +571,6 @@ function renderCanvasChart(history) {
     ctx.fill();
 }
 
-// BUGFIX Tooltip Boundaries
 const chartCanvas = document.getElementById('trading-chart');
 const tooltip = document.getElementById('chart-tooltip');
 const hoverLine = document.getElementById('chart-hover-line');
@@ -506,21 +586,18 @@ chartCanvas.addEventListener('mousemove', (e) => {
 
     tooltip.innerText = formatMoney(closest.price) + ' €';
 
-    // Boundary-Check: Verhindert, dass der Tooltip aus dem Rahmen rutscht
     let tooltipX = closest.x;
     let safeMargin = tooltip.offsetWidth / 2 + 10;
 
     if (tooltipX < safeMargin) tooltipX = safeMargin;
     if (tooltipX > rect.width - safeMargin) tooltipX = rect.width - safeMargin;
 
-    // Auch verhindern, dass er oben abgeschnitten wird
     let tooltipY = closest.y - 30;
     if (tooltipY < 20) tooltipY = 20;
 
     tooltip.style.left = tooltipX + 'px';
     tooltip.style.top = tooltipY + 'px';
 
-    // Positionierung über Transform anpassen, damit unser Left/Top exakt ist
     tooltip.style.transform = 'translate(-50%, -50%)';
     tooltip.classList.remove('hidden');
 
@@ -548,6 +625,7 @@ function updateMarket() {
     updateTradingUI();
 }
 
+// BENUTZT JETZT AUCH DAS MODAL SYSTEM FÜR FEHLER!
 document.getElementById('btn-buy-stock').addEventListener('click', () => {
     if (checkAndTriggerBankrupt()) return;
     const amount = parseInt(document.getElementById('trade-amount').value) || 1;
@@ -562,10 +640,11 @@ document.getElementById('btn-buy-stock').addEventListener('click', () => {
         savePortfolio();
         updateTradingUI();
     } else {
-        alert("Nicht genug Guthaben!");
+        showModal('alert', getT('modalError'), getT('modalNoMoney'));
     }
 });
 
+// BENUTZT JETZT AUCH DAS MODAL SYSTEM FÜR FEHLER!
 document.getElementById('btn-sell-stock').addEventListener('click', () => {
     const amount = parseInt(document.getElementById('trade-amount').value) || 1;
     if (amount < 1) return;
@@ -579,7 +658,7 @@ document.getElementById('btn-sell-stock').addEventListener('click', () => {
         savePortfolio();
         updateTradingUI();
     } else {
-        alert("Du hast nicht genug Aktien!");
+        showModal('alert', getT('modalError'), getT('modalNoStocks'));
     }
 });
 

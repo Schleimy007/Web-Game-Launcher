@@ -295,8 +295,19 @@
                 </div>
             </div>
         </div>
-
     </main>
+
+    <div id="custom-modal-overlay" class="hidden">
+        <div class="custom-modal-box">
+            <h3 id="c-modal-title">Titel</h3>
+            <p id="c-modal-desc">Beschreibung</p>
+            <input type="text" id="c-modal-input" class="hidden" placeholder="...">
+            <div class="c-modal-buttons">
+                <button id="c-modal-btn-cancel" class="btn danger hidden" data-translate="modalCancel">Abbrechen</button>
+                <button id="c-modal-btn-ok" class="btn success" data-translate="modalOk">OK</button>
+            </div>
+        </div>
+    </div>
 
     <script src="casino.js"></script>
 </body>
