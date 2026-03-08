@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schleimy's Game Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,1,0" rel="stylesheet" />
+    <link rel="stylesheet" href="launcher.css">
+</head>
+
+<body>
+
+    <div id="app-container">
+        <nav id="sidebar">
+            <div class="logo">
+                <span class="material-symbols-rounded logo-icon">stadia_controller</span>
+                <h2>Schleimy<span class="hub-text">HUB</span></h2>
+            </div>
+
+            <ul class="nav-links">
+                <li class="active" onclick="switchTab('library')">
+                    <span class="material-symbols-rounded">grid_view</span>
+                    <span id="nav-library">Bibliothek</span>
+                </li>
+                <li onclick="switchTab('store')">
+                    <span class="material-symbols-rounded">storefront</span>
+                    <span id="nav-store">Shop</span>
+                </li>
+                <li onclick="switchTab('settings')">
+                    <span class="material-symbols-rounded">settings</span>
+                    <span id="nav-settings">Einstellungen</span>
+                </li>
+            </ul>
+
+            <div class="user-profile">
+                <div class="avatar">
+                    <span class="material-symbols-rounded">person</span>
+                </div>
+                <div class="user-info">
+                    <p class="username" id="display-username">User-1234</p>
+                    <p class="status"><span class="status-dot"></span> Online</p>
+                </div>
+            </div>
+        </nav>
+
+        <main id="main-content">
+
+            <div class="mobile-header">
+                <div class="logo">
+                    <span class="material-symbols-rounded logo-icon">stadia_controller</span>
+                    <h2>Schleimy<span class="hub-text">HUB</span></h2>
+                </div>
+                <div class="avatar-small">
+                    <span class="material-symbols-rounded">person</span>
+                </div>
+            </div>
+
+            <section id="tab-library" class="tab-content active">
+                <header class="section-header">
+                    <h1 id="title-library">Meine Spiele</h1>
+                </header>
+                <div id="library-container"></div>
+            </section>
+
+            <section id="tab-store" class="tab-content">
+                <header class="section-header">
+                    <h1 id="title-store">Entdecken</h1>
+                </header>
+                <div id="store-container"></div>
+            </section>
+
+            <section id="tab-settings" class="tab-content">
+                <header class="section-header">
+                    <h1 id="title-settings">Launcher Einstellungen</h1>
+                </header>
+
+                <div class="settings-panel">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h3 id="set-user-title">Benutzername</h3>
+                            <p id="set-user-desc">Ändere deinen Anzeigenamen im Hub.</p>
+                        </div>
+                        <input type="text" id="username-input" class="modern-input" maxlength="15">
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h3 id="set-lang-title">Globale Sprache</h3>
+                            <p id="set-lang-desc">Wird automatisch in alle Spiele übernommen.</p>
+                        </div>
+                        <select id="launcher-lang-select" class="modern-select">
+                            <option value="de">Deutsch (German)</option>
+                            <option value="en">English (English)</option>
+                            <option value="es">Español (Spanish)</option>
+                            <option value="fr">Français (French)</option>
+                            <option value="it">Italiano (Italian)</option>
+                            <option value="pt">Português (Portuguese)</option>
+                            <option value="nl">Nederlands (Dutch)</option>
+                            <option value="pl">Polski (Polish)</option>
+                            <option value="ru">Русский (Russian)</option>
+                            <option value="ja">日本語 (Japanese)</option>
+                            <option value="zh">中文 (Chinese)</option>
+                            <option value="ko">한국어 (Korean)</option>
+                            <option value="ar">العربية (Arabic)</option>
+                            <option value="hi">हिन्दी (Hindi)</option>
+                            <option value="tr">Türkçe (Turkish)</option>
+                            <option value="sv">Svenska (Swedish)</option>
+                            <option value="da">Dansk (Danish)</option>
+                            <option value="fi">Suomi (Finnish)</option>
+                            <option value="el">Ελληνικά (Greek)</option>
+                            <option value="cs">Čeština (Czech)</option>
+                        </select>
+                    </div>
+
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h3 id="set-anim-title">Animationen reduzieren</h3>
+                            <p id="set-anim-desc">Schaltet aufwendige Effekte ab.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="anim-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="settings-actions">
+                        <button id="btn-save-settings" class="btn success"><span class="material-symbols-rounded">save</span> <span id="text-btn-save">Speichern</span></button>
+                        <button id="btn-reset-settings" class="btn danger"><span class="material-symbols-rounded">delete_forever</span> <span id="text-btn-reset">Zurücksetzen</span></button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="game-overlay" class="hidden">
+        <div class="overlay-topbar">
+            <div class="overlay-brand">
+                <span class="material-symbols-rounded">stadia_controller</span> Schleimy<span class="hub-text">HUB</span>
+            </div>
+            <button id="close-game-btn" onclick="closeGame()">
+                <span class="material-symbols-rounded">close</span> <span id="btn-exit-game">Spiel beenden</span>
+            </button>
+        </div>
+        <div id="game-loader">
+            <span class="material-symbols-rounded spinning">hourglass_empty</span>
+            <p id="loader-text">Starte Spiel...</p>
+        </div>
+        <iframe id="game-frame" src=""></iframe>
+    </div>
+
+    <script src="launcher.js"></script>
+</body>
+
+</html>
