@@ -4,252 +4,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky Slots</title>
-    <link rel="stylesheet" href="flappy.css">
-    <style>
-        body {
-            background-color: #4a235a;
-        }
-        
-        #game-container {
-            background-color: #8e44ad;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .slots-area {
-            background: #ded895;
-            border: 4px solid #543847;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 6px 0 #000;
-            width: 90%;
-            margin-bottom: 20px;
-        }
-        
-        .reels {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            background: #222;
-            padding: 15px;
-            border-radius: 8px;
-            border: 3px solid #000;
-            margin: 15px 0;
-        }
-        
-        .reel {
-            width: 70px;
-            height: 90px;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 50px;
-            border-radius: 5px;
-            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5);
-        }
-        
-        .spinning {
-            animation: spin 0.1s infinite;
-        }
-        
-        @keyframes spin {
-            0% {
-                transform: translateY(-10px);
-            }
-            50% {
-                transform: translateY(10px);
-            }
-            100% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        .bet-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 10px 0;
-            font-size: 20px;
-            font-weight: bold;
-            color: #000;
-        }
-    </style>
+    <title>Diamond Casino</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,1,0" rel="stylesheet" />
+    <link rel="stylesheet" href="casino.css">
 </head>
 
 <body>
-    <div id="game-container">
-        <div id="start-menu" class="screen">
-            <h1 class="title">Lucky Slots</h1>
-            <div class="menu-box">
-                <p>💰 Coins: <span id="menu-coins" style="color: #e45c13;">0</span></p>
-                <p>🏆 Höchster Gewinn: <span id="menu-highscore">0</span></p>
-            </div>
-            <div class="button-group">
-                <button id="start-btn" class="btn primary">An den Automaten</button>
-                <button id="leaderboard-btn" class="btn secondary" style="background-color: #3498db;">Leaderboard</button>
-                <button id="settings-btn" class="btn secondary">Einstellungen</button>
-                <button id="credits-btn" class="btn secondary">Credits</button>
+
+    <header>
+        <div class="header-left">
+            <span class="material-symbols-rounded logo-icon">diamond</span>
+            <h1>Diamond Casino</h1>
+        </div>
+        <div class="header-center">
+            <button id="btn-back" class="hidden">
+                <span class="material-symbols-rounded">arrow_back</span> 
+                <span data-translate="back">Hub Menü</span>
+            </button>
+        </div>
+        <div class="header-right" style="display: flex; gap: 15px; align-items: center;">
+            <select id="lang-select" class="lang-dropdown">
+                <option value="de">Deutsch (German)</option>
+                <option value="en">English (English)</option>
+                <option value="es">Español (Spanish)</option>
+                <option value="fr">Français (French)</option>
+                <option value="it">Italiano (Italian)</option>
+                <option value="pt">Português (Portuguese)</option>
+                <option value="nl">Nederlands (Dutch)</option>
+                <option value="pl">Polski (Polish)</option>
+                <option value="ru">Русский (Russian)</option>
+                <option value="ja">日本語 (Japanese)</option>
+                <option value="zh">中文 (Chinese)</option>
+                <option value="ko">한국어 (Korean)</option>
+                <option value="ar">العربية (Arabic)</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="tr">Türkçe (Turkish)</option>
+                <option value="sv">Svenska (Swedish)</option>
+                <option value="da">Dansk (Danish)</option>
+                <option value="fi">Suomi (Finnish)</option>
+                <option value="el">Ελληνικά (Greek)</option>
+                <option value="cs">Čeština (Czech)</option>
+            </select>
+            <div class="balance-badge">
+                <span class="material-symbols-rounded">account_balance_wallet</span>
+                <span id="balance-display">1000</span> €
             </div>
         </div>
+    </header>
 
-        <div id="game-ui" class="hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-            <div class="slots-area">
-                <h2 style="margin:0; color:#e45c13; text-shadow: 1px 1px 0 #fff;">JACKPOT x10</h2>
-                <div class="reels">
-                    <div class="reel" id="r1">🍒</div>
-                    <div class="reel" id="r2">🍒</div>
-                    <div class="reel" id="r3">🍒</div>
+    <main id="app-content">
+        <div id="view-menu" class="view active">
+            <h2 class="section-title" data-translate="menuTitle">Wähle dein Spiel</h2>
+            <div class="game-cards">
+                <div class="card" onclick="openGame('slots')">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">🎰</div>
+                    <h3>Slot Machine</h3>
                 </div>
-                <div id="msg" style="font-weight: bold; font-size: 20px; height: 25px;">Einsatz wählen!</div>
-                <div class="bet-box"><button class="btn secondary" id="btn-minus" style="padding: 5px 15px;">-10</button>
-                    <div>Einsatz: <span id="bet">10</span></div><button class="btn secondary" id="btn-plus" style="padding: 5px 15px;">+10</button></div>
+                <div class="card" onclick="openGame('blackjack')">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">🃏</div>
+                    <h3>Blackjack</h3>
+                </div>
+                <div class="card" onclick="openGame('trading')">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #3498db, #2980b9);">📈</div>
+                    <h3 data-translate="tradeTitle">Aktien Trading</h3>
+                </div>
+                <div class="card" onclick="openGame('roulette')">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e67e22, #d35400);">🎯</div>
+                    <h3>Roulette</h3>
+                </div>
+                <div class="card" onclick="openGame('crash')">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">🚀</div>
+                    <h3>Crash</h3>
+                </div>
+                <div class="card" onclick="openGame('coinflip')">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #f1c40f, #f39c12);">🪙</div>
+                    <h3>Coin Flip</h3>
+                </div>
+                <div class="card" onclick="openGame('mines')">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #34495e, #2c3e50);">💣</div>
+                    <h3>Mines</h3>
+                </div>
+                <div class="card" onclick="openGame('dice')">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #1abc9c, #16a085);">🎲</div>
+                    <h3>Dice Roll</h3>
+                </div>
+                <div class="card" onclick="openGame('wheel')">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #e84393, #d63031);">🎡</div>
+                    <h3 data-translate="wheelTitle">Glücksrad</h3>
+                </div>
+                <div class="card" onclick="openGame('highlow')">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #00cec9, #0984e3);">⬆️</div>
+                    <h3>High-Low</h3>
+                </div>
             </div>
-            <div class="button-group"><button id="btn-spin" class="btn primary" style="background-color: #2ecc71;">🎰 SPIN 🎰</button><button id="btn-back" class="btn secondary">Hauptmenü</button></div>
         </div>
 
-        <div id="leaderboard-modal" class="modal hidden">
-            <div class="modal-content">
-                <h2>Top 10 Gewinne</h2>
-                <table class="leaderboard-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody id="leaderboard-body">
-                        <tr>
-                            <td colspan="3" style="text-align:center;">Lokal</td>
-                        </tr>
-                    </tbody>
-                </table><button onclick="document.getElementById('leaderboard-modal').classList.add('hidden')" class="btn secondary mt-10">Schließen</button></div>
+        <div id="view-slots" class="view">
+            <div class="game-container">
+                <h2>Slot Machine</h2>
+                <div class="slot-machine">
+                    <div class="reels">
+                        <div class="reel" id="reel1"><span class="symbol">🍒</span></div>
+                        <div class="reel" id="reel2"><span class="symbol">🍒</span></div>
+                        <div class="reel" id="reel3"><span class="symbol">🍒</span></div>
+                    </div>
+                    <div class="slot-controls">
+                        <input type="number" id="slot-bet" value="10" min="1" step="1">
+                        <button id="btn-spin" class="btn primary">SPIN</button>
+                    </div>
+                    <div id="slot-msg" class="msg-box" data-translate="msgBet">Einsatz wählen!</div>
+                </div>
+            </div>
         </div>
-        <div id="settings-modal" class="modal hidden">
-            <div class="modal-content">
-                <h2>Einstellungen</h2>
-                <div class="setting-item flex-col"><label>Sprache:</label><select id="language-select" class="retro-select"><option value="de">Deutsch</option><option value="en">English</option></select></div><button onclick="document.getElementById('settings-modal').classList.add('hidden')"
-                    class="btn secondary mt-10">Schließen</button></div>
+
+        <div id="view-blackjack" class="view">
+            <div class="game-container blackjack-table">
+                <h2>Blackjack</h2>
+                <div class="bj-area">
+                    <div class="bj-label">Dealer: <span id="dealer-score">?</span></div>
+                    <div id="dealer-cards" class="cards-container"></div>
+                </div>
+                <div id="bj-msg" class="msg-box" data-translate="msgBet">Einsatz wählen!</div>
+                <div class="bj-area">
+                    <div class="bj-label"><span data-translate="lblYou">Du</span>: <span id="player-score">0</span></div>
+                    <div id="player-cards" class="cards-container"></div>
+                </div>
+                <div class="bj-controls">
+                    <div id="bj-bet-area">
+                        <input type="number" id="bj-bet" value="50" min="1" step="1">
+                        <button id="btn-bj-deal" class="btn primary">Deal</button>
+                    </div>
+                    <div id="bj-action-area" class="hidden" style="display:flex; justify-content:center; gap:15px;">
+                        <button id="btn-bj-hit" class="btn warning">Hit</button>
+                        <button id="btn-bj-stand" class="btn danger">Stand</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="credits-modal" class="modal hidden">
-            <div class="modal-content">
-                <h2>Credits</h2>
-                <p>Casino Vibes by Schleimy</p><button onclick="document.getElementById('credits-modal').classList.add('hidden')" class="btn secondary mt-10">Schließen</button></div>
+
+        <div id="view-trading" class="view">
+            <div class="game-container">
+                <h2 data-translate="tradeTitle">Aktien Trading</h2>
+                <div class="trading-board">
+                    <div class="price-box">
+                        <span class="stock-name">SchleimyCorp (SMC)</span>
+                        <div class="current-price" id="live-price">100.00 €</div>
+                        <div class="price-change" id="price-change">+0.00%</div>
+                    </div>
+                    <div class="chart-container">
+                        <div id="chart-bars"></div>
+                    </div>
+                    <div class="portfolio">
+                        <div><span data-translate="lblShares">Aktien</span>: <strong id="owned-shares">0</strong></div>
+                        <div><span data-translate="lblValue">Wert</span>: <strong id="shares-value">0.00 €</strong></div>
+                    </div>
+                    <div class="trading-controls">
+                        <button id="btn-buy-stock" class="btn success" data-translate="btnBuy">KAUFEN</button>
+                        <button id="btn-sell-stock" class="btn danger" data-translate="btnSell">VERKAUFEN</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <script>
-        const els = {
-            start: document.getElementById('start-menu'),
-            ui: document.getElementById('game-ui'),
-            coins: document.getElementById('menu-coins'),
-            bet: document.getElementById('bet'),
-            msg: document.getElementById('msg'),
-            spin: document.getElementById('btn-spin'),
-            r1: document.getElementById('r1'),
-            r2: document.getElementById('r2'),
-            r3: document.getElementById('r3'),
-            high: document.getElementById('menu-highscore')
-        };
-        let bet = 10;
-        let isSpinning = false;
-        const syms = ['🍒', '🍋', '🍉', '💎', '🔔', '7️⃣'];
-        let highScore = parseInt(localStorage.getItem('slotsHigh')) || 0;
 
-        function getCoins() {
-            return parseInt(localStorage.getItem('hubCoins')) || 0;
-        }
+        <div id="view-roulette" class="view">
+            <div class="game-container text-center">
+                <h2>Roulette</h2>
+                <div id="roulette-result" class="huge-display">0</div>
+                <div id="roulette-msg" class="msg-box" data-translate="msgColor">Wähle eine Farbe!</div>
+                <div class="flex-center gap-15 mb-20">
+                    <input type="number" id="roulette-bet" value="20" min="1" step="1">
+                </div>
+                <div class="flex-center gap-15">
+                    <button class="btn danger" onclick="playRoulette('red')"><span data-translate="btnRed">Rot</span> (2x)</button>
+                    <button class="btn success" onclick="playRoulette('green')"><span data-translate="btnGreen">Grün</span> (14x)</button>
+                    <button class="btn" style="background:#222; color:#fff;" onclick="playRoulette('black')"><span data-translate="btnBlack">Schwarz</span> (2x)</button>
+                </div>
+            </div>
+        </div>
 
-        function setCoins(v) {
-            localStorage.setItem('hubCoins', v);
-            els.coins.innerText = v;
-        }
-        els.coins.innerText = getCoins();
-        els.high.innerText = highScore;
+        <div id="view-crash" class="view">
+            <div class="game-container text-center">
+                <h2>Crash</h2>
+                <div id="crash-multiplier" class="huge-display" style="color:var(--accent);">1.00x</div>
+                <div id="crash-msg" class="msg-box" data-translate="msgCashout">Wann casht du aus?</div>
+                <div class="flex-center gap-15 mb-20" id="crash-bet-area">
+                    <input type="number" id="crash-bet" value="10" min="1">
+                    <button id="btn-crash-start" class="btn primary">Start</button>
+                </div>
+                <div class="flex-center gap-15 hidden" id="crash-cashout-area">
+                    <button id="btn-crash-cashout" class="btn success" style="width: 100%;">Cash Out</button>
+                </div>
+            </div>
+        </div>
 
-        document.getElementById('start-btn').onclick = () => {
-            els.start.classList.add('hidden');
-            els.ui.classList.remove('hidden');
-            els.coins.innerText = getCoins();
-        };
-        document.getElementById('btn-back').onclick = () => {
-            els.ui.classList.add('hidden');
-            els.start.classList.remove('hidden');
-            els.coins.innerText = getCoins();
-            els.high.innerText = highScore;
-        };
+        <div id="view-coinflip" class="view">
+            <div class="game-container text-center">
+                <h2>Coin Flip</h2>
+                <div id="coin-display" class="huge-display">🪙</div>
+                <div id="coin-msg" class="msg-box" data-translate="msgCoin">Kopf oder Zahl?</div>
+                <div class="flex-center gap-15 mb-20">
+                    <input type="number" id="coin-bet" value="15" min="1">
+                </div>
+                <div class="flex-center gap-15">
+                    <button class="btn primary" onclick="playCoinFlip('heads')" data-translate="btnHeads">Kopf</button>
+                    <button class="btn warning" onclick="playCoinFlip('tails')" data-translate="btnTails">Zahl</button>
+                </div>
+            </div>
+        </div>
 
-        document.getElementById('btn-minus').onclick = () => {
-            if (!isSpinning && bet > 10) {
-                bet -= 10;
-                els.bet.innerText = bet;
-            }
-        };
-        document.getElementById('btn-plus').onclick = () => {
-            if (!isSpinning && bet + 10 <= getCoins()) {
-                bet += 10;
-                els.bet.innerText = bet;
-            }
-        };
+        <div id="view-mines" class="view">
+            <div class="game-container text-center">
+                <h2>Mines</h2>
+                <div class="flex-center gap-15 mb-20" id="mines-setup">
+                    <input type="number" id="mines-bet" value="25" min="1">
+                    <button id="btn-mines-start" class="btn primary" data-translate="btnGenMines">Feld generieren</button>
+                </div>
+                <div id="mines-msg" class="msg-box" data-translate="msgMines">Finde die Diamanten!</div>
+                <div id="mines-grid" class="mines-grid hidden"></div>
+                <button id="btn-mines-cashout" class="btn success hidden mt-20" style="width:100%;">Cash Out: <span id="mines-pot">0</span> €</button>
+            </div>
+        </div>
 
-        els.spin.onclick = () => {
-            let c = getCoins();
-            if (c < bet) {
-                els.msg.innerText = "Zu wenig Coins!";
-                els.msg.style.color = "red";
-                return;
-            }
-            if (isSpinning) return;
-            setCoins(c - bet);
-            isSpinning = true;
-            els.msg.innerText = "Viel Glück...";
-            els.msg.style.color = "black";
-            els.r1.classList.add('spinning');
-            els.r2.classList.add('spinning');
-            els.r3.classList.add('spinning');
-            setTimeout(() => {
-                els.r1.classList.remove('spinning');
-                els.r2.classList.remove('spinning');
-                els.r3.classList.remove('spinning');
-                let res = [syms[Math.floor(Math.random() * syms.length)], syms[Math.floor(Math.random() * syms.length)], syms[Math.floor(Math.random() * syms.length)]];
-                els.r1.innerText = res[0];
-                els.r2.innerText = res[1];
-                els.r3.innerText = res[2];
-                let cNow = getCoins();
-                let win = 0;
-                if (res[0] === res[1] && res[1] === res[2]) {
-                    win = bet * 10;
-                    setCoins(cNow + win);
-                    els.msg.innerText = `JACKPOT! +${win}`;
-                    els.msg.style.color = "green";
-                } else if (res[0] === res[1] || res[1] === res[2] || res[0] === res[2]) {
-                    win = bet * 2;
-                    setCoins(cNow + win);
-                    els.msg.innerText = `Gewonnen! +${win}`;
-                    els.msg.style.color = "green";
-                } else {
-                    els.msg.innerText = "Verloren!";
-                    els.msg.style.color = "red";
-                }
-                if (win > highScore) {
-                    highScore = win;
-                    localStorage.setItem('slotsHigh', highScore);
-                }
-                isSpinning = false;
-                if (bet > getCoins()) {
-                    bet = Math.max(10, Math.floor(getCoins() / 10) * 10);
-                    els.bet.innerText = bet;
-                }
-            }, 1500);
-        };
-        document.getElementById('leaderboard-btn').onclick = () => document.getElementById('leaderboard-modal').classList.remove('hidden');
-        document.getElementById('settings-btn').onclick = () => document.getElementById('settings-modal').classList.remove('hidden');
-        document.getElementById('credits-btn').onclick = () => document.getElementById('credits-modal').classList.remove('hidden');
-    </script>
+        <div id="view-dice" class="view">
+            <div class="game-container text-center">
+                <h2>Dice Roll</h2>
+                <div id="dice-result" class="huge-display">--</div>
+                <div id="dice-msg" class="msg-box" data-translate="msgDice">Würfel unter der Zielzahl!</div>
+                <div class="flex-center gap-15 mb-20">
+                    <label><span data-translate="lblBet">Einsatz</span>: <input type="number" id="dice-bet" value="10" min="1" style="width:80px;"></label>
+                    <label><span data-translate="lblTarget">Ziel (Unter)</span>: <input type="number" id="dice-target" value="50" min="2" max="98" style="width:80px;"></label>
+                </div>
+                <p class="mb-20">Multiplikator: <strong id="dice-mult-display">2.00x</strong></p>
+                <button id="btn-dice-roll" class="btn primary" style="width:200px;" data-translate="btnRoll">Würfeln</button>
+            </div>
+        </div>
+
+        <div id="view-wheel" class="view">
+            <div class="game-container text-center">
+                <h2 data-translate="wheelTitle">Glücksrad</h2>
+                <div id="wheel-display" class="huge-display" style="font-size: 60px;">🎡</div>
+                <div id="wheel-msg" class="msg-box" data-translate="msgWheel">Dreh das Rad!</div>
+                <div class="flex-center gap-15">
+                    <input type="number" id="wheel-bet" value="50" min="1">
+                    <button id="btn-wheel-spin" class="btn primary" data-translate="btnSpin">Drehen</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-highlow" class="view">
+            <div class="game-container text-center blackjack-table">
+                <h2>High-Low</h2>
+                <div class="flex-center gap-15 mb-20">
+                    <div id="hl-card-current" class="card-ui" style="transform:none; animation:none; margin:0 auto;">?</div>
+                </div>
+                <div id="hl-msg" class="msg-box" data-translate="msgHl">Höher oder niedriger?</div>
+
+                <div id="hl-setup" class="flex-center gap-15">
+                    <input type="number" id="hl-bet" value="10" min="1">
+                    <button id="btn-hl-start" class="btn primary">Start</button>
+                </div>
+
+                <div id="hl-actions" class="hidden">
+                    <p class="mb-20">Pot: <strong id="hl-pot">0</strong> €</p>
+                    <div class="flex-center gap-15 mb-20">
+                        <button class="btn warning" onclick="playHighLow('high')"><span data-translate="btnHigh">Höher</span> ⬆️</button>
+                        <button class="btn primary" onclick="playHighLow('low')"><span data-translate="btnLow">Niedriger</span> ⬇️</button>
+                    </div>
+                    <button id="btn-hl-cashout" class="btn success" style="width:100%;">Cash Out</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="casino.js"></script>
 </body>
 
 </html>

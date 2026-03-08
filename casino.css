@@ -1,3 +1,16 @@
+:root {
+    --bg-main: #0a0e14;
+    --bg-card: #1c2636;
+    --accent: #f39c12;
+    --accent-hover: #e67e22;
+    --text: #ffffff;
+    --text-muted: #8b9eb3;
+    --success: #2ecc71;
+    --danger: #e74c3c;
+    --warning: #f1c40f;
+    --border: #2a3b52;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,175 +18,176 @@
 }
 
 body {
-    background: radial-gradient(circle, #2c0e18 0%, #0a0205 100%);
-    color: #fff;
+    background-color: var(--bg-main);
+    color: var(--text);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
-    touch-action: manipulation;
-}
-
-#game-container {
-    background: #1a0810;
-    width: 100%;
-    max-width: 480px;
-    height: 100vh;
-    max-height: 720px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
-    position: relative;
-    border: 2px solid #5b1324;
     overflow: hidden;
 }
 
-@media (min-width: 481px) {
-    #game-container {
-        border: 6px solid #d4af37;
-        border-radius: 12px;
-    }
+
+/* HELPER CLASSES */
+
+.text-center {
+    text-align: center;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background: #2a0b15;
-    border-bottom: 2px solid #d4af37;
-    height: 75px;
-}
-
-#title {
-    color: #d4af37;
-    font-size: 24px;
-    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-    font-weight: 800;
-}
-
-.user-bar {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 14px;
-    color: #bbb;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 5px 10px;
-    border-radius: 20px;
-}
-
-.balance-board {
+.flex-center {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    font-size: 24px;
-    font-weight: bold;
-    padding: 15px;
-    background: linear-gradient(to bottom, #111, #222);
-    border-bottom: 2px solid #333;
 }
 
-#coins-display {
-    color: #f1c40f;
-    text-shadow: 0 0 15px rgba(241, 196, 15, 0.6);
-    transition: color 0.3s;
+.gap-15 {
+    gap: 15px;
 }
 
-
-/* SCREEN LOGIC */
-
-.screen-view {
-    flex-grow: 1;
-    display: none;
-    flex-direction: column;
-    overflow-y: auto;
+.mb-20 {
+    margin-bottom: 20px;
 }
 
-.screen-view.active {
-    display: flex;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.98);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+.mt-20 {
+    margin-top: 20px;
 }
 
 .hidden {
     display: none !important;
 }
 
-
-/* LOBBY */
-
-.lobby-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    padding: 20px;
-}
-
-.lobby-card {
-    background: linear-gradient(135deg, #2a0b15, #111);
-    border: 2px solid #5b1324;
-    border-radius: 12px;
-    padding: 30px 10px;
-    color: white;
+header {
+    background-color: var(--bg-card);
+    padding: 15px 30px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    gap: 15px;
-    cursor: pointer;
-    transition: all 0.2s;
+    border-bottom: 2px solid var(--accent);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    z-index: 10;
 }
 
-.lobby-card:hover {
-    border-color: #d4af37;
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
-}
-
-.lobby-card .huge-icon {
-    font-size: 50px;
-    color: #d4af37;
-}
-
-
-/* GENERAL CONTROLS */
-
-.controls {
-    padding: 20px;
-    background: #2a0b15;
-    border-top: 2px solid #d4af37;
+.header-left {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    gap: 10px;
 }
 
-.row-controls {
-    flex-direction: row;
+.logo-icon {
+    color: var(--accent);
+    font-size: 30px;
 }
+
+h1 {
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+
+/* LANG DROPDOWN */
+
+.lang-dropdown {
+    background-color: var(--bg-main);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+}
+
+.lang-dropdown:hover {
+    border-color: var(--accent);
+}
+
+.balance-badge {
+    background: rgba(243, 156, 18, 0.2);
+    border: 1px solid var(--accent);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent);
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(243, 156, 18, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(243, 156, 18, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(243, 156, 18, 0.2);
+    }
+}
+
+#btn-back {
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text);
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.2s;
+}
+
+#btn-back:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+main {
+    flex: 1;
+    position: relative;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.view {
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Buttons */
 
 .btn {
     border: none;
-    outline: none;
-    font-family: inherit;
+    padding: 12px 20px;
+    font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
     border-radius: 8px;
-    transition: all 0.1s;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
 }
 
-.btn:active:not(:disabled) {
+.btn:active {
     transform: scale(0.95);
 }
 
@@ -182,253 +196,413 @@ header {
     cursor: not-allowed;
 }
 
-.btn.small {
-    width: 45px;
-    height: 45px;
-    font-size: 24px;
-    background: #444;
-    color: #fff;
-    border: 2px solid #666;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.btn.primary {
+    background: var(--accent);
+    color: #000;
 }
 
-.spin-btn {
-    background: linear-gradient(to bottom, #e48400, #b36700);
+.btn.primary:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 0 15px var(--accent);
+}
+
+.btn.success {
+    background: var(--success);
+    color: #fff;
+}
+
+.btn.danger {
+    background: var(--danger);
+    color: #fff;
+}
+
+.btn.warning {
+    background: var(--warning);
+    color: #000;
+}
+
+input[type="number"] {
+    background: var(--bg-main);
+    border: 2px solid var(--border);
     color: white;
-    font-size: 24px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 100px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.msg-box {
+    margin: 20px 0;
     padding: 15px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    min-height: 54px;
+    transition: color 0.3s;
+}
+
+.huge-display {
+    font-size: 80px;
+    font-weight: bold;
+    margin: 20px 0;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    font-family: monospace;
+}
+
+
+/* MENU CARDS */
+
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: var(--text-muted);
+}
+
+.game-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 25px;
+    width: 220px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 1;
-    border: 2px solid #ffaa33;
-    box-shadow: 0 5px 0 #804a00, 0 10px 20px rgba(0, 0, 0, 0.5);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-size: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.spin-btn:active:not(:disabled) {
-    box-shadow: 0 0px 0 #804a00, 0 5px 10px rgba(0, 0, 0, 0.5);
-    transform: translateY(5px);
+.card h3 {
+    font-size: 18px;
 }
 
 
-/* STATUS MSG */
+/* GAME CONTAINERS */
 
-.status-msg {
-    font-size: 20px;
-    font-weight: bold;
+.game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.game-container h2 {
     text-align: center;
-    color: #fff;
-    text-shadow: 0 2px 5px #000;
-    min-height: 28px;
-}
-
-.status-win {
-    color: #2ecc71;
-    text-shadow: 0 0 10px #2ecc71;
-    animation: pulse 1s infinite;
-}
-
-.status-lose {
-    color: #e74c3c;
+    margin-bottom: 30px;
+    color: var(--accent);
+    font-size: 32px;
 }
 
 
-/* SLOTS */
+/* SLOT MACHINE */
 
 .slot-machine {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    text-align: center;
 }
 
 .reels {
     display: flex;
-    gap: 15px;
-    background: #222;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    background: #0f151d;
     padding: 20px;
-    border-radius: 15px;
-    border: 4px solid #d4af37;
-    margin-bottom: 20px;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+    border-radius: 12px;
+    border: 3px solid #34495e;
 }
 
 .reel {
-    width: 80px;
+    width: 100px;
     height: 120px;
-    background: #f8f9fa;
+    background: #fff;
     border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 60px;
-    border: 2px solid #555;
+    border: 4px solid #bdc3c7;
+    overflow: hidden;
+    position: relative;
 }
 
-.bet-controls {
+.symbol {
+    position: absolute;
+    transition: transform 0.1s linear;
+}
+
+.spinning .symbol {
+    animation: slotSpin 0.1s infinite linear;
+    filter: blur(2px);
+}
+
+@keyframes slotSpin {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+.win-anim {
+    animation: winPulse 1s ease;
+}
+
+@keyframes winPulse {
+    0%,
+    100% {
+        transform: scale(1);
+        background: #fff;
+    }
+    50% {
+        transform: scale(1.1);
+        background: #f1c40f;
+        box-shadow: 0 0 20px #f1c40f;
+    }
+}
+
+.slot-controls {
     display: flex;
     justify-content: center;
+    gap: 15px;
     align-items: center;
-    gap: 20px;
 }
 
-.bet-display {
-    font-size: 22px;
+
+/* BLACKJACK & HIGH-LOW */
+
+.blackjack-table {
+    background: radial-gradient(circle, #27ae60, #1e8449);
+    border: 8px solid #3e2723;
+}
+
+.blackjack-table h2 {
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.bj-area {
+    margin-bottom: 20px;
+    min-height: 160px;
+}
+
+.bj-label {
     font-weight: bold;
-    background: #111;
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: 1px solid #d4af37;
-    min-width: 120px;
-    text-align: center;
-    color: #f1c40f;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #fff;
 }
 
-
-/* BLACKJACK */
-
-.bj-table {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-
-.hand {
-    min-height: 100px;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #333;
-}
-
-.cards {
+.cards-container {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
-.card {
+.card-ui {
+    width: 80px;
+    height: 120px;
     background: #fff;
     color: #000;
-    width: 50px;
-    height: 70px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    font-weight: bold;
-    border: 1px solid #888;
-}
-
-.card.red-suit {
-    color: red;
-}
-
-
-/* ROULETTE */
-
-.wheel-container {
-    flex-grow: 1;
+    border-radius: 8px;
+    border: 1px solid #ccc;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    animation: slideCard 0.4s forwards;
+    transform: translateY(-50px);
+    opacity: 0;
 }
 
-.result-box {
-    font-size: 80px;
-    font-weight: bold;
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 6px solid #d4af37;
-    margin-bottom: 20px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+@keyframes slideCard {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.card-ui.red {
+    color: #e74c3c;
+}
+
+.card-top {
+    text-align: left;
+}
+
+.card-center {
+    text-align: center;
+    font-size: 30px;
+}
+
+.card-bottom {
+    text-align: right;
+    transform: rotate(180deg);
+}
+
+.card-hidden {
+    background: repeating-linear-gradient(45deg, #2980b9, #2980b9 10px, #3498db 10px, #3498db 20px);
+    color: transparent;
+    border: 2px solid #fff;
+}
+
+.card-hidden * {
+    display: none;
+}
+
+.bj-controls {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 12px;
 }
 
 
 /* TRADING */
 
-.portfolio-box {
-    background: #111;
+.trading-board {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.price-box {
+    text-align: center;
+    background: #0f151d;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.stock-name {
+    color: var(--text-muted);
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.current-price {
+    font-size: 48px;
+    font-weight: bold;
+    font-family: monospace;
+    transition: color 0.3s;
+}
+
+.price-change {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.price-up {
+    color: var(--success);
+}
+
+.price-down {
+    color: var(--danger);
+}
+
+.chart-container {
+    height: 150px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px;
+    gap: 4px;
+    overflow: hidden;
+}
+
+.chart-bar {
+    flex: 1;
+    background: var(--accent);
+    border-radius: 2px 2px 0 0;
+    transition: height 0.3s, background-color 0.3s;
+}
+
+.portfolio {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(255, 255, 255, 0.05);
     padding: 15px;
     border-radius: 8px;
-    margin-top: 20px;
-    border: 1px solid #333;
+    font-size: 18px;
 }
 
-.portfolio-box p {
-    font-size: 16px;
-    margin: 5px 0;
+.trading-controls {
     display: flex;
-    justify-content: space-between;
+    gap: 15px;
+}
+
+.trading-controls button {
+    flex: 1;
 }
 
 
-/* HELPERS */
+/* MINES */
 
-.bg-red {
-    background: linear-gradient(to bottom, #e74c3c, #c0392b) !important;
-    border-color: #ff6b6b !important;
+.mines-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
-.bg-green {
-    background: linear-gradient(to bottom, #2ecc71, #27ae60) !important;
-    border-color: #2ecc71 !important;
+.mine-btn {
+    aspect-ratio: 1;
+    background: #34495e;
+    border: 2px solid #2c3e50;
+    border-radius: 8px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.bg-black {
-    background: linear-gradient(to bottom, #333, #111) !important;
-    border-color: #555 !important;
+.mine-btn:hover {
+    background: #455a64;
 }
 
-.bg-orange {
-    background: linear-gradient(to bottom, #f39c12, #d35400) !important;
-    border-color: #f1c40f !important;
+.mine-btn.safe {
+    background: #2ecc71;
+    border-color: #27ae60;
+    cursor: default;
 }
 
-
-/* ANIMATIONS */
-
-.spinning {
-    animation: spin-blur 0.15s infinite linear;
-}
-
-@keyframes spin-blur {
-    0% {
-        transform: translateY(-30px);
-        filter: blur(2px);
-    }
-    50% {
-        transform: translateY(0);
-        filter: blur(5px);
-    }
-    100% {
-        transform: translateY(30px);
-        filter: blur(2px);
-    }
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
+.mine-btn.bomb {
+    background: #e74c3c;
+    border-color: #c0392b;
+    cursor: default;
 }

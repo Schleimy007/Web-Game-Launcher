@@ -51,6 +51,35 @@ const gamesDatabase = {
             el: "Το θρυλικό παιχνίδι, με προσαρμοσμένη φυσική και 20 γλώσσες!",
             cs: "Legendární hra, s vlastní fyzikou a 20 jazyky!"
         }
+    },
+    casino: {
+        id: 'casino',
+        file: 'casino.html',
+        icon: 'casino',
+        bgClass: 'casino-bg',
+        title: 'Casino Simulator',
+        desc: {
+            de: "Der ultimative Casino Simulator! Teste dein Glück.",
+            en: "The ultimate Casino Simulator! Test your luck.",
+            es: "¡El simulador de casino definitivo! Prueba tu suerte.",
+            fr: "Le simulateur de casino ultime ! Testez votre chance.",
+            it: "Il simulatore di casinò definitivo! Metti alla prova la tua fortuna.",
+            pt: "O simulador de cassino definitivo! Teste sua sorte.",
+            nl: "De ultieme Casino Simulator! Beproef je geluk.",
+            pl: "Ostateczny Symulator Kasyna! Sprawdź swoje szczęście.",
+            ru: "Ультимативный симулятор казино! Испытай удачу.",
+            ja: "究極のカジノシミュレーター！運を試そう。",
+            zh: "终极赌场模拟器！测试你的运气。",
+            ko: "궁극의 카지노 시뮬레이터! 운을 시험해보세요.",
+            ar: "محاكي الكازينو النهائي! اختبر حظك.",
+            hi: "अंतिम कैसीनो सिम्युलेटर! अपनी किस्मत आजमाएं।",
+            tr: "Nihai Casino Simülatörü! Şansınızı test edin.",
+            sv: "Den ultimata casinosimulatorn! Testa din lycka.",
+            da: "Den ultimative Casino Simulator! Test dit held.",
+            fi: "Lopullinen kasinosimulaattori! Testaa onneasi.",
+            el: "Ο απόλυτος προσομοιωτής καζίνο! Δοκίμασε την τύχη σου.",
+            cs: "Ultimátní kasino simulátor! Zkus své štěstí."
+        }
     }
 };
 
@@ -68,7 +97,7 @@ const translations = {
     zh: { navLib: "库", navStore: "商店", navSet: "设置", titleLib: "我的游戏", titleStore: "发现", titleSet: "设置", libEmptyTitle: "库是空的。", libEmptyDesc: "访问商店！", storeEmptyTitle: "商店是空的。", storeEmptyDesc: "稍后再看！", btnPlay: "游玩", btnGet: "免费获取", btnOwned: "在库中", setUserTitle: "用户名", setUserDesc: "更改名称。", setLangTitle: "语言", setLangDesc: "应用于所有游戏。", setAnimTitle: "减少动画", setAnimDesc: "禁用效果。", btnExit: "退出", loader: "正在启动...", btnSave: "保存", btnReset: "重置", menuClear: "清除存档", menuUninstall: "卸载" },
     ko: { navLib: "라이브러리", navStore: "상점", navSet: "설정", titleLib: "내 게임", titleStore: "발견", titleSet: "설정", libEmptyTitle: "비어 있습니다.", libEmptyDesc: "상점을 방문하세요!", storeEmptyTitle: "비어 있습니다.", storeEmptyDesc: "나중에 확인하세요!", btnPlay: "플레이", btnGet: "무료로 받기", btnOwned: "라이브러리에 있음", setUserTitle: "사용자 이름", setUserDesc: "이름 변경.", setLangTitle: "언어", setLangDesc: "모든 게임에 적용됩니다.", setAnimTitle: "애니메이션 줄이기", setAnimDesc: "효과를 비활성화합니다.", btnExit: "종료", loader: "시작 중...", btnSave: "저장", btnReset: "초기화", menuClear: "저장 삭제", menuUninstall: "제거" },
     ar: { navLib: "المكتبة", navStore: "المتجر", navSet: "الإعدادات", titleLib: "ألعابي", titleStore: "اكتشف", titleSet: "الإعدادات", libEmptyTitle: "مكتبتك فارغة.", libEmptyDesc: "قم بزيارة المتجر!", storeEmptyTitle: "المتجر فارغ.", storeEmptyDesc: "تحقق لاحقًا!", btnPlay: "العب", btnGet: "احصل مجانًا", btnOwned: "في المكتبة", setUserTitle: "اسم المستخدم", setUserDesc: "قم بتغيير اسمك.", setLangTitle: "اللغة", setLangDesc: "يتم تطبيقه على الألعاب.", setAnimTitle: "تقليل الرسوم", setAnimDesc: "يعطل التأثيرات.", btnExit: "خروج", loader: "جاري البدء...", btnSave: "حفظ", btnReset: "إعادة تعيين", menuClear: "مسح الحفظ", menuUninstall: "إلغاء التثبيت" },
-    hi: { navLib: "लाइब्रेरी", navStore: "स्टोर", navSet: "सेटिंग्स", titleLib: "मेरे गेम", titleStore: "खोजें", titleSet: "सेटिंग्स", libEmptyTitle: "खाली है।", libEmptyDesc: "स्टोर पर जाएं!", storeEmptyTitle: "खाली है।", storeEmptyDesc: "बाद में देखें!", btnPlay: "खेलें", btnGet: "मुफ्त में प्राप्त करें", btnOwned: "लाइब्रेरी में", setUserTitle: "उपयोगकर्ता नाम", setUserDesc: "अपना नाम बदलें।", setLangTitle: "भाषा", setLangDesc: "सभी खेलों पर लागू होता है।", setAnimTitle: "एनिमेशन कम करें", setAnimDesc: "प्रभावों को अक्षम करता है।", btnExit: "बाहर निकलें", loader: "शुरू हो रहा है...", btnSave: "सहेजें", btnReset: "रीसेट", menuClear: "सेव मिटाएं", menuUninstall: "अनइंस्टॉल करें" },
+    hi: { navLib: "लाइब्रेरी", navStore: "स्टोर", navSet: "सेटिंग्स", titleLib: "मेरे गेम", titleStore: "खोजें", titleSet: "सेटिंग्स", libEmptyTitle: "खाली है।", libEmptyDesc: "स्टोर पर जाएं!", storeEmptyTitle: "खाली है。", storeEmptyDesc: "बाद में देखें!", btnPlay: "खेलें", btnGet: "मुफ्त में प्राप्त करें", btnOwned: "लाइब्रेरी में", setUserTitle: "उपयोगकर्ता नाम", setUserDesc: "अपना नाम बदलें।", setLangTitle: "भाषा", setLangDesc: "सभी खेलों पर लागू होता है।", setAnimTitle: "एनिमेशन कम करें", setAnimDesc: "प्रभावों को अक्षम करता है।", btnExit: "बाहर निकलें", loader: "शुरू हो रहा है...", btnSave: "सहेजें", btnReset: "रीसेट", menuClear: "सेव मिटाएं", menuUninstall: "अनइंस्टॉल करें" },
     tr: { navLib: "Kütüphane", navStore: "Mağaza", navSet: "Ayarlar", titleLib: "Oyunlarım", titleStore: "Keşfet", titleSet: "Ayarlar", libEmptyTitle: "Boş.", libEmptyDesc: "Mağazayı ziyaret et!", storeEmptyTitle: "Boş.", storeEmptyDesc: "Daha sonra kontrol et!", btnPlay: "Oyna", btnGet: "Ücretsiz Al", btnOwned: "Kütüphanede", setUserTitle: "Kullanıcı Adı", setUserDesc: "Adını değiştir.", setLangTitle: "Dil", setLangDesc: "Tüm oyunlara uygulanır.", setAnimTitle: "Animasyonları Azalt", setAnimDesc: "Efektleri devre dışı bırakır.", btnExit: "Çıkış", loader: "Başlatılıyor...", btnSave: "Kaydet", btnReset: "Sıfırla", menuClear: "Kaydı Sil", menuUninstall: "Kaldır" },
     sv: { navLib: "Bibliotek", navStore: "Butik", navSet: "Inställningar", titleLib: "Mina Spel", titleStore: "Upptäck", titleSet: "Inställningar", libEmptyTitle: "Tomt.", libEmptyDesc: "Besök butiken!", storeEmptyTitle: "Tomt.", storeEmptyDesc: "Kolla senare!", btnPlay: "Spela", btnGet: "Skaffa Gratis", btnOwned: "I Biblioteket", setUserTitle: "Användarnamn", setUserDesc: "Ändra ditt namn.", setLangTitle: "Språk", setLangDesc: "Tillämpas på alla spel.", setAnimTitle: "Minska Animationer", setAnimDesc: "Inaktiverar effekter.", btnExit: "Avsluta", loader: "Startar...", btnSave: "Spara", btnReset: "Återställ", menuClear: "Rensa Sparfil", menuUninstall: "Avinstallera" },
     da: { navLib: "Bibliotek", navStore: "Butik", navSet: "Indstillinger", titleLib: "Mine Spil", titleStore: "Opdag", titleSet: "Indstillinger", libEmptyTitle: "Tom.", libEmptyDesc: "Besøg butikken!", storeEmptyTitle: "Tom.", storeEmptyDesc: "Tjek senere!", btnPlay: "Spil", btnGet: "Få Gratis", btnOwned: "I Biblioteket", setUserTitle: "Brugernavn", setUserDesc: "Skift dit navn.", setLangTitle: "Sprog", setLangDesc: "Anvendes på alle spil.", setAnimTitle: "Reducer Animationer", setAnimDesc: "Deaktiverer effekter.", btnExit: "Afslut", loader: "Starter...", btnSave: "Gem", btnReset: "Nulstil", menuClear: "Slet Gem", menuUninstall: "Afinstaller" },

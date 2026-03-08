@@ -2,8 +2,8 @@
 // GLOBALES LEADERBOARD SETUP (DREAMLO)
 // Gleiche Keys wie im Launcher eintragen!
 // ==========================================
-const DREAMLO_PUBLIC = 'DEIN_PUBLIC_KEY';
-const DREAMLO_PRIVATE = 'DEIN_PRIVATE_KEY';
+const DREAMLO_PUBLIC = '5fa8af5feb371a09c4c51d17';
+const DREAMLO_PRIVATE = 'cgpr101Ep0yMn0IZPhMAqwVghoK20BG06c_rPh-i1Npg';
 
 // --- LÖSCH-BEFEHL & URL PARAMETER ---
 const urlParams = new URLSearchParams(window.location.search);
