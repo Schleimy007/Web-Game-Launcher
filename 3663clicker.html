@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>3663 Clicker Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -24,26 +24,18 @@
             margin: 0;
             padding: 0;
             user-select: none;
-            -webkit-user-select: none;
-            /* Safari Support */
-            -webkit-tap-highlight-color: transparent;
-            /* Behebt das blaue Flackern beim Tippen! */
         }
         
+        html,
         body {
             background-color: var(--bg);
             color: var(--text);
             font-family: 'Poppins', sans-serif;
+            height: 100%;
+        }
+        
+        body {
             display: flex;
-            height: 100vh;
-            /* Fallback für alte Browser */
-            height: 100dvh;
-            /* Dynamische Höhe (behebt den Suchleisten-Bug) */
-            padding-top: env(safe-area-inset-top);
-            /* Behebt Probleme mit der Notch */
-            padding-bottom: env(safe-area-inset-bottom);
-            padding-left: env(safe-area-inset-left);
-            padding-right: env(safe-area-inset-right);
             overflow: hidden;
         }
         
@@ -230,8 +222,6 @@
             transition: transform 0.05s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s;
             animation: pulseTarget 4s infinite alternate ease-in-out;
             background-color: #000;
-            outline: none;
-            /* Zusätzlicher Schutz gegen Markierungen */
         }
         
         #click-target:active {
@@ -258,6 +248,7 @@
             position: relative;
             overflow: hidden;
             border: 1px solid #333;
+            max-width: 90%;
         }
         
         #combo-bar {
@@ -340,6 +331,7 @@
             height: 45px;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 8px;
+            flex-shrink: 0;
         }
         
         .upgrade-info {
@@ -598,77 +590,72 @@
             border-radius: 5px;
             outline: none;
         }
-        /* --- MOBILE NAVIGATION & RESPONSIVE DESIGN --- */
+        /* 📱 SMARTPHONE & TABLET LAYOUT ERZWINGEN */
         
-        .mobile-nav {
-            display: none;
-        }
-        
-        @media (max-width: 1024px) {
+        @media screen and (max-width: 900px) {
+            html,
+            body {
+                height: auto !important;
+                min-height: 100dvh;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+                /* Erzwingt das Scrollen */
+            }
             body {
                 flex-direction: column;
-            }
-            .mobile-nav {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                position: fixed;
-                bottom: env(safe-area-inset-bottom, 0);
-                left: 0;
-                width: 100%;
-                height: 70px;
-                background: var(--panel-bg);
-                border-top: 2px solid var(--accent);
-                z-index: 1000;
-            }
-            .nav-item {
                 display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                font-size: 12px;
-                color: var(--text-dim);
-                cursor: pointer;
-                transition: color 0.2s, background 0.2s;
             }
-            .nav-item.active {
-                color: var(--accent);
-                background: rgba(255, 157, 28, 0.1);
-            }
-            .nav-item-icon {
-                font-size: 20px;
-                margin-bottom: 4px;
+            #particles-canvas {
+                position: fixed;
+                /* Partikel bleiben im Hintergrund fixiert */
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
             }
             .column {
                 width: 100% !important;
-                position: absolute;
-                top: 0;
-                left: 0;
-                /* Dynamische Höhe abzüglich Menüleiste und Notch/Home-Indikator */
-                height: calc(100dvh - 70px - env(safe-area-inset-bottom, 0)) !important;
-                display: none !important;
-                border: none !important;
-                box-shadow: none !important;
+                height: auto !important;
+                flex: none !important;
+                /* Verhindert das "Aufblasen" auf 100vh */
+                overflow: visible !important;
             }
-            .col-left,
+            .col-center {
+                order: 1;
+                /* Schiebt das Klickziel ganz nach oben */
+                padding: 40px 15px;
+                min-height: 50vh;
+                /* Sorgt dafür, dass es gut aussieht */
+            }
             .col-right {
-                padding-bottom: 20px !important;
+                order: 2;
+                /* Shop in der Mitte */
+                border-top: 2px solid rgba(255, 255, 255, 0.05);
+                border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+                border-left: none;
+                box-shadow: none;
             }
-            /* Aktiver Tab */
-            .column.active-tab {
-                display: flex !important;
+            .col-left {
+                order: 3;
+                /* Statistiken ganz unten */
+                border-right: none;
+                box-shadow: none;
+                padding-bottom: 60px;
+                /* Platz unten für besseres Scroll-Gefühl */
             }
-            #score {
-                font-size: 3.5rem;
-                /* Resize huge score for mobile */
+            .shop-items {
+                max-height: 350px;
+                /* Begrenzt den Shop in der Höhe, damit man nicht ewig swipen muss */
+                overflow-y: auto;
+                padding-bottom: 20px;
             }
             #click-target {
                 width: 220px;
                 height: 220px;
-                /* Resize target for mobile */
             }
-            #toast.show {
-                bottom: calc(90px + env(safe-area-inset-bottom, 0));
-                /* Move toast above mobile nav */
+            #score {
+                font-size: 3.5rem;
+                word-break: break-word;
             }
         }
     </style>
@@ -721,33 +708,33 @@
             <div class="settings-row">
                 <span id="txt-lang" style="font-size: 12px; color: var(--text-dim);">Sprache:</span>
                 <select class="lang-select" id="lang-select" onchange="changeLang(this.value)">
-                    <option value="de">Deutsch (German)</option>
-                    <option value="en">English (English)</option>
-                    <option value="es">Español (Spanish)</option>
-                    <option value="fr">Français (French)</option>
-                    <option value="it">Italiano (Italian)</option>
-                    <option value="pt">Português (Portuguese)</option>
-                    <option value="nl">Nederlands (Dutch)</option>
-                    <option value="pl">Polski (Polish)</option>
-                    <option value="ru">Русский (Russian)</option>
-                    <option value="ja">日本語 (Japanese)</option>
-                    <option value="zh">中文 (Chinese)</option>
-                    <option value="ko">한국어 (Korean)</option>
-                    <option value="ar">العربية (Arabic)</option>
-                    <option value="hi">हिन्दी (Hindi)</option>
-                    <option value="tr">Türkçe (Turkish)</option>
-                    <option value="sv">Svenska (Swedish)</option>
-                    <option value="da">Dansk (Danish)</option>
-                    <option value="fi">Suomi (Finnish)</option>
-                    <option value="el">Ελληνικά (Greek)</option>
-                    <option value="cs">Čeština (Czech)</option>
+                    <option value="de">Deutsch</option>
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="it">Italiano</option>
+                    <option value="pt">Português</option>
+                    <option value="nl">Nederlands</option>
+                    <option value="pl">Polski</option>
+                    <option value="ru">Русский</option>
+                    <option value="ja">日本語</option>
+                    <option value="zh">中文</option>
+                    <option value="ko">한국어</option>
+                    <option value="ar">العربية</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="tr">Türkçe</option>
+                    <option value="sv">Svenska</option>
+                    <option value="da">Dansk</option>
+                    <option value="fi">Suomi</option>
+                    <option value="el">Ελληνικά</option>
+                    <option value="cs">Čeština</option>
                 </select>
             </div>
             <button id="btn-reset" onclick="resetGame()" style="width:100%; padding:10px; background:var(--danger); color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:bold; margin-top: 15px;">Spielstand löschen</button>
         </div>
     </div>
 
-    <div class="column col-center active-tab">
+    <div class="column col-center">
         <div class="score-container">
             <div id="score">0</div>
             <div id="cps-display">0 pro Sekunde</div>
@@ -767,21 +754,6 @@
         <div class="shop-header" id="txt-shop">Upgrades Shop</div>
         <div class="shop-items" id="shop-container"></div>
     </div>
-
-    <nav class="mobile-nav">
-        <div class="nav-item" onclick="switchTab('col-left', this)">
-            <span class="nav-item-icon">📊</span>
-            <span>Stats</span>
-        </div>
-        <div class="nav-item active" onclick="switchTab('col-center', this)">
-            <span class="nav-item-icon">🖱️</span>
-            <span>Klicker</span>
-        </div>
-        <div class="nav-item" onclick="switchTab('col-right', this)">
-            <span class="nav-item-icon">🛒</span>
-            <span>Shop</span>
-        </div>
-    </nav>
 
     <div id="toast">Spielstand gespeichert!</div>
 
@@ -1129,7 +1101,7 @@
                 reset: "저장 삭제",
                 resetConfirm: "정말 모든 것을 삭제하시겠습니까?",
                 combo: "콤보:",
-                shop: "상점",
+                정답: "상점",
                 perSec: "초당",
                 clicks: "클릭",
                 reqRebirth: "{req} 환생 필요",
@@ -1405,63 +1377,27 @@
 
         // --- PROMO CODES ---
         const promoCodes = {
-            "X7A9K2": {
-                type: "score",
-                amount: 100000
-            },
-            "Q4M8ZP": {
-                type: "score",
-                amount: 100000
-            },
-            "L9T2BX": {
-                type: "score",
-                amount: 100000
-            },
-            "R5K7WD": {
-                type: "score",
-                amount: 100000
-            },
-            "V3N8QJ": {
-                type: "score",
-                amount: 100000
-            },
-            "C6Y2UF": {
-                type: "score",
-                amount: 1000000
-            },
-            "Z1P9RX": {
-                type: "score",
-                amount: 1000000
-            },
-            "B7H4LA": {
+            "GIMMECLICKS": {
                 type: "score",
                 amount: 10000000
             },
-            "M2W8KC": {
-                type: "score",
-                amount: 10000000
-            },
-            "T9F3QS": {
-                type: "score",
-                amount: 10000000
-            },
-            "MOON3663HHFOWKFJWJK228472SJSKJASW": {
+            "MOON3663": {
                 type: "unlock_planet",
                 planetIndex: 1
             },
-            "MARS3663JFIUHEKJOFHBJSJDHFUJSWDHE2314723428": {
+            "MARS3663": {
                 type: "unlock_planet",
                 planetIndex: 2
             },
-            "JUPITER3663HFJASFKFJHSHFFEEFFGKEFKGES72345723687w234qe667834": {
+            "JUPITER3663": {
                 type: "unlock_planet",
                 planetIndex: 3
             },
-            "NEBULA3663HFH7263HewjkgPOLÖjewlkogjJK382": {
+            "NEBULA3663": {
                 type: "unlock_planet",
                 planetIndex: 4
             },
-            "BLACKHOLE3663jkwejfh22323e23HGHguzawz2": {
+            "BLACKHOLE3663": {
                 type: "unlock_planet",
                 planetIndex: 5
             }
@@ -1501,7 +1437,6 @@
         }];
 
         // --- DYNAMICALLY GENERATE 80 UPGRADES ---
-        // 10 base concepts, scaled across 8 tiers linked to the planets
         const baseConcepts = [{
             id: 0,
             cpcAdd: 1,
@@ -1566,7 +1501,6 @@
 
         const upgrades = [];
         for (let tier = 1; tier <= 8; tier++) {
-            // Tie tiers to planet unlock requirements
             let reqP = 0; // Earth
             if (tier === 3) reqP = 1; // Moon
             if (tier === 4) reqP = 2; // Mars
@@ -1590,7 +1524,6 @@
                 });
             });
         }
-        // upgrades array now has exactly 80 dynamically scaled items!
 
         // --- DOM ELEMENTS ---
         const els = {
@@ -1722,7 +1655,6 @@
         }
 
         function getMaxPlanetUnlocked() {
-            // Find max planet unlocked via rebirth OR via codes
             let maxReb = 0;
             planetsData.forEach((p, i) => {
                 if (game.rebirths >= p.req) maxReb = i;
@@ -1778,38 +1710,18 @@
             checkShopAvailability();
         });
 
+        // Verhindert störendes Verhalten auf Handys beim schnellen Klicken
         els.target.addEventListener('touchstart', (e) => {
-            // Verhindert zusätzliches Scroll-Verhalten beim schnellen Tippen
-            if (e.cancelable) e.preventDefault();
-            const touch = e.touches[0];
-
-            const isCrit = Math.random() < 0.1;
-            const mult = getComboMultiplier();
-            let clickPower = getCpc() * mult;
-
-            if (isCrit) clickPower *= 3;
-
-            game.score += clickPower;
-            game.totalClicks++;
-            game.combo = Math.min(100, game.combo + 8);
-
-            createFloatingText(touch.clientX, touch.clientY, clickPower, isCrit);
-            createClickParticle(touch.clientX, touch.clientY);
-
-            updateUI();
-            updateComboUI();
-            checkShopAvailability();
-
-            // Simuliert den :active status visuell für Touch-Geräte
-            els.target.style.transform = "scale(0.9)";
-            els.target.style.boxShadow = "0 0 20px rgba(255, 157, 28, 0.6)";
-            els.target.style.borderColor = "#fff";
-
-            setTimeout(() => {
-                els.target.style.transform = "";
-                els.target.style.boxShadow = "";
-                els.target.style.borderColor = "";
-            }, 100);
+            if (e.target === els.target) {
+                e.preventDefault();
+                // Simulieren des Klicks für Touch-Geräte
+                const touch = e.changedTouches[0];
+                const mouseEvent = new MouseEvent('mousedown', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                els.target.dispatchEvent(mouseEvent);
+            }
         }, {
             passive: false
         });
@@ -1887,7 +1799,7 @@
             saveGame();
             updateUI();
             renderPlanets();
-            renderShop(); // Refresh shop to show newly unlocked tier items!
+            renderShop();
         }
 
         // --- UI UPDATES ---
@@ -1933,10 +1845,8 @@
             let currentPlanetHeader = -1;
 
             upgrades.forEach((upg, index) => {
-                // Nur Upgrades für Planeten anzeigen, die bereits freigeschaltet wurden
                 if (upg.reqPlanet > maxP) return;
 
-                // Dynamische Header für den Shop-Tiers einfügen
                 if (upg.reqPlanet > currentPlanetHeader) {
                     currentPlanetHeader = upg.reqPlanet;
                     const header = document.createElement('div');
@@ -2127,7 +2037,6 @@
 
                     game = { ...game, ...parsed.game };
                     
-                    // Initialize arrays for older saves
                     if(!game.redeemedCodes) game.redeemedCodes = [];
                     if(!game.unlockedPlanets) game.unlockedPlanets = [0];
                     
@@ -2156,23 +2065,6 @@
             els.toast.classList.add('show');
             setTimeout(() => els.toast.classList.remove('show'), 2000);
         }
-
-        // --- MOBILE TAB SWITCHER ---
-        window.switchTab = function(targetClass, btnElement) {
-            if (window.innerWidth > 1024) return; // Nur auf Mobile ausführen
-            
-            // Verstecke alle Spalten
-            document.querySelector('.col-left').classList.remove('active-tab');
-            document.querySelector('.col-center').classList.remove('active-tab');
-            document.querySelector('.col-right').classList.remove('active-tab');
-            
-            // Zeige die ausgewählte Spalte
-            document.querySelector('.' + targetClass).classList.add('active-tab');
-            
-            // UI Update für den aktiven Tab in der Navigation
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            btnElement.classList.add('active');
-        };
 
         init();
     </script>
