@@ -80,6 +80,35 @@ const gamesDatabase = {
             el: "Ο απόλυτος προσομοιωτής καζίνο! Δοκίμασε την τύχη σου.",
             cs: "Ultimátní kasino simulátor! Zkus své štěstí."
         }
+    },
+    clicker3663: {
+        id: 'clicker3663',
+        file: '3663clicker.html',
+        icon: 'ads_click',
+        bgClass: 'clicker-bg',
+        title: '3663 Clicker',
+        desc: {
+            de: "Klicke das Profilbild und kaufe dir Upgrades!",
+            en: "Click the profile picture and buy upgrades!",
+            es: "¡Haz clic en la foto de perfil y compra mejoras!",
+            fr: "Cliquez sur la photo de profil et achetez des améliorations !",
+            it: "Clicca sull'immagine del profilo e compra potenziamenti!",
+            pt: "Clique na foto do perfil e compre melhorias!",
+            nl: "Klik op de profielfoto en koop upgrades!",
+            pl: "Kliknij zdjęcie profilowe i kupuj ulepszenia!",
+            ru: "Кликни по аватарке и покупай улучшения!",
+            ja: "プロフィール画像をクリックしてアップグレードを購入しよう！",
+            zh: "点击个人资料图片并购买升级！",
+            ko: "프로필 사진을 클릭하고 업그레이드를 구매하세요!",
+            ar: "انقر على صورة الملف الشخصي واشترِ الترقيات!",
+            hi: "प्रोफ़ाइल चित्र पर क्लिक करें और अपग्रेड खरीदें!",
+            tr: "Profil resmine tıklayın ve yükseltmeler satın alın!",
+            sv: "Klicka på profilbilden och köp uppgraderingar!",
+            da: "Klik på profilbilledet og køb opgraderinger!",
+            fi: "Napsauta profiilikuvaa ja osta päivityksiä!",
+            el: "Κάντε κλικ στην εικόνα προφίλ και αγοράστε αναβαθμίσεις!",
+            cs: "Klikni na profilový obrázek a nakupuj vylepšení!"
+        }
     }
 };
 
