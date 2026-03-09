@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>3663 Clicker Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -24,6 +24,10 @@
             margin: 0;
             padding: 0;
             user-select: none;
+            -webkit-user-select: none;
+            /* Safari Support */
+            -webkit-tap-highlight-color: transparent;
+            /* Behebt das blaue Flackern beim Tippen! */
         }
         
         body {
@@ -32,6 +36,14 @@
             font-family: 'Poppins', sans-serif;
             display: flex;
             height: 100vh;
+            /* Fallback für alte Browser */
+            height: 100dvh;
+            /* Dynamische Höhe (behebt den Suchleisten-Bug) */
+            padding-top: env(safe-area-inset-top);
+            /* Behebt Probleme mit der Notch */
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
             overflow: hidden;
         }
         
@@ -218,6 +230,8 @@
             transition: transform 0.05s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s;
             animation: pulseTarget 4s infinite alternate ease-in-out;
             background-color: #000;
+            outline: none;
+            /* Zusätzlicher Schutz gegen Markierungen */
         }
         
         #click-target:active {
@@ -598,7 +612,7 @@
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 position: fixed;
-                bottom: 0;
+                bottom: env(safe-area-inset-bottom, 0);
                 left: 0;
                 width: 100%;
                 height: 70px;
@@ -629,18 +643,17 @@
                 position: absolute;
                 top: 0;
                 left: 0;
-                height: calc(100vh - 70px) !important;
+                /* Dynamische Höhe abzüglich Menüleiste und Notch/Home-Indikator */
+                height: calc(100dvh - 70px - env(safe-area-inset-bottom, 0)) !important;
                 display: none !important;
                 border: none !important;
                 box-shadow: none !important;
-                padding-bottom: 20px;
             }
             .col-left,
             .col-right {
-                padding-bottom: 90px !important;
-                /* Extra padding to clear mobile nav scroll */
+                padding-bottom: 20px !important;
             }
-            /* The tab that is currently selected */
+            /* Aktiver Tab */
             .column.active-tab {
                 display: flex !important;
             }
@@ -654,7 +667,7 @@
                 /* Resize target for mobile */
             }
             #toast.show {
-                bottom: 90px;
+                bottom: calc(90px + env(safe-area-inset-bottom, 0));
                 /* Move toast above mobile nav */
             }
         }
@@ -1763,6 +1776,42 @@
             updateUI();
             updateComboUI();
             checkShopAvailability();
+        });
+
+        els.target.addEventListener('touchstart', (e) => {
+            // Verhindert zusätzliches Scroll-Verhalten beim schnellen Tippen
+            if (e.cancelable) e.preventDefault();
+            const touch = e.touches[0];
+
+            const isCrit = Math.random() < 0.1;
+            const mult = getComboMultiplier();
+            let clickPower = getCpc() * mult;
+
+            if (isCrit) clickPower *= 3;
+
+            game.score += clickPower;
+            game.totalClicks++;
+            game.combo = Math.min(100, game.combo + 8);
+
+            createFloatingText(touch.clientX, touch.clientY, clickPower, isCrit);
+            createClickParticle(touch.clientX, touch.clientY);
+
+            updateUI();
+            updateComboUI();
+            checkShopAvailability();
+
+            // Simuliert den :active status visuell für Touch-Geräte
+            els.target.style.transform = "scale(0.9)";
+            els.target.style.boxShadow = "0 0 20px rgba(255, 157, 28, 0.6)";
+            els.target.style.borderColor = "#fff";
+
+            setTimeout(() => {
+                els.target.style.transform = "";
+                els.target.style.boxShadow = "";
+                els.target.style.borderColor = "";
+            }, 100);
+        }, {
+            passive: false
         });
 
         els.target.addEventListener('dragstart', (e) => e.preventDefault());
