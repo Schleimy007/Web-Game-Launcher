@@ -326,6 +326,14 @@ html {
     color: #f1c40f;
 }
 
+
+/* HIER IST DIE NEUE KLASSE FÜR 3663 CLICKER */
+
+.clicker-bg {
+    background: #ff7e67;
+    color: #ffffff;
+}
+
 .huge-icon {
     font-size: 80px;
 }
