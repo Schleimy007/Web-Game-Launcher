@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>3663 Clicker Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -584,6 +584,80 @@
             border-radius: 5px;
             outline: none;
         }
+        /* --- MOBILE NAVIGATION & RESPONSIVE DESIGN --- */
+        
+        .mobile-nav {
+            display: none;
+        }
+        
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+            }
+            .mobile-nav {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 70px;
+                background: var(--panel-bg);
+                border-top: 2px solid var(--accent);
+                z-index: 1000;
+            }
+            .nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                color: var(--text-dim);
+                cursor: pointer;
+                transition: color 0.2s, background 0.2s;
+            }
+            .nav-item.active {
+                color: var(--accent);
+                background: rgba(255, 157, 28, 0.1);
+            }
+            .nav-item-icon {
+                font-size: 20px;
+                margin-bottom: 4px;
+            }
+            .column {
+                width: 100% !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: calc(100vh - 70px) !important;
+                display: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding-bottom: 20px;
+            }
+            .col-left,
+            .col-right {
+                padding-bottom: 90px !important;
+                /* Extra padding to clear mobile nav scroll */
+            }
+            /* The tab that is currently selected */
+            .column.active-tab {
+                display: flex !important;
+            }
+            #score {
+                font-size: 3.5rem;
+                /* Resize huge score for mobile */
+            }
+            #click-target {
+                width: 220px;
+                height: 220px;
+                /* Resize target for mobile */
+            }
+            #toast.show {
+                bottom: 90px;
+                /* Move toast above mobile nav */
+            }
+        }
     </style>
 </head>
 
@@ -660,7 +734,7 @@
         </div>
     </div>
 
-    <div class="column col-center">
+    <div class="column col-center active-tab">
         <div class="score-container">
             <div id="score">0</div>
             <div id="cps-display">0 pro Sekunde</div>
@@ -680,6 +754,21 @@
         <div class="shop-header" id="txt-shop">Upgrades Shop</div>
         <div class="shop-items" id="shop-container"></div>
     </div>
+
+    <nav class="mobile-nav">
+        <div class="nav-item" onclick="switchTab('col-left', this)">
+            <span class="nav-item-icon">📊</span>
+            <span>Stats</span>
+        </div>
+        <div class="nav-item active" onclick="switchTab('col-center', this)">
+            <span class="nav-item-icon">🖱️</span>
+            <span>Klicker</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('col-right', this)">
+            <span class="nav-item-icon">🛒</span>
+            <span>Shop</span>
+        </div>
+    </nav>
 
     <div id="toast">Spielstand gespeichert!</div>
 
@@ -2018,6 +2107,23 @@
             els.toast.classList.add('show');
             setTimeout(() => els.toast.classList.remove('show'), 2000);
         }
+
+        // --- MOBILE TAB SWITCHER ---
+        window.switchTab = function(targetClass, btnElement) {
+            if (window.innerWidth > 1024) return; // Nur auf Mobile ausführen
+            
+            // Verstecke alle Spalten
+            document.querySelector('.col-left').classList.remove('active-tab');
+            document.querySelector('.col-center').classList.remove('active-tab');
+            document.querySelector('.col-right').classList.remove('active-tab');
+            
+            // Zeige die ausgewählte Spalte
+            document.querySelector('.' + targetClass).classList.add('active-tab');
+            
+            // UI Update für den aktiven Tab in der Navigation
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            btnElement.classList.add('active');
+        };
 
         init();
     </script>
