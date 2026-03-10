@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Snake UI V3: No Shake & Multi-Lang</title>
+    <style>
+        :root {
+            --neon-green: #00ffcc;
+            --neon-pink: #ff007f;
+            --neon-yellow: #ffea00;
+            --neon-blue: #0088ff;
+            --bg-color: #030305;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            user-select: none;
+            touch-action: none;
+        }
+
+        /* CRT Scanline Overlay */
+        body::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 100;
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { background-position: 0 0, 0 0; }
+            100% { background-position: 0 100vh, 0 0; }
+        }
+
+        .header-controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 440px;
+            margin-bottom: 20px;
+            z-index: 10;
+        }
+
+        .stat-box {
+            background: rgba(0, 255, 204, 0.05);
+            padding: 10px 20px;
+            border: 2px solid var(--neon-green);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.3), inset 0 0 10px rgba(0, 255, 204, 0.1);
+            font-weight: 900;
+            font-size: 22px;
+            color: var(--neon-green);
+            text-shadow: 0 0 10px var(--neon-green);
+            border-radius: 6px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .stat-box.high {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3), inset 0 0 10px rgba(255, 0, 127, 0.1);
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+        
+        #combo-container {
+            position: absolute;
+            top: 30px;
+            font-size: 60px;
+            font-weight: 900;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 20px var(--neon-yellow), 0 0 40px #fff;
+            opacity: 0;
+            transform: scale(0.1) translateY(-50px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.5);
+            z-index: 15;
+            pointer-events: none;
+            text-align: center;
+        }
+
+        #combo-container.active { opacity: 1; transform: scale(1) translateY(0); }
+        
+        /* Pulsierender Glow anstatt Shake für den Hyper Mode */
+        #combo-container.hyper { 
+            color: var(--neon-blue); 
+            text-shadow: 0 0 30px var(--neon-blue), 0 0 60px #fff; 
+            animation: hyperGlow 1s alternate infinite;
+        }
+
+        @keyframes hyperGlow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.3); }
+        }
+
+        #hyper-text { font-size: 20px; display: block; margin-top: -10px; color: #fff; letter-spacing: 10px; }
+
+        .game-wrapper { position: relative; }
+
+        canvas {
+            background: #050508;
+            border: 4px solid #111;
+            border-radius: 12px;
+            box-shadow: 0 0 80px rgba(0, 255, 204, 0.1), inset 0 0 30px rgba(0,0,0,0.9);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            z-index: 5;
+            max-width: 100vw;
+            max-height: 100vw;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 3, 5, 0.9);
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 50;
+            border-radius: 12px;
+        }
+
+        .overlay.visible { opacity: 1; pointer-events: all; }
+        
+        h1 {
+            color: var(--neon-pink); font-size: 50px; text-shadow: 0 0 30px var(--neon-pink); 
+            margin: 0; text-align: center; letter-spacing: 8px; text-transform: uppercase;
+        }
+
+        #startScreen h1 { color: var(--neon-green); text-shadow: 0 0 30px var(--neon-green); }
+        #pauseScreen h1 { color: var(--neon-yellow); text-shadow: 0 0 30px var(--neon-yellow); }
+        
+        .btn {
+            background: rgba(0, 255, 204, 0.1);
+            border: 2px solid var(--neon-green);
+            padding: 15px 40px; margin-top: 40px;
+            color: var(--neon-green); font-size: 24px; font-weight: 900; font-family: 'Courier New', Courier, monospace;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4), inset 0 0 20px rgba(0, 255, 204, 0.2);
+            text-transform: uppercase; transition: 0.2s;
+            letter-spacing: 4px;
+        }
+
+        .btn:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 60px rgba(0, 255, 204, 1); transform: scale(1.1); }
+        .btn:active { transform: scale(0.9); }
+        
+        #gameOverOverlay .btn {
+            border-color: var(--neon-pink); color: var(--neon-pink); background: rgba(255, 0, 127, 0.1);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4), inset 0 0 20px rgba(255, 0, 127, 0.2);
+        }
+        #gameOverOverlay .btn:hover { background: var(--neon-pink); color: #000; box-shadow: 0 0 60px rgba(255, 0, 127, 1); }
+
+        .controls-hint { 
+            margin-top: 30px; color: #888; font-size: 16px; 
+            letter-spacing: 3px; text-align: center; line-height: 1.8; 
+            white-space: pre-line; /* Damit \n im JS als Umbruch funktioniert */
+        }
+        .footer-controls { margin-top: 20px; z-index: 10; }
+        .small-btn {
+            background: none; border: 1px solid #555; color: #aaa; padding: 8px 15px; cursor: pointer;
+            font-family: inherit; transition: 0.2s; font-weight: bold; border-radius: 4px;
+        }
+        .small-btn:hover { color: #fff; border-color: #fff; box-shadow: 0 0 10px #fff; }
+    </style>
+</head>
+<body>
+
+    <div id="combo-container">
+        COMBO x<span id="combo-multiplier">1</span>
+        <div id="hyper-text"></div>
+    </div>
+
+    <div class="header-controls">
+        <div class="stat-box" id="box-score"><span id="lbl-score">SCORE:</span> <span id="score">0</span></div>
+        <div class="stat-box high"><span id="lbl-best">BEST:</span> <span id="highscore">0</span></div>
+    </div>
+
+    <div class="game-wrapper">
+        <canvas id="gameCanvas" width="440" height="440"></canvas>
+
+        <div id="startScreen" class="overlay visible">
+            <h1>ULTRA INSTINCT</h1>
+            <button class="btn" id="btn-start" onclick="startGame()">INITIATE</button>
+            <div id="controlsHint" class="controls-hint"></div>
+        </div>
+
+        <div id="pauseScreen" class="overlay">
+            <h1 id="lbl-title-pause">PAUSED</h1>
+            <button class="btn" id="btn-resume" style="border-color: var(--neon-yellow); color: var(--neon-yellow);" onclick="togglePause()">RESUME</button>
+        </div>
+
+        <div id="gameOverOverlay" class="overlay">
+            <h1 id="lbl-gameover">FATAL ERROR</h1>
+            <button class="btn" id="btn-reboot" onclick="startGame()">REBOOT</button>
+        </div>
+    </div>
+
+    <div class="footer-controls">
+        <button class="small-btn" id="btn-mute" onclick="toggleMute()">🔊 AUDIO ON</button>
+    </div>
+
+    <script>
+        // --- 1. SETUP & MEGA LOKALISIERUNG ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const lang = urlParams.get('lang') || 'de';
+        const username = urlParams.get('user') || 'Player';
+
+        const i18n = {
+            de: { score: "PUNKTE:", best: "REKORD:", startBtn: "STARTEN", gameOver: "SYSTEMAUSFALL", rebootBtn: "NEUSTART", paused: "PAUSIERT", resumeBtn: "WEITER", controls: "[ WASD / PFEILE / SWIPE ]\n[ P / ESC ] = PAUSE" },
+            en: { score: "SCORE:", best: "BEST:", startBtn: "INITIATE", gameOver: "FATAL ERROR", rebootBtn: "REBOOT", paused: "PAUSED", resumeBtn: "RESUME", controls: "[ WASD / ARROWS / SWIPE ]\n[ P / ESC ] = PAUSE" },
+            es: { score: "PUNTOS:", best: "MEJOR:", startBtn: "INICIAR", gameOver: "ERROR FATAL", rebootBtn: "REINICIAR", paused: "PAUSA", resumeBtn: "REANUDAR", controls: "[ WASD / FLECHAS / SWIPE ]\n[ P / ESC ] = PAUSA" },
+            fr: { score: "SCORE:", best: "MAX:", startBtn: "DÉMARRER", gameOver: "ERREUR FATALE", rebootBtn: "REDÉMARRER", paused: "PAUSE", resumeBtn: "REPRENDRE", controls: "[ WASD / FLÈCHES / SWIPE ]\n[ P / ESC ] = PAUSE" },
+            it: { score: "PUNTI:", best: "MAX:", startBtn: "AVVIA", gameOver: "ERRORE FATALE", rebootBtn: "RIAVVIA", paused: "IN PAUSA", resumeBtn: "RIPRENDI", controls: "[ WASD / FRECCE / SWIPE ]\n[ P / ESC ] = PAUSA" },
+            pt: { score: "PONTOS:", best: "RECORDE:", startBtn: "INICIAR", gameOver: "ERRO FATAL", rebootBtn: "REINICIAR", paused: "PAUSADO", resumeBtn: "CONTINUAR", controls: "[ WASD / SETAS / SWIPE ]\n[ P / ESC ] = PAUSA" },
+            nl: { score: "SCORE:", best: "BESTE:", startBtn: "STARTEN", gameOver: "FATALE FOUT", rebootBtn: "HERSTART", paused: "PAUZE", resumeBtn: "HERVATTEN", controls: "[ WASD / PIJLEN / SWIPE ]\n[ P / ESC ] = PAUZE" },
+            pl: { score: "WYNIK:", best: "REKORD:", startBtn: "START", gameOver: "BŁĄD KRYTYCZNY", rebootBtn: "RESTART", paused: "PAUZA", resumeBtn: "WZNÓW", controls: "[ WASD / STRZAŁKI / SWIPE ]\n[ P / ESC ] = PAUZA" },
+            ru: { score: "ОЧКИ:", best: "ЛУЧШИЙ:", startBtn: "НАЧАТЬ", gameOver: "ОШИБКА", rebootBtn: "РЕСТАРТ", paused: "ПАУЗА", resumeBtn: "ПРОДОЛЖИТЬ", controls: "[ WASD / СТРЕЛКИ / SWIPE ]\n[ P / ESC ] = ПАУЗА" },
+            ja: { score: "スコア:", best: "ベスト:", startBtn: "開始", gameOver: "致命的なエラー", rebootBtn: "再起動", paused: "一時停止", resumeBtn: "再開", controls: "[ WASD / 矢印 / SWIPE ]\n[ P / ESC ] = 一時停止" },
+            zh: { score: "分数:", best: "最高分:", startBtn: "开始", gameOver: "致命错误", rebootBtn: "重启", paused: "暂停", resumeBtn: "继续", controls: "[ WASD / 方向键 / SWIPE ]\n[ P / ESC ] = 暂停" },
+            ko: { score: "점수:", best: "최고:", startBtn: "시작", gameOver: "치명적 오류", rebootBtn: "재부팅", paused: "일시 정지", resumeBtn: "재개", controls: "[ WASD / 방향키 / SWIPE ]\n[ P / ESC ] = 일시 정지" },
+            ar: { score: "النقاط:", best: "الأفضل:", startBtn: "ابدأ", gameOver: "خطأ فادح", rebootBtn: "إعادة تشغيل", paused: "مؤقت", resumeBtn: "استئناف", controls: "[ WASD / أسهم / SWIPE ]\n[ P / ESC ] = مؤقت" },
+            hi: { score: "स्कोर:", best: "सर्वश्रेष्ठ:", startBtn: "शुरू", gameOver: "गंभीर त्रुटि", rebootBtn: "रीबूट", paused: "विराम", resumeBtn: "जारी रखें", controls: "[ WASD / तीर / SWIPE ]\n[ P / ESC ] = विराम" },
+            tr: { score: "SKOR:", best: "EN IYI:", startBtn: "BAŞLAT", gameOver: "ÖLÜMCÜL HATA", rebootBtn: "YENİDEN BAŞLAT", paused: "DURAKLATILDI", resumeBtn: "DEVAM", controls: "[ WASD / YÖN TUŞLARI / SWIPE ]\n[ P / ESC ] = DURAKLAT" },
+            sv: { score: "POÄNG:", best: "BÄSTA:", startBtn: "STARTA", gameOver: "FATALT FEL", rebootBtn: "OMSTART", paused: "PAUSAD", resumeBtn: "FORTSÄTT", controls: "[ WASD / PILAR / SWIPE ]\n[ P / ESC ] = PAUS" },
+            da: { score: "SCORE:", best: "BEDSTE:", startBtn: "START", gameOver: "FATAL FEJL", rebootBtn: "GENSTART", paused: "PAUSET", resumeBtn: "GENOPTAG", controls: "[ WASD / PILE / SWIPE ]\n[ P / ESC ] = PAUSE" },
+            fi: { score: "PISTEET:", best: "PARAS:", startBtn: "ALOITA", gameOver: "VIRHE", rebootBtn: "UUDELLEENKÄYNNISTYS", paused: "TAUKO", resumeBtn: "JATKA", controls: "[ WASD / NUOLET / SWIPE ]\n[ P / ESC ] = TAUKO" },
+            el: { score: "ΣΚΟΡ:", best: "ΚΑΛΥΤΕΡΟ:", startBtn: "ΕΝΑΡΞΗ", gameOver: "ΣΦΑΛΜΑ", rebootBtn: "ΕΠΑΝΕΚΚΙΝΗΣΗ", paused: "ΠΑΥΣΗ", resumeBtn: "ΣΥΝΕΧΙΣΗ", controls: "[ WASD / ΒΕΛΑΚΙΑ / SWIPE ]\n[ P / ESC ] = ΠΑΥΣΗ" },
+            cs: { score: "SKÓRE:", best: "NEJLEPŠÍ:", startBtn: "START", gameOver: "CHYBA", rebootBtn: "RESTART", paused: "PAUZA", resumeBtn: "POKRAČOVAT", controls: "[ WASD / ŠIPKY / SWIPE ]\n[ P / ESC ] = PAUZA" }
+        };
+
+        const currentLang = i18n[lang] || i18n['en']; // Fallback auf Englisch
+
+        document.getElementById('lbl-score').innerText = currentLang.score;
+        document.getElementById('lbl-best').innerText = currentLang.best;
+        document.getElementById('btn-start').innerText = currentLang.startBtn;
+        document.getElementById('lbl-gameover').innerText = currentLang.gameOver;
+        document.getElementById('btn-reboot').innerText = currentLang.rebootBtn;
+        document.getElementById('lbl-title-pause').innerText = currentLang.paused;
+        document.getElementById('btn-resume').innerText = currentLang.resumeBtn;
+        document.getElementById('controlsHint').innerText = currentLang.controls;
+
+        // --- 2. AUDIO SYNTHESIZER ---
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx, isMuted = false;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioContext();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            document.getElementById('btn-mute').innerText = isMuted ? "🔇 AUDIO OFF" : "🔊 AUDIO ON";
+        }
+
+        function playSound(type) {
+            if (!audioCtx || isMuted) return;
+            const osc = audioCtx.createOscillator();
+            const osc2 = audioCtx.createOscillator(); 
+            const gain = audioCtx.createGain();
+            
+            osc.connect(gain); osc2.connect(gain); gain.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+
+            if (type === 'eat') {
+                osc.type = 'square'; osc2.type = 'sine';
+                osc.frequency.setValueAtTime(800 + (comboMultiplier * 50), now);
+                osc.frequency.exponentialRampToValueAtTime(2000, now + 0.1);
+                osc2.frequency.setValueAtTime(100, now);
+                osc2.frequency.exponentialRampToValueAtTime(50, now + 0.1);
+                
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now); osc2.start(now); osc.stop(now + 0.1); osc2.stop(now + 0.1);
+            } else if (type === 'die') {
+                osc.type = 'sawtooth'; osc2.type = 'square';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(5, now + 0.8);
+                osc2.frequency.setValueAtTime(50, now);
+                osc2.frequency.linearRampToValueAtTime(1, now + 0.8);
+                
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+                osc.start(now); osc2.start(now); osc.stop(now + 0.8); osc2.stop(now + 0.8);
+            } else if (type === 'hyper') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.linearRampToValueAtTime(100, now + 0.4);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.4);
+                osc.start(now); osc.stop(now + 0.4);
+            }
+        }
+
+        // --- 3. SPIEL LOGIK & EFFEKTE ---
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const gridSize = 22; 
+        const tileCount = canvas.width / gridSize;
+        
+        let score = 0, highscore = localStorage.getItem("snakeUltraHigh3") || 0;
+        document.getElementById("highscore").innerText = highscore;
+
+        let snake, dx, dy, food, particles, shockwaves;
+        let isPlaying = false, isPaused = false;
+        let inputQueue = [];
+        
+        let comboMultiplier = 1;
+        let comboTimer = 0;
+        let isHyperMode = false;
+        const maxComboTime = 3500; 
+
+        let lastTime = 0, accumulator = 0;
+
+        function startGame() {
+            initAudio();
+            document.querySelectorAll('.overlay').forEach(el => el.classList.remove("visible"));
+            canvas.style.borderColor = "#111";
+            
+            snake = [ {x: 10, y: 10}, {x: 9, y: 10}, {x: 8, y: 10} ];
+            dx = 1; dy = 0; inputQueue = [];
+            score = 0; comboMultiplier = 1; comboTimer = 0; isHyperMode = false;
+            particles = []; shockwaves = [];
+            isPlaying = true; isPaused = false;
+            
+            updateScore();
+            spawnFood();
+            
+            lastTime = performance.now();
+            accumulator = 0;
+            requestAnimationFrame(gameLoop);
+        }
+
+        function togglePause() {
+            if (!isPlaying && !isPaused) return;
+            isPaused = !isPaused;
+            document.getElementById("pauseScreen").classList.toggle("visible", isPaused);
+            if (!isPaused) { lastTime = performance.now(); requestAnimationFrame(gameLoop); }
+        }
+
+        function spawnFood() {
+            let valid = false;
+            while(!valid) {
+                food = { x: Math.floor(Math.random() * tileCount), y: Math.floor(Math.random() * tileCount) };
+                valid = !snake.some(s => s.x === food.x && s.y === food.y);
+            }
+        }
+
+        function addParticles(x, y, color, amount, speed) {
+            for(let i=0; i<amount; i++) {
+                particles.push({
+                    x: x, y: y,
+                    vx: (Math.random() - 0.5) * speed, vy: (Math.random() - 0.5) * speed,
+                    life: 1, maxLife: Math.random() * 0.5 + 0.5, color: color
+                });
+            }
+        }
+
+        function addShockwave(x, y, color) {
+            shockwaves.push({ x: x, y: y, radius: 0, maxRadius: isHyperMode ? 150 : 80, alpha: 1, color: color });
+        }
+
+        function triggerGameOver() {
+            isPlaying = false;
+            playSound('die');
+            if(score > highscore) { highscore = score; localStorage.setItem("snakeUltraHigh3", highscore); document.getElementById("highscore").innerText = highscore; }
+            document.getElementById("gameOverOverlay").classList.add("visible");
+            
+            addParticles(snake[0].x * gridSize, snake[0].y * gridSize, "var(--neon-pink)", 100, 25);
+            addShockwave(snake[0].x * gridSize, snake[0].y * gridSize, "var(--neon-pink)");
+        }
+
+        function processInput() {
+            if(inputQueue.length === 0) return;
+            const key = inputQueue.shift();
+            const goingUp = dy === -1, goingDown = dy === 1, goingRight = dx === 1, goingLeft = dx === -1;
+            
+            if ((key === "w" || key === "arrowup") && !goingDown) { dx = 0; dy = -1; }
+            else if ((key === "s" || key === "arrowdown") && !goingUp) { dx = 0; dy = 1; }
+            else if ((key === "a" || key === "arrowleft") && !goingRight) { dx = -1; dy = 0; }
+            else if ((key === "d" || key === "arrowright") && !goingLeft) { dx = 1; dy = 0; }
+        }
+
+        // --- 4. GAME LOOP ---
+        function gameLoop(currentTime) {
+            if (!isPlaying || isPaused) return;
+
+            let deltaTime = currentTime - lastTime;
+            lastTime = currentTime;
+            accumulator += deltaTime;
+
+            let tickRate = Math.max(isHyperMode ? 40 : 50, 120 - (score * 0.7)); 
+            
+            while (accumulator >= tickRate) {
+                updateLogic();
+                accumulator -= tickRate;
+            }
+
+            updateVisuals(deltaTime);
+            draw();
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        function updateLogic() {
+            processInput();
+            let head = { x: snake[0].x + dx, y: snake[0].y + dy };
+            
+            if(head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount || snake.some(s => s.x === head.x && s.y === head.y)) {
+                triggerGameOver(); return;
+            }
+
+            snake.unshift(head);
+
+            if(head.x === food.x && head.y === food.y) {
+                score += (10 * comboMultiplier);
+                
+                comboMultiplier++;
+                comboTimer = maxComboTime;
+                
+                let comboEl = document.getElementById("combo-container");
+                document.getElementById("combo-multiplier").innerText = comboMultiplier;
+                
+                if (comboMultiplier >= 5 && !isHyperMode) {
+                    isHyperMode = true;
+                    playSound('hyper');
+                    comboEl.classList.add("hyper");
+                    document.getElementById("hyper-text").innerText = "HYPER MODE";
+                    canvas.style.borderColor = "var(--neon-blue)";
+                    canvas.style.boxShadow = "0 0 100px rgba(0, 136, 255, 0.4), inset 0 0 50px rgba(0,0,0,0.9)";
+                    document.getElementById("box-score").style.borderColor = "var(--neon-blue)";
+                    document.getElementById("box-score").style.color = "var(--neon-blue)";
+                    document.getElementById("box-score").style.textShadow = "0 0 15px var(--neon-blue)";
+                } else {
+                    playSound('eat');
+                }
+
+                if(comboMultiplier > 1) {
+                    comboEl.classList.remove("active");
+                    void comboEl.offsetWidth; 
+                    comboEl.classList.add("active");
+                }
+
+                addShockwave(food.x * gridSize + gridSize/2, food.y * gridSize + gridSize/2, isHyperMode ? "var(--neon-blue)" : "var(--neon-green)");
+                addParticles(food.x * gridSize + gridSize/2, food.y * gridSize + gridSize/2, isHyperMode ? "var(--neon-blue)" : "var(--neon-green)", 30, 15);
+                
+                updateScore();
+                spawnFood();
+            } else {
+                let tail = snake.pop();
+                if(Math.random() > 0.3) {
+                    addParticles(tail.x * gridSize + gridSize/2, tail.y * gridSize + gridSize/2, isHyperMode ? "var(--neon-blue)" : "var(--neon-green)", 1, 2);
+                }
+            }
+        }
+
+        function updateVisuals(deltaTime) {
+            if(comboTimer > 0) {
+                comboTimer -= deltaTime;
+                if(comboTimer <= 0) {
+                    comboTimer = 0;
+                    comboMultiplier = 1;
+                    isHyperMode = false;
+                    document.getElementById("combo-container").classList.remove("active", "hyper");
+                    document.getElementById("hyper-text").innerText = "";
+                    canvas.style.borderColor = "#111";
+                    canvas.style.boxShadow = "0 0 80px rgba(0, 255, 204, 0.1), inset 0 0 30px rgba(0,0,0,0.9)";
+                    document.getElementById("box-score").style.borderColor = "var(--neon-green)";
+                    document.getElementById("box-score").style.color = "var(--neon-green)";
+                    document.getElementById("box-score").style.textShadow = "0 0 10px var(--neon-green)";
+                }
+            }
+
+            for(let i = particles.length - 1; i >= 0; i--) {
+                let p = particles[i];
+                p.x += p.vx; p.y += p.vy; 
+                p.vx *= 0.9; p.vy *= 0.9;
+                p.life -= 0.03 * (deltaTime / 16);
+                if(p.life <= 0) particles.splice(i, 1);
+            }
+
+            for(let i = shockwaves.length - 1; i >= 0; i--) {
+                let sw = shockwaves[i];
+                sw.radius += 10 * (deltaTime / 16);
+                sw.alpha -= 0.05 * (deltaTime / 16);
+                if(sw.alpha <= 0) shockwaves.splice(i, 1);
+            }
+        }
+
+        // --- 5. ZEICHNEN ---
+        function draw() {
+            ctx.fillStyle = isHyperMode ? "rgba(2, 2, 5, 0.3)" : "rgba(5, 5, 8, 0.4)"; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            drawGrid();
+
+            ctx.lineWidth = 3;
+            for(let sw of shockwaves) {
+                ctx.beginPath();
+                ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI*2);
+                ctx.strokeStyle = sw.color;
+                ctx.globalAlpha = Math.max(0, sw.alpha);
+                ctx.stroke();
+            }
+            ctx.globalAlpha = 1;
+
+            for(let p of particles) {
+                ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
+                ctx.fillStyle = p.color;
+                ctx.shadowBlur = 10; ctx.shadowColor = p.color;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 4 * (p.life / p.maxLife), 0, Math.PI*2); ctx.fill();
+            }
+            ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+
+            drawFood();
+            drawSnake();
+
+            if(isHyperMode) {
+                ctx.fillStyle = "rgba(0, 136, 255, 0.05)";
+                ctx.fillRect(0,0, canvas.width, canvas.height);
+            }
+        }
+
+        function drawGrid() {
+            ctx.strokeStyle = isHyperMode ? "rgba(0, 136, 255, 0.08)" : "rgba(0, 255, 204, 0.05)";
+            ctx.lineWidth = 1;
+            for(let i = 0; i <= canvas.width; i += gridSize) {
+                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+            }
+        }
+
+        function drawSnake() {
+            snake.forEach((part, index) => {
+                let isHead = index === 0;
+                let colorBase = isHyperMode ? 210 : 160;
+                let lightness = Math.max(30, 80 - (index * 2));
+                
+                ctx.fillStyle = isHead ? "#ffffff" : `hsl(${colorBase}, 100%, ${lightness}%)`;
+                
+                if(isHead || isHyperMode) {
+                    ctx.shadowBlur = isHead ? 25 : 10;
+                    ctx.shadowColor = isHyperMode ? "var(--neon-blue)" : "var(--neon-green)";
+                } else {
+                    ctx.shadowBlur = 0;
+                }
+                
+                let padding = index === 0 ? 0 : Math.min(6, index * 0.4); 
+                
+                ctx.beginPath();
+                ctx.roundRect(
+                    part.x * gridSize + 1 + padding/2, 
+                    part.y * gridSize + 1 + padding/2, 
+                    gridSize - 2 - padding, 
+                    gridSize - 2 - padding, 
+                    isHead ? 6 : 4
+                );
+                ctx.fill();
+            });
+            ctx.shadowBlur = 0;
+        }
+
+        function drawFood() {
+            let pulse = Math.abs(Math.sin(performance.now() / 150)) * 6;
+            let foodColor = isHyperMode ? "var(--neon-blue)" : "var(--neon-pink)";
+            
+            ctx.fillStyle = foodColor;
+            ctx.shadowBlur = 25 + pulse;
+            ctx.shadowColor = foodColor;
+            
+            let centerX = food.x * gridSize + gridSize/2;
+            let centerY = food.y * gridSize + gridSize/2;
+
+            ctx.beginPath();
+            let size = (gridSize/2 - 2) + pulse/4;
+            ctx.moveTo(centerX, centerY - size);
+            ctx.lineTo(centerX + size, centerY);
+            ctx.lineTo(centerX, centerY + size);
+            ctx.lineTo(centerX - size, centerY);
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.fillStyle = "#fff";
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 2.5, 0, Math.PI*2);
+            ctx.fill();
+            
+            ctx.shadowBlur = 0;
+            
+            if(comboTimer > 0) {
+                ctx.strokeStyle = isHyperMode ? "var(--neon-blue)" : "var(--neon-yellow)";
+                ctx.lineWidth = 3;
+                ctx.lineCap = "round";
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, gridSize/1.2, -Math.PI/2, (-Math.PI/2) + (Math.PI * 2 * (comboTimer/maxComboTime)));
+                ctx.stroke();
+            }
+        }
+
+        function updateScore() { document.getElementById("score").innerText = score; }
+
+        // --- 6. INPUT HANDLING ---
+        document.addEventListener("keydown", e => {
+            const key = e.key.toLowerCase();
+            if (key === 'p' || key === 'escape') { togglePause(); return; }
+            if (!isPlaying || isPaused) return;
+
+            if(["w", "a", "s", "d", "arrowup", "arrowdown", "arrowleft", "arrowright"].includes(key)) {
+                if(inputQueue[inputQueue.length-1] !== key && inputQueue.length < 3) inputQueue.push(key);
+            }
+        });
+
+        let touchStartX = 0, touchStartY = 0;
+        document.addEventListener('touchstart', e => { 
+            touchStartX = e.changedTouches[0].screenX; touchStartY = e.changedTouches[0].screenY; 
+        }, {passive: true});
+
+        document.addEventListener('touchend', e => {
+            if (!isPlaying || isPaused) return;
+            let dxTouch = e.changedTouches[0].screenX - touchStartX;
+            let dyTouch = e.changedTouches[0].screenY - touchStartY;
+            
+            if(Math.abs(dxTouch) < 30 && Math.abs(dyTouch) < 30) { togglePause(); return; }
+
+            if (Math.abs(dxTouch) > Math.abs(dyTouch)) inputQueue.push(dxTouch > 0 ? 'arrowright' : 'arrowleft');
+            else inputQueue.push(dyTouch > 0 ? 'arrowdown' : 'arrowup');
+        }, {passive: true});
+
+        ctx.fillStyle = "var(--bg-color)"; ctx.fillRect(0, 0, canvas.width, canvas.height); drawGrid();
+    </script>
+</body>
+</html>

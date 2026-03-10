@@ -109,6 +109,66 @@ const gamesDatabase = {
             el: "Κάντε κλικ στην εικόνα προφίλ και αγοράστε αναβαθμίσεις!",
             cs: "Klikni na profilový obrázek a nakupuj vylepšení!"
         }
+    },
+/*
+craft: {
+    id: 'craft',
+    file: 'craft.html',
+    icon: 'view_in_ar',
+    bgClass: 'craft-bg',
+    title: 'SchleimyCraft',
+    desc: {
+        de: "Überlebe, baue und erkunde die 3D-Welt!",
+        en: "Survive, build and explore the 3D world!",
+        es: "¡Sobrevive, construye y explora el mundo 3D!",
+        fr: "Survivez, construisez et explorez le monde 3D !",
+        it: "Sopravvivi, costruisci ed esplora il mondo 3D!",
+        pt: "Sobreviva, construa e explore o mundo 3D!",
+        nl: "Overleef, bouw en verken de 3D-wereld!",
+        pl: "Przetrwaj, buduj i eksploruj świat 3D!",
+        ru: "Выживай, строй и исследуй 3D-мир!",
+        ja: "3Dの世界で生き残り、建築し、探索しよう！",
+        zh: "在3D世界中生存，建造和探索！",
+        ko: "3D 세계에서 생존하고, 짓고, 탐험하세요!",
+        ar: "البقاء على قيد الحياة، بناء واستكشاف العالم ثلاثي الأبعاد!",
+        hi: "3D दुनिया में जीवित रहें, निर्माण करें और अन्वेषण करें!",
+        tr: "3D dünyada hayatta kal, inşa et ve keşfet!",
+        sv: "Överlev, bygg och utforska 3D-världen!",
+        da: "Overlev, byg og udforsk 3D-verdenen!",
+        fi: "Selviydy, rakenna ja tutki 3D-maailmaa!",
+        el: "Επιβιώστε, χτίστε και εξερευνήστε τον 3D κόσμο!",
+        cs: "Přežij, stavěj a objevuj 3D svět!"
+    }
+},
+*/
+    snake: {
+        id: 'snake',
+        file: 'snake.html',
+        icon: 'gesture',
+        bgClass: 'snake-bg',
+        title: 'Snake',
+        desc: {
+            de: "Der zeitlose Klassiker, friss Äpfel und wachse!",
+            en: "The timeless classic, eat apples and grow!",
+            es: "¡El clásico atemporal, come manzanas y crece!",
+            fr: "Le classique intemporel, mangez des pommes et grandissez !",
+            it: "Il classico intramontabile, mangia le mele e cresci!",
+            pt: "O clássico atemporal, coma maçãs e cresça!",
+            nl: "De tijdloze klassieker, eet appels en groei!",
+            pl: "Ponadczasowy klasyk, jedz jabłka i rośnij!",
+            ru: "Вневременная классика, ешь яблоки и расти!",
+            ja: "時代を超越したクラシック、リンゴを食べて成長しよう！",
+            zh: "永恒的经典，吃苹果并成长！",
+            ko: "시간을 초월한 고전, 사과를 먹고 성장하세요!",
+            ar: "الكلاسيكية الخالدة، كل التفاح وتنمو!",
+            hi: "कालातीत क्लासिक, सेब खाएं और बढ़ें!",
+            tr: "Zamansız klasik, elma ye ve büyü!",
+            sv: "Den tidlösa klassikern, ät äpplen och väx!",
+            da: "Den tidløse klassiker, spis æbler og voks!",
+            fi: "Ajaton klassikko, syö omenoita ja kasva!",
+            el: "Το διαχρονικό κλασικό, φάτε μήλα και μεγαλώστε!",
+            cs: "Nadčasová klasika, jez jablka a rosť!"
+        }
     }
 };
 
